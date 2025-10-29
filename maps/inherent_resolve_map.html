@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_47f80caad008085540a05128d19b61f9 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+    <div style="position: fixed;
+                top: 80px; right: 15px; width: 320px;
+                background-color: white; border:2px solid #0066cc; z-index:9999;
+                font-size:11px; padding: 12px; line-height: 1.5;">
+    <p style="margin: 0 0 8px 0; font-weight: bold; color: #0066cc;">Operation Inherent Resolve Timeline</p>
+    <p style="margin: 4px 0; font-size: 10px;">
+        <b>2014:</b> OIR launched - Coalition vs ISIS<br>
+        <b>2017:</b> ISIS territorial defeat in Iraq<br>
+        <b>2019:</b> ISIS territorial defeat in Syria<br>
+        <b>2021:</b> Belgian F-16 operations end<br>
+        <b>2024:</b> Belgium training & demining (€1.5M)<br>
+        <b>Sep 2024:</b> Phase 1 begins - Iraq transition<br>
+        <b>Sep 2025:</b> Phase 2 begins - Syria ops from Iraq<br>
+        <b>2026+:</b> Bilateral security partnership
+    </p>
+    <p style="margin: 8px 0 0 0; font-size: 9px; color: #666;">
+        Current: ~2,000 coalition troops<br>
+        ISIS remnants: ~3,000 fighters (scattered)
+    </p>
+    </div>
+    
+    
+    <div style="position: fixed;
+                bottom: 50px; right: 15px; width: 280px;
+                background-color: white; border:2px solid grey; z-index:9999;
+                font-size:11px; padding: 12px; line-height: 1.6;">
+    <p style="margin: 0 0 8px 0; font-weight: bold;">Mission Elements</p>
+    <p style="margin: 4px 0;">
+        <i class="fa fa-home" style="color: green;"></i>
+        <b style="color: #00aa44;">Belgium</b> - Kuwait (Camp Arifjan)
+    </p>
+    <p style="margin: 4px 0;">
+        <i class="fa fa-plane" style="color: blue;"></i>
+        <b style="color: #0066cc;">Iraq</b> - Training sites
+    </p>
+    <p style="margin: 4px 0;">
+        <i class="fa fa-plane" style="color: red;"></i>
+        <b style="color: #cc0000;">Syria</b> - Active operations
+    </p>
+    <p style="margin: 4px 0;">
+        <span style="border: 2px dashed red; padding: 2px 6px;">---</span>
+        Former ISIS territory (2014-2017)
+    </p>
+    <p style="margin: 8px 0 0 0; font-size: 9px; color: #666;">
+        Data sources: CJTF-OIR, DoD IG Reports,<br>
+        Washington Institute, PolGeoNow
+    </p>
+    </div>
+    
+    
+            <div class="folium-map" id="map_47f80caad008085540a05128d19b61f9" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_47f80caad008085540a05128d19b61f9 = L.map(
+                "map_47f80caad008085540a05128d19b61f9",
+                {
+                    center: [33.5, 43.0],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 5,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_554e8d04b8ca67699ac020ebd4161be4 = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_554e8d04b8ca67699ac020ebd4161be4.addTo(map_47f80caad008085540a05128d19b61f9);
+        
+    
+        function geo_json_39a1af41a2f24d54a30f6e1f37e85621_styler(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"color": "#666666", "fillColor": "#e6e6e6", "fillOpacity": 0.5, "weight": 1.5};
+            }
+        }
+        function geo_json_39a1af41a2f24d54a30f6e1f37e85621_highlighter(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"fillOpacity": 0.7, "weight": 2.5};
+            }
+        }
+
+        function geo_json_39a1af41a2f24d54a30f6e1f37e85621_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_39a1af41a2f24d54a30f6e1f37e85621.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_39a1af41a2f24d54a30f6e1f37e85621_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_39a1af41a2f24d54a30f6e1f37e85621 = L.geoJson(null, {
+                onEachFeature: geo_json_39a1af41a2f24d54a30f6e1f37e85621_onEachFeature,
+            
+                style: geo_json_39a1af41a2f24d54a30f6e1f37e85621_styler,
+            ...{
+}
+        });
+
+        function geo_json_39a1af41a2f24d54a30f6e1f37e85621_add (data) {
+            geo_json_39a1af41a2f24d54a30f6e1f37e85621
+                .addData(data);
+        }
+            geo_json_39a1af41a2f24d54a30f6e1f37e85621_add({"features": [{"bbox": [34.922603, 29.197495, 39.195468, 33.378686], "geometry": {"coordinates": [[[35.545665, 32.393992], [35.719918, 32.709192], [36.834062, 32.312938], [38.792341, 33.378686], [39.195468, 32.161009], [39.004886, 32.010217], [37.002166, 31.508413], [37.998849, 30.5085], [37.66812, 30.338665], [37.503582, 30.003776], [36.740528, 29.865283], [36.501214, 29.505254], [36.068941, 29.197495], [34.956037, 29.356555], [34.922603, 29.501326], [35.420918, 31.100066], [35.397561, 31.489086], [35.545252, 31.782505], [35.545665, 32.393992]]], "type": "Polygon"}, "properties": {"ABBREV": "Jord.", "ABBREV_LEN": 5, "ADM0_A3": "JOR", "ADM0_A3_AR": "JOR", "ADM0_A3_BD": "JOR", "ADM0_A3_BR": "JOR", "ADM0_A3_CN": "JOR", "ADM0_A3_DE": "JOR", "ADM0_A3_EG": "JOR", "ADM0_A3_ES": "JOR", "ADM0_A3_FR": "JOR", "ADM0_A3_GB": "JOR", "ADM0_A3_GR": "JOR", "ADM0_A3_ID": "JOR", "ADM0_A3_IL": "JOR", "ADM0_A3_IN": "JOR", "ADM0_A3_IT": "JOR", "ADM0_A3_JP": "JOR", "ADM0_A3_KO": "JOR", "ADM0_A3_MA": "JOR", "ADM0_A3_NL": "JOR", "ADM0_A3_NP": "JOR", "ADM0_A3_PK": "JOR", "ADM0_A3_PL": "JOR", "ADM0_A3_PS": "JOR", "ADM0_A3_PT": "JOR", "ADM0_A3_RU": "JOR", "ADM0_A3_SA": "JOR", "ADM0_A3_SE": "JOR", "ADM0_A3_TR": "JOR", "ADM0_A3_TW": "JOR", "ADM0_A3_UA": "JOR", "ADM0_A3_UN": -99, "ADM0_A3_US": "JOR", "ADM0_A3_VN": "JOR", "ADM0_A3_WB": -99, "ADM0_DIF": 0, "ADM0_DIFF": null, "ADM0_ISO": "JOR", "ADM0_TLC": "JOR", "ADMIN": "Jordan", "BRK_A3": "JOR", "BRK_DIFF": 0, "BRK_GROUP": null, "BRK_NAME": "Jordan", "CONTINENT": "Asia", "ECONOMY": "6. Developing region", "FCLASS_AR": null, "FCLASS_BD": null, "FCLASS_BR": null, "FCLASS_CN": null, "FCLASS_DE": null, "FCLASS_EG": null, "FCLASS_ES": null, "FCLASS_FR": null, "FCLASS_GB": null, "FCLASS_GR": null, "FCLASS_ID": null, "FCLASS_IL": null, "FCLASS_IN": null, "FCLASS_ISO": "Admin-0 country", "FCLASS_IT": null, "FCLASS_JP": null, "FCLASS_KO": null, "FCLASS_MA": null, "FCLASS_NL": null, "FCLASS_NP": null, "FCLASS_PK": null, "FCLASS_PL": null, "FCLASS_PS": null, "FCLASS_PT": null, "FCLASS_RU": null, "FCLASS_SA": null, "FCLASS_SE": null, "FCLASS_TLC": "Admin-0 country", "FCLASS_TR": null, "FCLASS_TW": null, "FCLASS_UA": null, "FCLASS_US": null, "FCLASS_VN": null, "FIPS_10": "JO", "FORMAL_EN": "Hashemite Kingdom of Jordan", "FORMAL_FR": null, "GDP_MD": 44502, "GDP_YEAR": 2019, "GEOUNIT": "Jordan", "GEOU_DIF": 0, "GU_A3": "JOR", "HOMEPART": 1, "INCOME_GRP": "3. Upper middle income", "ISO_A2": "JO", "ISO_A2_EH": "JO", "ISO_A3": "JOR", "ISO_A3_EH": "JOR", "ISO_N3": "400", "ISO_N3_EH": "400", "LABELRANK": 4, "LABEL_X": 36.375991, "LABEL_Y": 30.805025, "LEVEL": 2, "LONG_LEN": 6, "MAPCOLOR13": 4, "MAPCOLOR7": 5, "MAPCOLOR8": 3, "MAPCOLOR9": 4, "MAX_LABEL": 9, "MIN_LABEL": 4, "MIN_ZOOM": 0, "NAME": "Jordan", "NAME_ALT": null, "NAME_AR": "\u0627\u0644\u0623\u0631\u062f\u0646", "NAME_BN": "\u099c\u09b0\u09cd\u09a1\u09be\u09a8", "NAME_CIAWF": "Jordan", "NAME_DE": "Jordanien", "NAME_EL": "\u0399\u03bf\u03c1\u03b4\u03b1\u03bd\u03af\u03b1", "NAME_EN": "Jordan", "NAME_ES": "Jordania", "NAME_FA": "\u0627\u0631\u062f\u0646", "NAME_FR": "Jordanie", "NAME_HE": "\u05d9\u05e8\u05d3\u05df", "NAME_HI": "\u091c\u0949\u0930\u094d\u0921\u0928", "NAME_HU": "Jord\u00e1nia", "NAME_ID": "Yordania", "NAME_IT": "Giordania", "NAME_JA": "\u30e8\u30eb\u30c0\u30f3", "NAME_KO": "\uc694\ub974\ub2e8", "NAME_LEN": 6, "NAME_LONG": "Jordan", "NAME_NL": "Jordani\u00eb", "NAME_PL": "Jordania", "NAME_PT": "Jord\u00e2nia", "NAME_RU": "\u0418\u043e\u0440\u0434\u0430\u043d\u0438\u044f", "NAME_SORT": "Jordan", "NAME_SV": "Jordanien", "NAME_TR": "\u00dcrd\u00fcn", "NAME_UK": "\u0419\u043e\u0440\u0434\u0430\u043d\u0456\u044f", "NAME_UR": "\u0627\u0631\u062f\u0646", "NAME_VI": "Jordan", "NAME_ZH": "\u7ea6\u65e6", "NAME_ZHT": "\u7d04\u65e6", "NE_ID": 1159320935, "NOTE_ADM0": null, "NOTE_BRK": null, "POP_EST": 10101694, "POP_RANK": 14, "POP_YEAR": 2019, "POSTAL": "J", "REGION_UN": "Asia", "REGION_WB": "Middle East \u0026 North Africa", "SOVEREIGNT": "Jordan", "SOV_A3": "JOR", "SUBREGION": "Western Asia", "SUBUNIT": "Jordan", "SU_A3": "JOR", "SU_DIF": 0, "TINY": -99, "TLC": "1", "TLC_DIFF": null, "TYPE": "Sovereign country", "UN_A3": "400", "WB_A2": "JO", "WB_A3": "JOR", "WIKIDATAID": "Q810", "WOE_ID": 23424860, "WOE_ID_EH": 23424860, "WOE_NOTE": "Exact WOE match as country", "featurecla": "Admin-0 country", "scalerank": 1}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_39a1af41a2f24d54a30f6e1f37e85621.bindTooltip(
+                `<div>
+                     Jordan
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        var popup_877fb39573e885a99f195de17c44b987 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_70a2a2ea7fecd858431700a3baeb8caf = $(`<div id="html_70a2a2ea7fecd858431700a3baeb8caf" style="width: 100.0%; height: 100.0%;">             <div style="width: 250px; font-family: Arial, sans-serif;">                 <h4 style="margin: 0 0 8px 0;">Jordan</h4>                 <p style="margin: 4px 0; font-size: 11px;">Coalition partner - Al-Tanf support</p>             </div>             </div>`)[0];
+                popup_877fb39573e885a99f195de17c44b987.setContent(html_70a2a2ea7fecd858431700a3baeb8caf);
+            
+        
+
+        geo_json_39a1af41a2f24d54a30f6e1f37e85621.bindPopup(popup_877fb39573e885a99f195de17c44b987)
+        ;
+
+        
+    
+    
+            geo_json_39a1af41a2f24d54a30f6e1f37e85621.addTo(map_47f80caad008085540a05128d19b61f9);
+        
+    
+        function geo_json_6c12b6961bf9497422a0e179926ed695_styler(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"color": "#666666", "fillColor": "#66ccff", "fillOpacity": 0.5, "weight": 1.5};
+            }
+        }
+        function geo_json_6c12b6961bf9497422a0e179926ed695_highlighter(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"fillOpacity": 0.7, "weight": 2.5};
+            }
+        }
+
+        function geo_json_6c12b6961bf9497422a0e179926ed695_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_6c12b6961bf9497422a0e179926ed695.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_6c12b6961bf9497422a0e179926ed695_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_6c12b6961bf9497422a0e179926ed695 = L.geoJson(null, {
+                onEachFeature: geo_json_6c12b6961bf9497422a0e179926ed695_onEachFeature,
+            
+                style: geo_json_6c12b6961bf9497422a0e179926ed695_styler,
+            ...{
+}
+        });
+
+        function geo_json_6c12b6961bf9497422a0e179926ed695_add (data) {
+            geo_json_6c12b6961bf9497422a0e179926ed695
+                .addData(data);
+        }
+            geo_json_6c12b6961bf9497422a0e179926ed695_add({"features": [{"bbox": [46.568713, 28.526063, 48.416094, 30.05907], "geometry": {"coordinates": [[[47.974519, 29.975819], [48.183189, 29.534477], [48.093943, 29.306299], [48.416094, 28.552004], [47.708851, 28.526063], [47.459822, 29.002519], [46.568713, 29.099025], [47.302622, 30.05907], [47.974519, 29.975819]]], "type": "Polygon"}, "properties": {"ABBREV": "Kwt.", "ABBREV_LEN": 4, "ADM0_A3": "KWT", "ADM0_A3_AR": "KWT", "ADM0_A3_BD": "KWT", "ADM0_A3_BR": "KWT", "ADM0_A3_CN": "KWT", "ADM0_A3_DE": "KWT", "ADM0_A3_EG": "KWT", "ADM0_A3_ES": "KWT", "ADM0_A3_FR": "KWT", "ADM0_A3_GB": "KWT", "ADM0_A3_GR": "KWT", "ADM0_A3_ID": "KWT", "ADM0_A3_IL": "KWT", "ADM0_A3_IN": "KWT", "ADM0_A3_IT": "KWT", "ADM0_A3_JP": "KWT", "ADM0_A3_KO": "KWT", "ADM0_A3_MA": "KWT", "ADM0_A3_NL": "KWT", "ADM0_A3_NP": "KWT", "ADM0_A3_PK": "KWT", "ADM0_A3_PL": "KWT", "ADM0_A3_PS": "KWT", "ADM0_A3_PT": "KWT", "ADM0_A3_RU": "KWT", "ADM0_A3_SA": "KWT", "ADM0_A3_SE": "KWT", "ADM0_A3_TR": "KWT", "ADM0_A3_TW": "KWT", "ADM0_A3_UA": "KWT", "ADM0_A3_UN": -99, "ADM0_A3_US": "KWT", "ADM0_A3_VN": "KWT", "ADM0_A3_WB": -99, "ADM0_DIF": 0, "ADM0_DIFF": null, "ADM0_ISO": "KWT", "ADM0_TLC": "KWT", "ADMIN": "Kuwait", "BRK_A3": "KWT", "BRK_DIFF": 0, "BRK_GROUP": null, "BRK_NAME": "Kuwait", "CONTINENT": "Asia", "ECONOMY": "6. Developing region", "FCLASS_AR": null, "FCLASS_BD": null, "FCLASS_BR": null, "FCLASS_CN": null, "FCLASS_DE": null, "FCLASS_EG": null, "FCLASS_ES": null, "FCLASS_FR": null, "FCLASS_GB": null, "FCLASS_GR": null, "FCLASS_ID": null, "FCLASS_IL": null, "FCLASS_IN": null, "FCLASS_ISO": "Admin-0 country", "FCLASS_IT": null, "FCLASS_JP": null, "FCLASS_KO": null, "FCLASS_MA": null, "FCLASS_NL": null, "FCLASS_NP": null, "FCLASS_PK": null, "FCLASS_PL": null, "FCLASS_PS": null, "FCLASS_PT": null, "FCLASS_RU": null, "FCLASS_SA": null, "FCLASS_SE": null, "FCLASS_TLC": "Admin-0 country", "FCLASS_TR": null, "FCLASS_TW": null, "FCLASS_UA": null, "FCLASS_US": null, "FCLASS_VN": null, "FIPS_10": "KU", "FORMAL_EN": "State of Kuwait", "FORMAL_FR": null, "GDP_MD": 134628, "GDP_YEAR": 2019, "GEOUNIT": "Kuwait", "GEOU_DIF": 0, "GU_A3": "KWT", "HOMEPART": 1, "INCOME_GRP": "2. High income: nonOECD", "ISO_A2": "KW", "ISO_A2_EH": "KW", "ISO_A3": "KWT", "ISO_A3_EH": "KWT", "ISO_N3": "414", "ISO_N3_EH": "414", "LABELRANK": 6, "LABEL_X": 47.313999, "LABEL_Y": 29.413628, "LEVEL": 2, "LONG_LEN": 6, "MAPCOLOR13": 2, "MAPCOLOR7": 2, "MAPCOLOR8": 2, "MAPCOLOR9": 2, "MAX_LABEL": 10, "MIN_LABEL": 5, "MIN_ZOOM": 0, "NAME": "Kuwait", "NAME_ALT": null, "NAME_AR": "\u0627\u0644\u0643\u0648\u064a\u062a", "NAME_BN": "\u0995\u09c1\u09af\u09bc\u09c7\u09a4", "NAME_CIAWF": "Kuwait", "NAME_DE": "Kuwait", "NAME_EL": "\u039a\u03bf\u03c5\u03b2\u03ad\u03b9\u03c4", "NAME_EN": "Kuwait", "NAME_ES": "Kuwait", "NAME_FA": "\u06a9\u0648\u06cc\u062a", "NAME_FR": "Kowe\u00eft", "NAME_HE": "\u05db\u05d5\u05d5\u05d9\u05ea", "NAME_HI": "\u0915\u0941\u0935\u0948\u0924", "NAME_HU": "Kuvait", "NAME_ID": "Kuwait", "NAME_IT": "Kuwait", "NAME_JA": "\u30af\u30a6\u30a7\u30fc\u30c8", "NAME_KO": "\ucfe0\uc6e8\uc774\ud2b8", "NAME_LEN": 6, "NAME_LONG": "Kuwait", "NAME_NL": "Koeweit", "NAME_PL": "Kuwejt", "NAME_PT": "Kuwait", "NAME_RU": "\u041a\u0443\u0432\u0435\u0439\u0442", "NAME_SORT": "Kuwait", "NAME_SV": "Kuwait", "NAME_TR": "Kuveyt", "NAME_UK": "\u041a\u0443\u0432\u0435\u0439\u0442", "NAME_UR": "\u06a9\u0648\u06cc\u062a", "NAME_VI": "Kuwait", "NAME_ZH": "\u79d1\u5a01\u7279", "NAME_ZHT": "\u79d1\u5a01\u7279", "NE_ID": 1159321009, "NOTE_ADM0": null, "NOTE_BRK": null, "POP_EST": 4207083, "POP_RANK": 12, "POP_YEAR": 2019, "POSTAL": "KW", "REGION_UN": "Asia", "REGION_WB": "Middle East \u0026 North Africa", "SOVEREIGNT": "Kuwait", "SOV_A3": "KWT", "SUBREGION": "Western Asia", "SUBUNIT": "Kuwait", "SU_A3": "KWT", "SU_DIF": 0, "TINY": -99, "TLC": "1", "TLC_DIFF": null, "TYPE": "Sovereign country", "UN_A3": "414", "WB_A2": "KW", "WB_A3": "KWT", "WIKIDATAID": "Q817", "WOE_ID": 23424870, "WOE_ID_EH": 23424870, "WOE_NOTE": "Exact WOE match as country", "featurecla": "Admin-0 country", "scalerank": 1}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_6c12b6961bf9497422a0e179926ed695.bindTooltip(
+                `<div>
+                     Kuwait
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        var popup_572eea7d3b09ea019e6a1078dc998959 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_e9a512240a883f3f2d15596ee738a39b = $(`<div id="html_e9a512240a883f3f2d15596ee738a39b" style="width: 100.0%; height: 100.0%;">             <div style="width: 250px; font-family: Arial, sans-serif;">                 <h4 style="margin: 0 0 8px 0;">Kuwait</h4>                 <p style="margin: 4px 0; font-size: 11px;">Belgium location - Camp Arifjan logistics hub</p>             </div>             </div>`)[0];
+                popup_572eea7d3b09ea019e6a1078dc998959.setContent(html_e9a512240a883f3f2d15596ee738a39b);
+            
+        
+
+        geo_json_6c12b6961bf9497422a0e179926ed695.bindPopup(popup_572eea7d3b09ea019e6a1078dc998959)
+        ;
+
+        
+    
+    
+            geo_json_6c12b6961bf9497422a0e179926ed695.addTo(map_47f80caad008085540a05128d19b61f9);
+        
+    
+        function geo_json_cc06ba9409df17bf04cf06ebfac36c54_styler(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"color": "#666666", "fillColor": "#ff9999", "fillOpacity": 0.5, "weight": 1.5};
+            }
+        }
+        function geo_json_cc06ba9409df17bf04cf06ebfac36c54_highlighter(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"fillOpacity": 0.7, "weight": 2.5};
+            }
+        }
+
+        function geo_json_cc06ba9409df17bf04cf06ebfac36c54_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_cc06ba9409df17bf04cf06ebfac36c54.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_cc06ba9409df17bf04cf06ebfac36c54_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_cc06ba9409df17bf04cf06ebfac36c54 = L.geoJson(null, {
+                onEachFeature: geo_json_cc06ba9409df17bf04cf06ebfac36c54_onEachFeature,
+            
+                style: geo_json_cc06ba9409df17bf04cf06ebfac36c54_styler,
+            ...{
+}
+        });
+
+        function geo_json_cc06ba9409df17bf04cf06ebfac36c54_add (data) {
+            geo_json_cc06ba9409df17bf04cf06ebfac36c54
+                .addData(data);
+        }
+            geo_json_cc06ba9409df17bf04cf06ebfac36c54_add({"features": [{"bbox": [38.792341, 29.099025, 48.567971, 37.385264], "geometry": {"coordinates": [[[39.195468, 32.161009], [38.792341, 33.378686], [41.006159, 34.419372], [41.383965, 35.628317], [41.289707, 36.358815], [41.837064, 36.605854], [42.349591, 37.229873], [42.779126, 37.385264], [43.942259, 37.256228], [44.293452, 37.001514], [44.772677, 37.170437], [45.420618, 35.977546], [46.07634, 35.677383], [46.151788, 35.093259], [45.64846, 34.748138], [45.416691, 33.967798], [46.109362, 33.017287], [47.334661, 32.469155], [47.849204, 31.709176], [47.685286, 30.984853], [48.004698, 30.985137], [48.014568, 30.452457], [48.567971, 29.926778], [47.974519, 29.975819], [47.302622, 30.05907], [46.568713, 29.099025], [44.709499, 29.178891], [41.889981, 31.190009], [40.399994, 31.889992], [39.195468, 32.161009]]], "type": "Polygon"}, "properties": {"ABBREV": "Iraq", "ABBREV_LEN": 4, "ADM0_A3": "IRQ", "ADM0_A3_AR": "IRQ", "ADM0_A3_BD": "IRQ", "ADM0_A3_BR": "IRQ", "ADM0_A3_CN": "IRQ", "ADM0_A3_DE": "IRQ", "ADM0_A3_EG": "IRQ", "ADM0_A3_ES": "IRQ", "ADM0_A3_FR": "IRQ", "ADM0_A3_GB": "IRQ", "ADM0_A3_GR": "IRQ", "ADM0_A3_ID": "IRQ", "ADM0_A3_IL": "IRQ", "ADM0_A3_IN": "IRQ", "ADM0_A3_IT": "IRQ", "ADM0_A3_JP": "IRQ", "ADM0_A3_KO": "IRQ", "ADM0_A3_MA": "IRQ", "ADM0_A3_NL": "IRQ", "ADM0_A3_NP": "IRQ", "ADM0_A3_PK": "IRQ", "ADM0_A3_PL": "IRQ", "ADM0_A3_PS": "IRQ", "ADM0_A3_PT": "IRQ", "ADM0_A3_RU": "IRQ", "ADM0_A3_SA": "IRQ", "ADM0_A3_SE": "IRQ", "ADM0_A3_TR": "IRQ", "ADM0_A3_TW": "IRQ", "ADM0_A3_UA": "IRQ", "ADM0_A3_UN": -99, "ADM0_A3_US": "IRQ", "ADM0_A3_VN": "IRQ", "ADM0_A3_WB": -99, "ADM0_DIF": 0, "ADM0_DIFF": null, "ADM0_ISO": "IRQ", "ADM0_TLC": "IRQ", "ADMIN": "Iraq", "BRK_A3": "IRQ", "BRK_DIFF": 0, "BRK_GROUP": null, "BRK_NAME": "Iraq", "CONTINENT": "Asia", "ECONOMY": "6. Developing region", "FCLASS_AR": null, "FCLASS_BD": null, "FCLASS_BR": null, "FCLASS_CN": null, "FCLASS_DE": null, "FCLASS_EG": null, "FCLASS_ES": null, "FCLASS_FR": null, "FCLASS_GB": null, "FCLASS_GR": null, "FCLASS_ID": null, "FCLASS_IL": null, "FCLASS_IN": null, "FCLASS_ISO": "Admin-0 country", "FCLASS_IT": null, "FCLASS_JP": null, "FCLASS_KO": null, "FCLASS_MA": null, "FCLASS_NL": null, "FCLASS_NP": null, "FCLASS_PK": null, "FCLASS_PL": null, "FCLASS_PS": null, "FCLASS_PT": null, "FCLASS_RU": null, "FCLASS_SA": null, "FCLASS_SE": null, "FCLASS_TLC": "Admin-0 country", "FCLASS_TR": null, "FCLASS_TW": null, "FCLASS_UA": null, "FCLASS_US": null, "FCLASS_VN": null, "FIPS_10": "IZ", "FORMAL_EN": "Republic of Iraq", "FORMAL_FR": null, "GDP_MD": 234094, "GDP_YEAR": 2019, "GEOUNIT": "Iraq", "GEOU_DIF": 0, "GU_A3": "IRQ", "HOMEPART": 1, "INCOME_GRP": "4. Lower middle income", "ISO_A2": "IQ", "ISO_A2_EH": "IQ", "ISO_A3": "IRQ", "ISO_A3_EH": "IRQ", "ISO_N3": "368", "ISO_N3_EH": "368", "LABELRANK": 3, "LABEL_X": 43.26181, "LABEL_Y": 33.09403, "LEVEL": 2, "LONG_LEN": 4, "MAPCOLOR13": 1, "MAPCOLOR7": 1, "MAPCOLOR8": 4, "MAPCOLOR9": 3, "MAX_LABEL": 7.5, "MIN_LABEL": 3, "MIN_ZOOM": 0, "NAME": "Iraq", "NAME_ALT": null, "NAME_AR": "\u0627\u0644\u0639\u0631\u0627\u0642", "NAME_BN": "\u0987\u09b0\u09be\u0995", "NAME_CIAWF": "Iraq", "NAME_DE": "Irak", "NAME_EL": "\u0399\u03c1\u03ac\u03ba", "NAME_EN": "Iraq", "NAME_ES": "Irak", "NAME_FA": "\u0639\u0631\u0627\u0642", "NAME_FR": "Irak", "NAME_HE": "\u05e2\u05d9\u05e8\u05d0\u05e7", "NAME_HI": "\u0907\u0930\u093e\u0915", "NAME_HU": "Irak", "NAME_ID": "Irak", "NAME_IT": "Iraq", "NAME_JA": "\u30a4\u30e9\u30af", "NAME_KO": "\uc774\ub77c\ud06c", "NAME_LEN": 4, "NAME_LONG": "Iraq", "NAME_NL": "Irak", "NAME_PL": "Irak", "NAME_PT": "Iraque", "NAME_RU": "\u0418\u0440\u0430\u043a", "NAME_SORT": "Iraq", "NAME_SV": "Irak", "NAME_TR": "Irak", "NAME_UK": "\u0406\u0440\u0430\u043a", "NAME_UR": "\u0639\u0631\u0627\u0642", "NAME_VI": "Iraq", "NAME_ZH": "\u4f0a\u62c9\u514b", "NAME_ZHT": "\u4f0a\u62c9\u514b", "NE_ID": 1159320887, "NOTE_ADM0": null, "NOTE_BRK": null, "POP_EST": 39309783, "POP_RANK": 15, "POP_YEAR": 2019, "POSTAL": "IRQ", "REGION_UN": "Asia", "REGION_WB": "Middle East \u0026 North Africa", "SOVEREIGNT": "Iraq", "SOV_A3": "IRQ", "SUBREGION": "Western Asia", "SUBUNIT": "Iraq", "SU_A3": "IRQ", "SU_DIF": 0, "TINY": -99, "TLC": "1", "TLC_DIFF": null, "TYPE": "Sovereign country", "UN_A3": "368", "WB_A2": "IQ", "WB_A3": "IRQ", "WIKIDATAID": "Q796", "WOE_ID": 23424855, "WOE_ID_EH": 23424855, "WOE_NOTE": "Exact WOE match as country", "featurecla": "Admin-0 country", "scalerank": 1}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_cc06ba9409df17bf04cf06ebfac36c54.bindTooltip(
+                `<div>
+                     Iraq
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        var popup_70b8c7878228f75821c5eb92818d1c42 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_8da701edc97f1f4f5aca8a0eb10e5321 = $(`<div id="html_8da701edc97f1f4f5aca8a0eb10e5321" style="width: 100.0%; height: 100.0%;">             <div style="width: 250px; font-family: Arial, sans-serif;">                 <h4 style="margin: 0 0 8px 0;">Iraq</h4>                 <p style="margin: 4px 0; font-size: 11px;">Primary theater - ISIS defeated 2017, training mission ongoing</p>             </div>             </div>`)[0];
+                popup_70b8c7878228f75821c5eb92818d1c42.setContent(html_8da701edc97f1f4f5aca8a0eb10e5321);
+            
+        
+
+        geo_json_cc06ba9409df17bf04cf06ebfac36c54.bindPopup(popup_70b8c7878228f75821c5eb92818d1c42)
+        ;
+
+        
+    
+    
+            geo_json_cc06ba9409df17bf04cf06ebfac36c54.addTo(map_47f80caad008085540a05128d19b61f9);
+        
+    
+        function geo_json_23f27464b36c9fb47be43d8bbde05289_styler(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"color": "#666666", "fillColor": "#ffeeee", "fillOpacity": 0.5, "weight": 1.5};
+            }
+        }
+        function geo_json_23f27464b36c9fb47be43d8bbde05289_highlighter(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"fillOpacity": 0.7, "weight": 2.5};
+            }
+        }
+
+        function geo_json_23f27464b36c9fb47be43d8bbde05289_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_23f27464b36c9fb47be43d8bbde05289.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_23f27464b36c9fb47be43d8bbde05289_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_23f27464b36c9fb47be43d8bbde05289 = L.geoJson(null, {
+                onEachFeature: geo_json_23f27464b36c9fb47be43d8bbde05289_onEachFeature,
+            
+                style: geo_json_23f27464b36c9fb47be43d8bbde05289_styler,
+            ...{
+}
+        });
+
+        function geo_json_23f27464b36c9fb47be43d8bbde05289_add (data) {
+            geo_json_23f27464b36c9fb47be43d8bbde05289
+                .addData(data);
+        }
+            geo_json_23f27464b36c9fb47be43d8bbde05289_add({"features": [{"bbox": [44.109225, 25.078237, 63.316632, 39.713003], "geometry": {"coordinates": [[[48.567971, 29.926778], [48.014568, 30.452457], [48.004698, 30.985137], [47.685286, 30.984853], [47.849204, 31.709176], [47.334661, 32.469155], [46.109362, 33.017287], [45.416691, 33.967798], [45.64846, 34.748138], [46.151788, 35.093259], [46.07634, 35.677383], [45.420618, 35.977546], [44.772677, 37.170437], [44.77267, 37.17045], [44.225756, 37.971584], [44.421403, 38.281281], [44.109225, 39.428136], [44.79399, 39.713003], [44.952688, 39.335765], [45.457722, 38.874139], [46.143623, 38.741201], [46.50572, 38.770605], [47.685079, 39.508364], [48.060095, 39.582235], [48.355529, 39.288765], [48.010744, 38.794015], [48.634375, 38.270378], [48.883249, 38.320245], [49.199612, 37.582874], [50.147771, 37.374567], [50.842354, 36.872814], [52.264025, 36.700422], [53.82579, 36.965031], [53.921598, 37.198918], [54.800304, 37.392421], [55.511578, 37.964117], [56.180375, 37.935127], [56.619366, 38.121394], [57.330434, 38.029229], [58.436154, 37.522309], [59.234762, 37.412988], [60.377638, 36.527383], [61.123071, 36.491597], [61.210817, 35.650072], [60.803193, 34.404102], [60.52843, 33.676446], [60.9637, 33.528832], [60.536078, 32.981269], [60.863655, 32.18292], [60.941945, 31.548075], [61.699314, 31.379506], [61.781222, 30.73585], [60.874248, 29.829239], [61.369309, 29.303276], [61.771868, 28.699334], [62.72783, 28.259645], [62.755426, 27.378923], [63.233898, 27.217047], [63.316632, 26.756532], [61.874187, 26.239975], [61.497363, 25.078237], [59.616134, 25.380157], [58.525761, 25.609962], [57.397251, 25.739902], [56.970766, 26.966106], [56.492139, 27.143305], [55.72371, 26.964633], [54.71509, 26.480658], [53.493097, 26.812369], [52.483598, 27.580849], [51.520763, 27.86569], [50.852948, 28.814521], [50.115009, 30.147773], [49.57685, 29.985715], [48.941333, 30.31709], [48.567971, 29.926778]]], "type": "Polygon"}, "properties": {"ABBREV": "Iran", "ABBREV_LEN": 4, "ADM0_A3": "IRN", "ADM0_A3_AR": "IRN", "ADM0_A3_BD": "IRN", "ADM0_A3_BR": "IRN", "ADM0_A3_CN": "IRN", "ADM0_A3_DE": "IRN", "ADM0_A3_EG": "IRN", "ADM0_A3_ES": "IRN", "ADM0_A3_FR": "IRN", "ADM0_A3_GB": "IRN", "ADM0_A3_GR": "IRN", "ADM0_A3_ID": "IRN", "ADM0_A3_IL": "IRN", "ADM0_A3_IN": "IRN", "ADM0_A3_IT": "IRN", "ADM0_A3_JP": "IRN", "ADM0_A3_KO": "IRN", "ADM0_A3_MA": "IRN", "ADM0_A3_NL": "IRN", "ADM0_A3_NP": "IRN", "ADM0_A3_PK": "IRN", "ADM0_A3_PL": "IRN", "ADM0_A3_PS": "IRN", "ADM0_A3_PT": "IRN", "ADM0_A3_RU": "IRN", "ADM0_A3_SA": "IRN", "ADM0_A3_SE": "IRN", "ADM0_A3_TR": "IRN", "ADM0_A3_TW": "IRN", "ADM0_A3_UA": "IRN", "ADM0_A3_UN": -99, "ADM0_A3_US": "IRN", "ADM0_A3_VN": "IRN", "ADM0_A3_WB": -99, "ADM0_DIF": 0, "ADM0_DIFF": null, "ADM0_ISO": "IRN", "ADM0_TLC": "IRN", "ADMIN": "Iran", "BRK_A3": "IRN", "BRK_DIFF": 0, "BRK_GROUP": null, "BRK_NAME": "Iran", "CONTINENT": "Asia", "ECONOMY": "5. Emerging region: G20", "FCLASS_AR": null, "FCLASS_BD": null, "FCLASS_BR": null, "FCLASS_CN": null, "FCLASS_DE": null, "FCLASS_EG": null, "FCLASS_ES": null, "FCLASS_FR": null, "FCLASS_GB": null, "FCLASS_GR": null, "FCLASS_ID": null, "FCLASS_IL": null, "FCLASS_IN": null, "FCLASS_ISO": "Admin-0 country", "FCLASS_IT": null, "FCLASS_JP": null, "FCLASS_KO": null, "FCLASS_MA": null, "FCLASS_NL": null, "FCLASS_NP": null, "FCLASS_PK": null, "FCLASS_PL": null, "FCLASS_PS": null, "FCLASS_PT": null, "FCLASS_RU": null, "FCLASS_SA": null, "FCLASS_SE": null, "FCLASS_TLC": "Admin-0 country", "FCLASS_TR": null, "FCLASS_TW": null, "FCLASS_UA": null, "FCLASS_US": null, "FCLASS_VN": null, "FIPS_10": "IR", "FORMAL_EN": "Islamic Republic of Iran", "FORMAL_FR": null, "GDP_MD": 453996, "GDP_YEAR": 2018, "GEOUNIT": "Iran", "GEOU_DIF": 0, "GU_A3": "IRN", "HOMEPART": 1, "INCOME_GRP": "3. Upper middle income", "ISO_A2": "IR", "ISO_A2_EH": "IR", "ISO_A3": "IRN", "ISO_A3_EH": "IRN", "ISO_N3": "364", "ISO_N3_EH": "364", "LABELRANK": 2, "LABEL_X": 54.931495, "LABEL_Y": 32.166225, "LEVEL": 2, "LONG_LEN": 4, "MAPCOLOR13": 13, "MAPCOLOR7": 4, "MAPCOLOR8": 3, "MAPCOLOR9": 4, "MAX_LABEL": 6.7, "MIN_LABEL": 2.5, "MIN_ZOOM": 0, "NAME": "Iran", "NAME_ALT": null, "NAME_AR": "\u0625\u064a\u0631\u0627\u0646", "NAME_BN": "\u0987\u09b0\u09be\u09a8", "NAME_CIAWF": "Iran", "NAME_DE": "Iran", "NAME_EL": "\u0399\u03c1\u03ac\u03bd", "NAME_EN": "Iran", "NAME_ES": "Ir\u00e1n", "NAME_FA": "\u0627\u06cc\u0631\u0627\u0646", "NAME_FR": "Iran", "NAME_HE": "\u05d0\u05d9\u05e8\u05d0\u05df", "NAME_HI": "\u0908\u0930\u093e\u0928", "NAME_HU": "Ir\u00e1n", "NAME_ID": "Iran", "NAME_IT": "Iran", "NAME_JA": "\u30a4\u30e9\u30f3", "NAME_KO": "\uc774\ub780", "NAME_LEN": 4, "NAME_LONG": "Iran", "NAME_NL": "Iran", "NAME_PL": "Iran", "NAME_PT": "Ir\u00e3o", "NAME_RU": "\u0418\u0440\u0430\u043d", "NAME_SORT": "Iran, Islamic Rep.", "NAME_SV": "Iran", "NAME_TR": "\u0130ran", "NAME_UK": "\u0406\u0440\u0430\u043d", "NAME_UR": "\u0627\u06cc\u0631\u0627\u0646", "NAME_VI": "Iran", "NAME_ZH": "\u4f0a\u6717", "NAME_ZHT": "\u4f0a\u6717", "NE_ID": 1159320881, "NOTE_ADM0": null, "NOTE_BRK": null, "POP_EST": 82913906, "POP_RANK": 16, "POP_YEAR": 2019, "POSTAL": "IRN", "REGION_UN": "Asia", "REGION_WB": "Middle East \u0026 North Africa", "SOVEREIGNT": "Iran", "SOV_A3": "IRN", "SUBREGION": "Southern Asia", "SUBUNIT": "Iran", "SU_A3": "IRN", "SU_DIF": 0, "TINY": -99, "TLC": "1", "TLC_DIFF": null, "TYPE": "Sovereign country", "UN_A3": "364", "WB_A2": "IR", "WB_A3": "IRN", "WIKIDATAID": "Q794", "WOE_ID": 23424851, "WOE_ID_EH": 23424851, "WOE_NOTE": "Exact WOE match as country", "featurecla": "Admin-0 country", "scalerank": 1}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_23f27464b36c9fb47be43d8bbde05289.bindTooltip(
+                `<div>
+                     Iran
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        var popup_1a32eec6c30ed2cafa1fd1267cd69d73 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_138c7197a4305364f0fa2b7b19cd5506 = $(`<div id="html_138c7197a4305364f0fa2b7b19cd5506" style="width: 100.0%; height: 100.0%;">             <div style="width: 250px; font-family: Arial, sans-serif;">                 <h4 style="margin: 0 0 8px 0;">Iran</h4>                 <p style="margin: 4px 0; font-size: 11px;">Regional actor - Influence in Iraq/Syria</p>             </div>             </div>`)[0];
+                popup_1a32eec6c30ed2cafa1fd1267cd69d73.setContent(html_138c7197a4305364f0fa2b7b19cd5506);
+            
+        
+
+        geo_json_23f27464b36c9fb47be43d8bbde05289.bindPopup(popup_1a32eec6c30ed2cafa1fd1267cd69d73)
+        ;
+
+        
+    
+    
+            geo_json_23f27464b36c9fb47be43d8bbde05289.addTo(map_47f80caad008085540a05128d19b61f9);
+        
+    
+        function geo_json_95b2f261fc80f5c214e292e851655979_styler(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"color": "#666666", "fillColor": "#ffcccc", "fillOpacity": 0.5, "weight": 1.5};
+            }
+        }
+        function geo_json_95b2f261fc80f5c214e292e851655979_highlighter(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"fillOpacity": 0.7, "weight": 2.5};
+            }
+        }
+
+        function geo_json_95b2f261fc80f5c214e292e851655979_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_95b2f261fc80f5c214e292e851655979.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_95b2f261fc80f5c214e292e851655979_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_95b2f261fc80f5c214e292e851655979 = L.geoJson(null, {
+                onEachFeature: geo_json_95b2f261fc80f5c214e292e851655979_onEachFeature,
+            
+                style: geo_json_95b2f261fc80f5c214e292e851655979_styler,
+            ...{
+}
+        });
+
+        function geo_json_95b2f261fc80f5c214e292e851655979_add (data) {
+            geo_json_95b2f261fc80f5c214e292e851655979
+                .addData(data);
+        }
+            geo_json_95b2f261fc80f5c214e292e851655979_add({"features": [{"bbox": [35.700798, 32.312938, 42.349591, 37.229873], "geometry": {"coordinates": [[[35.719918, 32.709192], [35.700798, 32.716014], [35.836397, 32.868123], [35.821101, 33.277426], [36.06646, 33.824912], [36.61175, 34.201789], [36.448194, 34.593935], [35.998403, 34.644914], [35.905023, 35.410009], [36.149763, 35.821535], [36.41755, 36.040617], [36.685389, 36.259699], [36.739494, 36.81752], [37.066761, 36.623036], [38.167727, 36.90121], [38.699891, 36.712927], [39.52258, 36.716054], [40.673259, 37.091276], [41.212089, 37.074352], [42.349591, 37.229873], [41.837064, 36.605854], [41.289707, 36.358815], [41.383965, 35.628317], [41.006159, 34.419372], [38.792341, 33.378686], [36.834062, 32.312938], [35.719918, 32.709192]]], "type": "Polygon"}, "properties": {"ABBREV": "Syria", "ABBREV_LEN": 5, "ADM0_A3": "SYR", "ADM0_A3_AR": "SYR", "ADM0_A3_BD": "SYR", "ADM0_A3_BR": "SYR", "ADM0_A3_CN": "SYR", "ADM0_A3_DE": "SYR", "ADM0_A3_EG": "SYR", "ADM0_A3_ES": "SYR", "ADM0_A3_FR": "SYR", "ADM0_A3_GB": "SYR", "ADM0_A3_GR": "SYR", "ADM0_A3_ID": "SYR", "ADM0_A3_IL": "SYR", "ADM0_A3_IN": "SYR", "ADM0_A3_IT": "SYR", "ADM0_A3_JP": "SYR", "ADM0_A3_KO": "SYR", "ADM0_A3_MA": "SYR", "ADM0_A3_NL": "SYR", "ADM0_A3_NP": "SYR", "ADM0_A3_PK": "SYR", "ADM0_A3_PL": "SYR", "ADM0_A3_PS": "SYR", "ADM0_A3_PT": "SYR", "ADM0_A3_RU": "SYR", "ADM0_A3_SA": "SYR", "ADM0_A3_SE": "SYR", "ADM0_A3_TR": "SYR", "ADM0_A3_TW": "SYR", "ADM0_A3_UA": "SYR", "ADM0_A3_UN": -99, "ADM0_A3_US": "SYR", "ADM0_A3_VN": "SYR", "ADM0_A3_WB": -99, "ADM0_DIF": 0, "ADM0_DIFF": null, "ADM0_ISO": "SYR", "ADM0_TLC": "SYR", "ADMIN": "Syria", "BRK_A3": "SYR", "BRK_DIFF": 0, "BRK_GROUP": null, "BRK_NAME": "Syria", "CONTINENT": "Asia", "ECONOMY": "6. Developing region", "FCLASS_AR": null, "FCLASS_BD": null, "FCLASS_BR": null, "FCLASS_CN": null, "FCLASS_DE": null, "FCLASS_EG": null, "FCLASS_ES": null, "FCLASS_FR": null, "FCLASS_GB": null, "FCLASS_GR": null, "FCLASS_ID": null, "FCLASS_IL": null, "FCLASS_IN": null, "FCLASS_ISO": "Admin-0 country", "FCLASS_IT": null, "FCLASS_JP": null, "FCLASS_KO": null, "FCLASS_MA": null, "FCLASS_NL": null, "FCLASS_NP": null, "FCLASS_PK": null, "FCLASS_PL": null, "FCLASS_PS": null, "FCLASS_PT": null, "FCLASS_RU": null, "FCLASS_SA": null, "FCLASS_SE": null, "FCLASS_TLC": "Admin-0 country", "FCLASS_TR": null, "FCLASS_TW": null, "FCLASS_UA": null, "FCLASS_US": null, "FCLASS_VN": null, "FIPS_10": "SY", "FORMAL_EN": "Syrian Arab Republic", "FORMAL_FR": null, "GDP_MD": 98830, "GDP_YEAR": 2015, "GEOUNIT": "Syria", "GEOU_DIF": 0, "GU_A3": "SYR", "HOMEPART": 1, "INCOME_GRP": "4. Lower middle income", "ISO_A2": "SY", "ISO_A2_EH": "SY", "ISO_A3": "SYR", "ISO_A3_EH": "SYR", "ISO_N3": "760", "ISO_N3_EH": "760", "LABELRANK": 3, "LABEL_X": 38.277783, "LABEL_Y": 35.006636, "LEVEL": 2, "LONG_LEN": 5, "MAPCOLOR13": 6, "MAPCOLOR7": 2, "MAPCOLOR8": 6, "MAPCOLOR9": 2, "MAX_LABEL": 8, "MIN_LABEL": 3, "MIN_ZOOM": 0, "NAME": "Syria", "NAME_ALT": null, "NAME_AR": "\u0633\u0648\u0631\u064a\u0627", "NAME_BN": "\u09b8\u09bf\u09b0\u09bf\u09af\u09bc\u09be", "NAME_CIAWF": "Syria", "NAME_DE": "Syrien", "NAME_EL": "\u03a3\u03c5\u03c1\u03af\u03b1", "NAME_EN": "Syria", "NAME_ES": "Siria", "NAME_FA": "\u0633\u0648\u0631\u06cc\u0647", "NAME_FR": "Syrie", "NAME_HE": "\u05e1\u05d5\u05e8\u05d9\u05d4", "NAME_HI": "\u0938\u0940\u0930\u093f\u092f\u093e", "NAME_HU": "Sz\u00edria", "NAME_ID": "Suriah", "NAME_IT": "Siria", "NAME_JA": "\u30b7\u30ea\u30a2", "NAME_KO": "\uc2dc\ub9ac\uc544", "NAME_LEN": 5, "NAME_LONG": "Syria", "NAME_NL": "Syri\u00eb", "NAME_PL": "Syria", "NAME_PT": "S\u00edria", "NAME_RU": "\u0421\u0438\u0440\u0438\u044f", "NAME_SORT": "Syrian Arab Republic", "NAME_SV": "Syrien", "NAME_TR": "Suriye", "NAME_UK": "\u0421\u0438\u0440\u0456\u044f", "NAME_UR": "\u0633\u0648\u0631\u06cc\u06c1", "NAME_VI": "Syria", "NAME_ZH": "\u53d9\u5229\u4e9a", "NAME_ZHT": "\u6558\u5229\u4e9e", "NE_ID": 1159321295, "NOTE_ADM0": null, "NOTE_BRK": null, "POP_EST": 17070135, "POP_RANK": 14, "POP_YEAR": 2019, "POSTAL": "SYR", "REGION_UN": "Asia", "REGION_WB": "Middle East \u0026 North Africa", "SOVEREIGNT": "Syria", "SOV_A3": "SYR", "SUBREGION": "Western Asia", "SUBUNIT": "Syria", "SU_A3": "SYR", "SU_DIF": 0, "TINY": -99, "TLC": "1", "TLC_DIFF": null, "TYPE": "Sovereign country", "UN_A3": "760", "WB_A2": "SY", "WB_A3": "SYR", "WIKIDATAID": "Q858", "WOE_ID": 23424956, "WOE_ID_EH": 23424956, "WOE_NOTE": "Exact WOE match as country", "featurecla": "Admin-0 country", "scalerank": 1}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_95b2f261fc80f5c214e292e851655979.bindTooltip(
+                `<div>
+                     Syria
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        var popup_72ee6f1d84041427f7512edf1b0181f7 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_a913de7bf7568cb5e0068b3ec1f1038e = $(`<div id="html_a913de7bf7568cb5e0068b3ec1f1038e" style="width: 100.0%; height: 100.0%;">             <div style="width: 250px; font-family: Arial, sans-serif;">                 <h4 style="margin: 0 0 8px 0;">Syria</h4>                 <p style="margin: 4px 0; font-size: 11px;">Active operations - Northeast governorates</p>             </div>             </div>`)[0];
+                popup_72ee6f1d84041427f7512edf1b0181f7.setContent(html_a913de7bf7568cb5e0068b3ec1f1038e);
+            
+        
+
+        geo_json_95b2f261fc80f5c214e292e851655979.bindPopup(popup_72ee6f1d84041427f7512edf1b0181f7)
+        ;
+
+        
+    
+    
+            geo_json_95b2f261fc80f5c214e292e851655979.addTo(map_47f80caad008085540a05128d19b61f9);
+        
+    
+        function geo_json_dc9f6439b2848c6e081a71fd3ab5bed8_styler(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"color": "#666666", "fillColor": "#e6e6e6", "fillOpacity": 0.5, "weight": 1.5};
+            }
+        }
+        function geo_json_dc9f6439b2848c6e081a71fd3ab5bed8_highlighter(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"fillOpacity": 0.7, "weight": 2.5};
+            }
+        }
+
+        function geo_json_dc9f6439b2848c6e081a71fd3ab5bed8_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_dc9f6439b2848c6e081a71fd3ab5bed8.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_dc9f6439b2848c6e081a71fd3ab5bed8_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_dc9f6439b2848c6e081a71fd3ab5bed8 = L.geoJson(null, {
+                onEachFeature: geo_json_dc9f6439b2848c6e081a71fd3ab5bed8_onEachFeature,
+            
+                style: geo_json_dc9f6439b2848c6e081a71fd3ab5bed8_styler,
+            ...{
+}
+        });
+
+        function geo_json_dc9f6439b2848c6e081a71fd3ab5bed8_add (data) {
+            geo_json_dc9f6439b2848c6e081a71fd3ab5bed8
+                .addData(data);
+        }
+            geo_json_dc9f6439b2848c6e081a71fd3ab5bed8_add({"features": [{"bbox": [26.043351, 35.821535, 44.79399, 42.141485], "geometry": {"coordinates": [[[[44.772677, 37.170437], [44.293452, 37.001514], [43.942259, 37.256228], [42.779126, 37.385264], [42.349591, 37.229873], [41.212089, 37.074352], [40.673259, 37.091276], [39.52258, 36.716054], [38.699891, 36.712927], [38.167727, 36.90121], [37.066761, 36.623036], [36.739494, 36.81752], [36.685389, 36.259699], [36.41755, 36.040617], [36.149763, 35.821535], [35.782085, 36.274995], [36.160822, 36.650606], [35.550936, 36.565443], [34.714553, 36.795532], [34.026895, 36.21996], [32.509158, 36.107564], [31.699595, 36.644275], [30.621625, 36.677865], [30.391096, 36.262981], [29.699976, 36.144357], [28.732903, 36.676831], [27.641187, 36.658822], [27.048768, 37.653361], [26.318218, 38.208133], [26.8047, 38.98576], [26.170785, 39.463612], [27.28002, 40.420014], [28.819978, 40.460011], [29.240004, 41.219991], [31.145934, 41.087622], [32.347979, 41.736264], [33.513283, 42.01896], [35.167704, 42.040225], [36.913127, 41.335358], [38.347665, 40.948586], [39.512607, 41.102763], [40.373433, 41.013673], [41.554084, 41.535656], [42.619549, 41.583173], [43.582746, 41.092143], [43.752658, 40.740201], [43.656436, 40.253564], [44.400009, 40.005], [44.79399, 39.713003], [44.109225, 39.428136], [44.421403, 38.281281], [44.225756, 37.971584], [44.77267, 37.17045], [44.772677, 37.170437]]], [[[26.117042, 41.826905], [27.135739, 42.141485], [27.99672, 42.007359], [28.115525, 41.622886], [28.988443, 41.299934], [28.806438, 41.054962], [27.619017, 40.999823], [27.192377, 40.690566], [26.358009, 40.151994], [26.043351, 40.617754], [26.056942, 40.824123], [26.294602, 40.936261], [26.604196, 41.562115], [26.117042, 41.826905]]]], "type": "MultiPolygon"}, "properties": {"ABBREV": "Tur.", "ABBREV_LEN": 4, "ADM0_A3": "TUR", "ADM0_A3_AR": "TUR", "ADM0_A3_BD": "TUR", "ADM0_A3_BR": "TUR", "ADM0_A3_CN": "TUR", "ADM0_A3_DE": "TUR", "ADM0_A3_EG": "TUR", "ADM0_A3_ES": "TUR", "ADM0_A3_FR": "TUR", "ADM0_A3_GB": "TUR", "ADM0_A3_GR": "TUR", "ADM0_A3_ID": "TUR", "ADM0_A3_IL": "TUR", "ADM0_A3_IN": "TUR", "ADM0_A3_IT": "TUR", "ADM0_A3_JP": "TUR", "ADM0_A3_KO": "TUR", "ADM0_A3_MA": "TUR", "ADM0_A3_NL": "TUR", "ADM0_A3_NP": "TUR", "ADM0_A3_PK": "TUR", "ADM0_A3_PL": "TUR", "ADM0_A3_PS": "TUR", "ADM0_A3_PT": "TUR", "ADM0_A3_RU": "TUR", "ADM0_A3_SA": "TUR", "ADM0_A3_SE": "TUR", "ADM0_A3_TR": "TUR", "ADM0_A3_TW": "TUR", "ADM0_A3_UA": "TUR", "ADM0_A3_UN": -99, "ADM0_A3_US": "TUR", "ADM0_A3_VN": "TUR", "ADM0_A3_WB": -99, "ADM0_DIF": 0, "ADM0_DIFF": null, "ADM0_ISO": "TUR", "ADM0_TLC": "TUR", "ADMIN": "Turkey", "BRK_A3": "TUR", "BRK_DIFF": 0, "BRK_GROUP": null, "BRK_NAME": "Turkey", "CONTINENT": "Asia", "ECONOMY": "4. Emerging region: MIKT", "FCLASS_AR": null, "FCLASS_BD": null, "FCLASS_BR": null, "FCLASS_CN": null, "FCLASS_DE": null, "FCLASS_EG": null, "FCLASS_ES": null, "FCLASS_FR": null, "FCLASS_GB": null, "FCLASS_GR": null, "FCLASS_ID": null, "FCLASS_IL": null, "FCLASS_IN": null, "FCLASS_ISO": "Admin-0 country", "FCLASS_IT": null, "FCLASS_JP": null, "FCLASS_KO": null, "FCLASS_MA": null, "FCLASS_NL": null, "FCLASS_NP": null, "FCLASS_PK": null, "FCLASS_PL": null, "FCLASS_PS": null, "FCLASS_PT": null, "FCLASS_RU": null, "FCLASS_SA": null, "FCLASS_SE": null, "FCLASS_TLC": "Admin-0 country", "FCLASS_TR": null, "FCLASS_TW": null, "FCLASS_UA": null, "FCLASS_US": null, "FCLASS_VN": null, "FIPS_10": "TU", "FORMAL_EN": "Republic of Turkey", "FORMAL_FR": null, "GDP_MD": 761425, "GDP_YEAR": 2019, "GEOUNIT": "Turkey", "GEOU_DIF": 0, "GU_A3": "TUR", "HOMEPART": 1, "INCOME_GRP": "3. Upper middle income", "ISO_A2": "TR", "ISO_A2_EH": "TR", "ISO_A3": "TUR", "ISO_A3_EH": "TUR", "ISO_N3": "792", "ISO_N3_EH": "792", "LABELRANK": 2, "LABEL_X": 34.508268, "LABEL_Y": 39.345388, "LEVEL": 2, "LONG_LEN": 6, "MAPCOLOR13": 4, "MAPCOLOR7": 6, "MAPCOLOR8": 3, "MAPCOLOR9": 8, "MAX_LABEL": 7, "MIN_LABEL": 2, "MIN_ZOOM": 0, "NAME": "Turkey", "NAME_ALT": null, "NAME_AR": "\u062a\u0631\u0643\u064a\u0627", "NAME_BN": "\u09a4\u09c1\u09b0\u09b8\u09cd\u0995", "NAME_CIAWF": "Turkey", "NAME_DE": "T\u00fcrkei", "NAME_EL": "\u03a4\u03bf\u03c5\u03c1\u03ba\u03af\u03b1", "NAME_EN": "Turkey", "NAME_ES": "Turqu\u00eda", "NAME_FA": "\u062a\u0631\u06a9\u06cc\u0647", "NAME_FR": "Turquie", "NAME_HE": "\u05d8\u05d5\u05e8\u05e7\u05d9\u05d4", "NAME_HI": "\u0924\u0941\u0930\u094d\u0915\u0940", "NAME_HU": "T\u00f6r\u00f6korsz\u00e1g", "NAME_ID": "Turki", "NAME_IT": "Turchia", "NAME_JA": "\u30c8\u30eb\u30b3", "NAME_KO": "\ud130\ud0a4", "NAME_LEN": 6, "NAME_LONG": "Turkey", "NAME_NL": "Turkije", "NAME_PL": "Turcja", "NAME_PT": "Turquia", "NAME_RU": "\u0422\u0443\u0440\u0446\u0438\u044f", "NAME_SORT": "Turkey", "NAME_SV": "Turkiet", "NAME_TR": "T\u00fcrkiye", "NAME_UK": "\u0422\u0443\u0440\u0435\u0447\u0447\u0438\u043d\u0430", "NAME_UR": "\u062a\u0631\u06a9\u06cc", "NAME_VI": "Th\u1ed5 Nh\u0129 K\u1ef3", "NAME_ZH": "\u571f\u8033\u5176", "NAME_ZHT": "\u571f\u8033\u5176", "NE_ID": 1159321331, "NOTE_ADM0": null, "NOTE_BRK": null, "POP_EST": 83429615, "POP_RANK": 16, "POP_YEAR": 2019, "POSTAL": "TR", "REGION_UN": "Asia", "REGION_WB": "Europe \u0026 Central Asia", "SOVEREIGNT": "Turkey", "SOV_A3": "TUR", "SUBREGION": "Western Asia", "SUBUNIT": "Turkey", "SU_A3": "TUR", "SU_DIF": 0, "TINY": -99, "TLC": "1", "TLC_DIFF": null, "TYPE": "Sovereign country", "UN_A3": "792", "WB_A2": "TR", "WB_A3": "TUR", "WIKIDATAID": "Q43", "WOE_ID": 23424969, "WOE_ID_EH": 23424969, "WOE_NOTE": "Exact WOE match as country", "featurecla": "Admin-0 country", "scalerank": 1}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_dc9f6439b2848c6e081a71fd3ab5bed8.bindTooltip(
+                `<div>
+                     Turkey
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        var popup_e4b92ce4383bb78c4ccca019b29bdbcc = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_4f60a627558affe1cd5e1c7f4b7d1ab0 = $(`<div id="html_4f60a627558affe1cd5e1c7f4b7d1ab0" style="width: 100.0%; height: 100.0%;">             <div style="width: 250px; font-family: Arial, sans-serif;">                 <h4 style="margin: 0 0 8px 0;">Turkey</h4>                 <p style="margin: 4px 0; font-size: 11px;">Coalition partner - Northern border</p>             </div>             </div>`)[0];
+                popup_e4b92ce4383bb78c4ccca019b29bdbcc.setContent(html_4f60a627558affe1cd5e1c7f4b7d1ab0);
+            
+        
+
+        geo_json_dc9f6439b2848c6e081a71fd3ab5bed8.bindPopup(popup_e4b92ce4383bb78c4ccca019b29bdbcc)
+        ;
+
+        
+    
+    
+            geo_json_dc9f6439b2848c6e081a71fd3ab5bed8.addTo(map_47f80caad008085540a05128d19b61f9);
+        
+    
+        function geo_json_b4380e25e9f31e23393171f703ec6887_styler(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"color": "#666666", "fillColor": "#e6e6e6", "fillOpacity": 0.5, "weight": 1.5};
+            }
+        }
+        function geo_json_b4380e25e9f31e23393171f703ec6887_highlighter(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"fillOpacity": 0.7, "weight": 2.5};
+            }
+        }
+
+        function geo_json_b4380e25e9f31e23393171f703ec6887_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_b4380e25e9f31e23393171f703ec6887.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_b4380e25e9f31e23393171f703ec6887_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_b4380e25e9f31e23393171f703ec6887 = L.geoJson(null, {
+                onEachFeature: geo_json_b4380e25e9f31e23393171f703ec6887_onEachFeature,
+            
+                style: geo_json_b4380e25e9f31e23393171f703ec6887_styler,
+            ...{
+}
+        });
+
+        function geo_json_b4380e25e9f31e23393171f703ec6887_add (data) {
+            geo_json_b4380e25e9f31e23393171f703ec6887
+                .addData(data);
+        }
+            geo_json_b4380e25e9f31e23393171f703ec6887_add({"features": [{"bbox": [34.632336, 16.347891, 55.666659, 32.161009], "geometry": {"coordinates": [[[34.956037, 29.356555], [36.068941, 29.197495], [36.501214, 29.505254], [36.740528, 29.865283], [37.503582, 30.003776], [37.66812, 30.338665], [37.998849, 30.5085], [37.002166, 31.508413], [39.004886, 32.010217], [39.195468, 32.161009], [40.399994, 31.889992], [41.889981, 31.190009], [44.709499, 29.178891], [46.568713, 29.099025], [47.459822, 29.002519], [47.708851, 28.526063], [48.416094, 28.552004], [48.807595, 27.689628], [49.299554, 27.461218], [49.470914, 27.109999], [50.152422, 26.689663], [50.212935, 26.277027], [50.113303, 25.943972], [50.239859, 25.60805], [50.527387, 25.327808], [50.660557, 24.999896], [50.810108, 24.754743], [51.112415, 24.556331], [51.389608, 24.627386], [51.579519, 24.245497], [51.617708, 24.014219], [52.000733, 23.001154], [55.006803, 22.496948], [55.208341, 22.70833], [55.666659, 22.000001], [54.999982, 19.999994], [52.00001, 19.000003], [49.116672, 18.616668], [48.183344, 18.166669], [47.466695, 17.116682], [47.000005, 16.949999], [46.749994, 17.283338], [46.366659, 17.233315], [45.399999, 17.333335], [45.216651, 17.433329], [44.062613, 17.410359], [43.791519, 17.319977], [43.380794, 17.579987], [43.115798, 17.08844], [43.218375, 16.66689], [42.779332, 16.347891], [42.649573, 16.774635], [42.347989, 17.075806], [42.270888, 17.474722], [41.754382, 17.833046], [41.221391, 18.6716], [40.939341, 19.486485], [40.247652, 20.174635], [39.801685, 20.338862], [39.139399, 21.291905], [39.023696, 21.986875], [39.066329, 22.579656], [38.492772, 23.688451], [38.02386, 24.078686], [37.483635, 24.285495], [37.154818, 24.858483], [37.209491, 25.084542], [36.931627, 25.602959], [36.639604, 25.826228], [36.249137, 26.570136], [35.640182, 27.37652], [35.130187, 28.063352], [34.632336, 28.058546], [34.787779, 28.607427], [34.83222, 28.957483], [34.956037, 29.356555]]], "type": "Polygon"}, "properties": {"ABBREV": "Saud.", "ABBREV_LEN": 5, "ADM0_A3": "SAU", "ADM0_A3_AR": "SAU", "ADM0_A3_BD": "SAU", "ADM0_A3_BR": "SAU", "ADM0_A3_CN": "SAU", "ADM0_A3_DE": "SAU", "ADM0_A3_EG": "SAU", "ADM0_A3_ES": "SAU", "ADM0_A3_FR": "SAU", "ADM0_A3_GB": "SAU", "ADM0_A3_GR": "SAU", "ADM0_A3_ID": "SAU", "ADM0_A3_IL": "SAU", "ADM0_A3_IN": "SAU", "ADM0_A3_IT": "SAU", "ADM0_A3_JP": "SAU", "ADM0_A3_KO": "SAU", "ADM0_A3_MA": "SAU", "ADM0_A3_NL": "SAU", "ADM0_A3_NP": "SAU", "ADM0_A3_PK": "SAU", "ADM0_A3_PL": "SAU", "ADM0_A3_PS": "SAU", "ADM0_A3_PT": "SAU", "ADM0_A3_RU": "SAU", "ADM0_A3_SA": "SAU", "ADM0_A3_SE": "SAU", "ADM0_A3_TR": "SAU", "ADM0_A3_TW": "SAU", "ADM0_A3_UA": "SAU", "ADM0_A3_UN": -99, "ADM0_A3_US": "SAU", "ADM0_A3_VN": "SAU", "ADM0_A3_WB": -99, "ADM0_DIF": 0, "ADM0_DIFF": null, "ADM0_ISO": "SAU", "ADM0_TLC": "SAU", "ADMIN": "Saudi Arabia", "BRK_A3": "SAU", "BRK_DIFF": 0, "BRK_GROUP": null, "BRK_NAME": "Saudi Arabia", "CONTINENT": "Asia", "ECONOMY": "2. Developed region: nonG7", "FCLASS_AR": null, "FCLASS_BD": null, "FCLASS_BR": null, "FCLASS_CN": null, "FCLASS_DE": null, "FCLASS_EG": null, "FCLASS_ES": null, "FCLASS_FR": null, "FCLASS_GB": null, "FCLASS_GR": null, "FCLASS_ID": null, "FCLASS_IL": null, "FCLASS_IN": null, "FCLASS_ISO": "Admin-0 country", "FCLASS_IT": null, "FCLASS_JP": null, "FCLASS_KO": null, "FCLASS_MA": null, "FCLASS_NL": null, "FCLASS_NP": null, "FCLASS_PK": null, "FCLASS_PL": null, "FCLASS_PS": null, "FCLASS_PT": null, "FCLASS_RU": null, "FCLASS_SA": null, "FCLASS_SE": null, "FCLASS_TLC": "Admin-0 country", "FCLASS_TR": null, "FCLASS_TW": null, "FCLASS_UA": null, "FCLASS_US": null, "FCLASS_VN": null, "FIPS_10": "SA", "FORMAL_EN": "Kingdom of Saudi Arabia", "FORMAL_FR": null, "GDP_MD": 792966, "GDP_YEAR": 2019, "GEOUNIT": "Saudi Arabia", "GEOU_DIF": 0, "GU_A3": "SAU", "HOMEPART": 1, "INCOME_GRP": "2. High income: nonOECD", "ISO_A2": "SA", "ISO_A2_EH": "SA", "ISO_A3": "SAU", "ISO_A3_EH": "SAU", "ISO_N3": "682", "ISO_N3_EH": "682", "LABELRANK": 2, "LABEL_X": 44.6996, "LABEL_Y": 23.806908, "LEVEL": 2, "LONG_LEN": 12, "MAPCOLOR13": 7, "MAPCOLOR7": 6, "MAPCOLOR8": 1, "MAPCOLOR9": 6, "MAX_LABEL": 7, "MIN_LABEL": 1.7, "MIN_ZOOM": 0, "NAME": "Saudi Arabia", "NAME_ALT": null, "NAME_AR": "\u0627\u0644\u0633\u0639\u0648\u062f\u064a\u0629", "NAME_BN": "\u09b8\u09cc\u09a6\u09bf \u0986\u09b0\u09ac", "NAME_CIAWF": "Saudi Arabia", "NAME_DE": "Saudi-Arabien", "NAME_EL": "\u03a3\u03b1\u03bf\u03c5\u03b4\u03b9\u03ba\u03ae \u0391\u03c1\u03b1\u03b2\u03af\u03b1", "NAME_EN": "Saudi Arabia", "NAME_ES": "Arabia Saudita", "NAME_FA": "\u0639\u0631\u0628\u0633\u062a\u0627\u0646 \u0633\u0639\u0648\u062f\u06cc", "NAME_FR": "Arabie saoudite", "NAME_HE": "\u05e2\u05e8\u05d1 \u05d4\u05e1\u05e2\u05d5\u05d3\u05d9\u05ea", "NAME_HI": "\u0938\u0909\u0926\u0940 \u0905\u0930\u092c", "NAME_HU": "Sza\u00fad-Ar\u00e1bia", "NAME_ID": "Arab Saudi", "NAME_IT": "Arabia Saudita", "NAME_JA": "\u30b5\u30a6\u30b8\u30a2\u30e9\u30d3\u30a2", "NAME_KO": "\uc0ac\uc6b0\ub514\uc544\ub77c\ube44\uc544", "NAME_LEN": 12, "NAME_LONG": "Saudi Arabia", "NAME_NL": "Saoedi-Arabi\u00eb", "NAME_PL": "Arabia Saudyjska", "NAME_PT": "Ar\u00e1bia Saudita", "NAME_RU": "\u0421\u0430\u0443\u0434\u043e\u0432\u0441\u043a\u0430\u044f \u0410\u0440\u0430\u0432\u0438\u044f", "NAME_SORT": "Saudi Arabia", "NAME_SV": "Saudiarabien", "NAME_TR": "Suudi Arabistan", "NAME_UK": "\u0421\u0430\u0443\u0434\u0456\u0432\u0441\u044c\u043a\u0430 \u0410\u0440\u0430\u0432\u0456\u044f", "NAME_UR": "\u0633\u0639\u0648\u062f\u06cc \u0639\u0631\u0628", "NAME_VI": "\u1ea2 R\u1eadp Saudi", "NAME_ZH": "\u6c99\u7279\u963f\u62c9\u4f2f", "NAME_ZHT": "\u6c99\u70cf\u5730\u963f\u62c9\u4f2f", "NE_ID": 1159321225, "NOTE_ADM0": null, "NOTE_BRK": null, "POP_EST": 34268528, "POP_RANK": 15, "POP_YEAR": 2019, "POSTAL": "SA", "REGION_UN": "Asia", "REGION_WB": "Middle East \u0026 North Africa", "SOVEREIGNT": "Saudi Arabia", "SOV_A3": "SAU", "SUBREGION": "Western Asia", "SUBUNIT": "Saudi Arabia", "SU_A3": "SAU", "SU_DIF": 0, "TINY": -99, "TLC": "1", "TLC_DIFF": null, "TYPE": "Sovereign country", "UN_A3": "682", "WB_A2": "SA", "WB_A3": "SAU", "WIKIDATAID": "Q851", "WOE_ID": 23424938, "WOE_ID_EH": 23424938, "WOE_NOTE": "Exact WOE match as country", "featurecla": "Admin-0 country", "scalerank": 1}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_b4380e25e9f31e23393171f703ec6887.bindTooltip(
+                `<div>
+                     Saudi Arabia
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        var popup_b2b266be4506a3d782734459f2a494e2 = L.popup({
+  "maxWidth": 300,
+});
+
+        
+            
+                var html_234997fe207f576aa85d32afee789eb9 = $(`<div id="html_234997fe207f576aa85d32afee789eb9" style="width: 100.0%; height: 100.0%;">             <div style="width: 250px; font-family: Arial, sans-serif;">                 <h4 style="margin: 0 0 8px 0;">Saudi Arabia</h4>                 <p style="margin: 4px 0; font-size: 11px;">Coalition partner - Regional coordination</p>             </div>             </div>`)[0];
+                popup_b2b266be4506a3d782734459f2a494e2.setContent(html_234997fe207f576aa85d32afee789eb9);
+            
+        
+
+        geo_json_b4380e25e9f31e23393171f703ec6887.bindPopup(popup_b2b266be4506a3d782734459f2a494e2)
+        ;
+
+        
+    
+    
+            geo_json_b4380e25e9f31e23393171f703ec6887.addTo(map_47f80caad008085540a05128d19b61f9);
+        
+    
+            var marker_897374b018c6ccb75e8e8ab96bef0506 = L.marker(
+                [33.7856, 42.4414],
+                {
+}
+            ).addTo(map_47f80caad008085540a05128d19b61f9);
+        
+    
+            var icon_1b9587e266a98f2a97228c9165df47e4 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_ebeb0a01e853a43f8509b5fb120e5a56 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_52fe2be8cb1c272c6211e3ef2413183c = $(`<div id="html_52fe2be8cb1c272c6211e3ef2413183c" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: Arial, sans-serif;">             <h4 style="margin: 0 0 8px 0;">Al-Asad Airbase</h4>             <p style="margin: 4px 0;"><b>Location:</b> Iraq (Anbar)</p>             <p style="margin: 4px 0;"><b>Role:</b> Coalition training base</p>         </div>         </div>`)[0];
+                popup_ebeb0a01e853a43f8509b5fb120e5a56.setContent(html_52fe2be8cb1c272c6211e3ef2413183c);
+            
+        
+
+        marker_897374b018c6ccb75e8e8ab96bef0506.bindPopup(popup_ebeb0a01e853a43f8509b5fb120e5a56)
+        ;
+
+        
+    
+    
+            marker_897374b018c6ccb75e8e8ab96bef0506.bindTooltip(
+                `<div>
+                     Al-Asad Airbase
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_897374b018c6ccb75e8e8ab96bef0506.setIcon(icon_1b9587e266a98f2a97228c9165df47e4);
+            
+    
+            var marker_4d0f9970d0850cb146f240594298e0f4 = L.marker(
+                [36.1911, 44.0091],
+                {
+}
+            ).addTo(map_47f80caad008085540a05128d19b61f9);
+        
+    
+            var icon_50c7446bd620014af41ac7c15e541b94 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f670b2faaf0625410a082e20461e1fbf = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_5e9a09636e429233a559944b13878ea7 = $(`<div id="html_5e9a09636e429233a559944b13878ea7" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: Arial, sans-serif;">             <h4 style="margin: 0 0 8px 0;">Erbil</h4>             <p style="margin: 4px 0;"><b>Location:</b> Iraq (Kurdistan)</p>             <p style="margin: 4px 0;"><b>Role:</b> Coalition training site</p>         </div>         </div>`)[0];
+                popup_f670b2faaf0625410a082e20461e1fbf.setContent(html_5e9a09636e429233a559944b13878ea7);
+            
+        
+
+        marker_4d0f9970d0850cb146f240594298e0f4.bindPopup(popup_f670b2faaf0625410a082e20461e1fbf)
+        ;
+
+        
+    
+    
+            marker_4d0f9970d0850cb146f240594298e0f4.bindTooltip(
+                `<div>
+                     Erbil
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4d0f9970d0850cb146f240594298e0f4.setIcon(icon_50c7446bd620014af41ac7c15e541b94);
+            
+    
+            var marker_4de51642d1072757fcab0c3d7691fb6c = L.marker(
+                [33.5311, 44.2569],
+                {
+}
+            ).addTo(map_47f80caad008085540a05128d19b61f9);
+        
+    
+            var icon_93a171e1b3724dbdcfcd830368d36d5f = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "blue",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_edb95c812149c04d14628f15200bed92 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_a274c705db74a9130c2016811a3154e6 = $(`<div id="html_a274c705db74a9130c2016811a3154e6" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: Arial, sans-serif;">             <h4 style="margin: 0 0 8px 0;">Taji</h4>             <p style="margin: 4px 0;"><b>Location:</b> Iraq (Baghdad)</p>             <p style="margin: 4px 0;"><b>Role:</b> Coalition training site</p>         </div>         </div>`)[0];
+                popup_edb95c812149c04d14628f15200bed92.setContent(html_a274c705db74a9130c2016811a3154e6);
+            
+        
+
+        marker_4de51642d1072757fcab0c3d7691fb6c.bindPopup(popup_edb95c812149c04d14628f15200bed92)
+        ;
+
+        
+    
+    
+            marker_4de51642d1072757fcab0c3d7691fb6c.bindTooltip(
+                `<div>
+                     Taji
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_4de51642d1072757fcab0c3d7691fb6c.setIcon(icon_93a171e1b3724dbdcfcd830368d36d5f);
+            
+    
+            var marker_21a264dd53319f050459760425eb42f9 = L.marker(
+                [33.3128, 44.3615],
+                {
+}
+            ).addTo(map_47f80caad008085540a05128d19b61f9);
+        
+    
+            var icon_7ad548cab2111727f13b8a572668f5e5 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "darkblue",
+  "iconColor": "white",
+  "icon": "star",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_3109725f4a448e0d79ac92270740d6df = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_d02052853b8058e504e369827b8b8b03 = $(`<div id="html_d02052853b8058e504e369827b8b8b03" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: Arial, sans-serif;">             <h4 style="margin: 0 0 8px 0;">Union III</h4>             <p style="margin: 4px 0;"><b>Location:</b> Iraq (Baghdad)</p>             <p style="margin: 4px 0;"><b>Role:</b> CJTF-OIR HQ (as of 2025)</p>         </div>         </div>`)[0];
+                popup_3109725f4a448e0d79ac92270740d6df.setContent(html_d02052853b8058e504e369827b8b8b03);
+            
+        
+
+        marker_21a264dd53319f050459760425eb42f9.bindPopup(popup_3109725f4a448e0d79ac92270740d6df)
+        ;
+
+        
+    
+    
+            marker_21a264dd53319f050459760425eb42f9.bindTooltip(
+                `<div>
+                     Union III
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_21a264dd53319f050459760425eb42f9.setIcon(icon_7ad548cab2111727f13b8a572668f5e5);
+            
+    
+            var marker_7cba5974ace55129276c5844226fa788 = L.marker(
+                [33.4933, 38.6167],
+                {
+}
+            ).addTo(map_47f80caad008085540a05128d19b61f9);
+        
+    
+            var icon_5e77320ba5061673177986390890cc40 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "plane",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_56313f772a58b1ea4e6535884e7b85fa = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_33833961d10280578205713d0f5f5bb7 = $(`<div id="html_33833961d10280578205713d0f5f5bb7" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: Arial, sans-serif;">             <h4 style="margin: 0 0 8px 0;">Al-Tanf</h4>             <p style="margin: 4px 0;"><b>Location:</b> Syria (Homs)</p>             <p style="margin: 4px 0;"><b>Role:</b> Coalition garrison (SE Syria)</p>         </div>         </div>`)[0];
+                popup_56313f772a58b1ea4e6535884e7b85fa.setContent(html_33833961d10280578205713d0f5f5bb7);
+            
+        
+
+        marker_7cba5974ace55129276c5844226fa788.bindPopup(popup_56313f772a58b1ea4e6535884e7b85fa)
+        ;
+
+        
+    
+    
+            marker_7cba5974ace55129276c5844226fa788.bindTooltip(
+                `<div>
+                     Al-Tanf
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_7cba5974ace55129276c5844226fa788.setIcon(icon_5e77320ba5061673177986390890cc40);
+            
+    
+            var marker_c4be5f49e8dfc9380caa3c846077d33e = L.marker(
+                [36.5, 40.7],
+                {
+}
+            ).addTo(map_47f80caad008085540a05128d19b61f9);
+        
+    
+            var icon_b04306df429a492a3fdd50e4efa31e40 = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "warning-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_48a13f742b4eb6d212b444f0f217b2b2 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_3859d752bcf35780c8a328c82f50b820 = $(`<div id="html_3859d752bcf35780c8a328c82f50b820" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: Arial, sans-serif;">             <h4 style="margin: 0 0 8px 0;">Al-Hasakah Province</h4>             <p style="margin: 4px 0;"><b>Location:</b> Syria (NE)</p>             <p style="margin: 4px 0;"><b>Role:</b> Active operations zone</p>         </div>         </div>`)[0];
+                popup_48a13f742b4eb6d212b444f0f217b2b2.setContent(html_3859d752bcf35780c8a328c82f50b820);
+            
+        
+
+        marker_c4be5f49e8dfc9380caa3c846077d33e.bindPopup(popup_48a13f742b4eb6d212b444f0f217b2b2)
+        ;
+
+        
+    
+    
+            marker_c4be5f49e8dfc9380caa3c846077d33e.bindTooltip(
+                `<div>
+                     Al-Hasakah Province
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_c4be5f49e8dfc9380caa3c846077d33e.setIcon(icon_b04306df429a492a3fdd50e4efa31e40);
+            
+    
+            var marker_13d9338c7bdb468d9a0749560aed06e1 = L.marker(
+                [35.0, 40.5],
+                {
+}
+            ).addTo(map_47f80caad008085540a05128d19b61f9);
+        
+    
+            var icon_b229d5be739fa57998ef44a5a817b1bf = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "red",
+  "iconColor": "white",
+  "icon": "warning-sign",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_f147dcdab05be636520949e54e3c42c0 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_60b54615d15e6079381ff4ef1f1c9692 = $(`<div id="html_60b54615d15e6079381ff4ef1f1c9692" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: Arial, sans-serif;">             <h4 style="margin: 0 0 8px 0;">Deir ez-Zor Province</h4>             <p style="margin: 4px 0;"><b>Location:</b> Syria (NE)</p>             <p style="margin: 4px 0;"><b>Role:</b> Active operations zone</p>         </div>         </div>`)[0];
+                popup_f147dcdab05be636520949e54e3c42c0.setContent(html_60b54615d15e6079381ff4ef1f1c9692);
+            
+        
+
+        marker_13d9338c7bdb468d9a0749560aed06e1.bindPopup(popup_f147dcdab05be636520949e54e3c42c0)
+        ;
+
+        
+    
+    
+            marker_13d9338c7bdb468d9a0749560aed06e1.bindTooltip(
+                `<div>
+                     Deir ez-Zor Province
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_13d9338c7bdb468d9a0749560aed06e1.setIcon(icon_b229d5be739fa57998ef44a5a817b1bf);
+            
+    
+            var marker_49a8815067e5671b7835abda800789b2 = L.marker(
+                [29.0833, 48.1],
+                {
+}
+            ).addTo(map_47f80caad008085540a05128d19b61f9);
+        
+    
+            var icon_28c383ea75a39ffed5d52e8273a056cd = L.AwesomeMarkers.icon(
+                {
+  "markerColor": "green",
+  "iconColor": "white",
+  "icon": "home",
+  "prefix": "glyphicon",
+  "extraClasses": "fa-rotate-0",
+}
+            );
+        
+    
+        var popup_5f60ec69a118d9994856e4a7fa0c250c = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_860dca23968de394020936d4cad5d27f = $(`<div id="html_860dca23968de394020936d4cad5d27f" style="width: 100.0%; height: 100.0%;">         <div style="width: 220px; font-family: Arial, sans-serif;">             <h4 style="margin: 0 0 8px 0;">Camp Arifjan</h4>             <p style="margin: 4px 0;"><b>Location:</b> Kuwait</p>             <p style="margin: 4px 0;"><b>Role:</b> Belgium location - Forward logistics base & CJTF-OIR support</p>         </div>         </div>`)[0];
+                popup_5f60ec69a118d9994856e4a7fa0c250c.setContent(html_860dca23968de394020936d4cad5d27f);
+            
+        
+
+        marker_49a8815067e5671b7835abda800789b2.bindPopup(popup_5f60ec69a118d9994856e4a7fa0c250c)
+        ;
+
+        
+    
+    
+            marker_49a8815067e5671b7835abda800789b2.bindTooltip(
+                `<div>
+                     Camp Arifjan
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+                marker_49a8815067e5671b7835abda800789b2.setIcon(icon_28c383ea75a39ffed5d52e8273a056cd);
+            
+    
+            var polygon_75ed31866ec5f980b067c8df520af6d3 = L.polygon(
+                [[36.5, 43.0], [36.0, 41.5], [35.5, 40.0], [35.0, 38.5], [34.5, 40.5], [33.5, 43.5], [33.0, 44.4], [33.5, 44.0], [34.5, 43.0], [35.5, 42.5], [36.5, 43.0]],
+                {"bubblingMouseEvents": true, "color": "#ff0000", "dashArray": "10, 10", "dashOffset": null, "fill": false, "fillColor": "#ff0000", "fillOpacity": 0.2, "fillRule": "evenodd", "lineCap": "round", "lineJoin": "round", "noClip": false, "opacity": 1.0, "smoothFactor": 1.0, "stroke": true, "weight": 2}
+            ).addTo(map_47f80caad008085540a05128d19b61f9);
+        
+    
+        var popup_6ab44d5af41f25b726dc7ea13f98556f = L.popup({
+  "maxWidth": "100%",
+});
+
+        
+            
+                var html_ea26c923d9ba691e4d8ad1cf68d285ea = $(`<div id="html_ea26c923d9ba691e4d8ad1cf68d285ea" style="width: 100.0%; height: 100.0%;"><b>Historical ISIS Territory (2014-2017)</b><br>Peak caliphate extent - now defeated</div>`)[0];
+                popup_6ab44d5af41f25b726dc7ea13f98556f.setContent(html_ea26c923d9ba691e4d8ad1cf68d285ea);
+            
+        
+
+        polygon_75ed31866ec5f980b067c8df520af6d3.bindPopup(popup_6ab44d5af41f25b726dc7ea13f98556f)
+        ;
+
+        
+    
+    
+            polygon_75ed31866ec5f980b067c8df520af6d3.bindTooltip(
+                `<div>
+                     Former ISIS Territory
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+</script>
+</html>
