@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css"/>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_54eed05130a338c371a5546625698ebd {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+
+            <style>html, body {
+                width: 100%;
+                height: 100%;
+                margin: 0;
+                padding: 0;
+            }
+            </style>
+
+            <style>#map {
+                position:absolute;
+                top:0;
+                bottom:0;
+                right:0;
+                left:0;
+                }
+            </style>
+
+            <script>
+                L_NO_TOUCH = false;
+                L_DISABLE_3D = false;
+            </script>
+
+        
+</head>
+<body>
+    
+    
+    <div style="position: fixed;
+                bottom: 50px; right: 50px; width: 200px;
+                background-color: white; border:2px solid grey; z-index:9999;
+                font-size:12px; padding: 12px; line-height: 1.6;">
+    <p style="margin: 0 0 8px 0; font-weight: bold;">Mission Categories</p>
+    <p style="margin: 4px 0;">
+        <span style="display:inline-block; width:20px; height:15px;
+                     background-color:#28a745; border:1px solid #1e7e34;"></span>
+        Belgium (Home)
+    </p>
+    <p style="margin: 4px 0;">
+        <span style="display:inline-block; width:20px; height:15px;
+                     background-color:#3388ff; border:1px solid #333;"></span>
+        Eastern Flank
+    </p>
+    <p style="margin: 4px 0;">
+        <span style="display:inline-block; width:20px; height:15px;
+                     background-color:#00cc66; border:1px solid #333;"></span>
+        Africa
+    </p>
+    <p style="margin: 4px 0;">
+        <span style="display:inline-block; width:20px; height:15px;
+                     background-color:#ff4444; border:1px solid #333;"></span>
+        Inherent Resolve
+    </p>
+    </div>
+    
+    
+            <div class="folium-map" id="map_54eed05130a338c371a5546625698ebd" ></div>
+        
+</body>
+<script>
+    
+    
+            var map_54eed05130a338c371a5546625698ebd = L.map(
+                "map_54eed05130a338c371a5546625698ebd",
+                {
+                    center: [30.0, 15.0],
+                    crs: L.CRS.EPSG3857,
+                    ...{
+  "zoom": 3,
+  "zoomControl": true,
+  "preferCanvas": false,
+}
+
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_3e74a9e396785a8715ad051e38784ade = L.tileLayer(
+                "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+                {
+  "minZoom": 0,
+  "maxZoom": 20,
+  "maxNativeZoom": 20,
+  "noWrap": false,
+  "attribution": "\u0026copy; \u003ca href=\"https://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"https://carto.com/attributions\"\u003eCARTO\u003c/a\u003e",
+  "subdomains": "abcd",
+  "detectRetina": false,
+  "tms": false,
+  "opacity": 1,
+}
+
+            );
+        
+    
+            tile_layer_3e74a9e396785a8715ad051e38784ade.addTo(map_54eed05130a338c371a5546625698ebd);
+        
+    
+        function geo_json_cdc7b97bf2fc71503af24f607a5134c6_styler(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"color": "#333333", "fillColor": "#00cc66", "fillOpacity": 0.6, "weight": 1.5};
+            }
+        }
+        function geo_json_cdc7b97bf2fc71503af24f607a5134c6_highlighter(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"fillOpacity": 0.8, "weight": 3};
+            }
+        }
+
+        function geo_json_cdc7b97bf2fc71503af24f607a5134c6_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_cdc7b97bf2fc71503af24f607a5134c6.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_cdc7b97bf2fc71503af24f607a5134c6_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_cdc7b97bf2fc71503af24f607a5134c6 = L.geoJson(null, {
+                onEachFeature: geo_json_cdc7b97bf2fc71503af24f607a5134c6_onEachFeature,
+            
+                style: geo_json_cdc7b97bf2fc71503af24f607a5134c6_styler,
+            ...{
+}
+        });
+
+        function geo_json_cdc7b97bf2fc71503af24f607a5134c6_add (data) {
+            geo_json_cdc7b97bf2fc71503af24f607a5134c6
+                .addData(data);
+        }
+            geo_json_cdc7b97bf2fc71503af24f607a5134c6_add({"features": [{"bbox": [12.182337, -13.257227, 31.174149, 5.256088], "geometry": {"coordinates": [[[29.339998, -4.499983], [29.519987, -5.419979], [29.419993, -5.939999], [29.620032, -6.520015], [30.199997, -7.079981], [30.740015, -8.340007], [30.74001, -8.340006], [30.346086, -8.238257], [29.002912, -8.407032], [28.734867, -8.526559], [28.449871, -9.164918], [28.673682, -9.605925], [28.49607, -10.789884], [28.372253, -11.793647], [28.642417, -11.971569], [29.341548, -12.360744], [29.616001, -12.178895], [29.699614, -13.257227], [28.934286, -13.248958], [28.523562, -12.698604], [28.155109, -12.272481], [27.388799, -12.132747], [27.16442, -11.608748], [26.553088, -11.92444], [25.75231, -11.784965], [25.418118, -11.330936], [24.78317, -11.238694], [24.314516, -11.262826], [24.257155, -10.951993], [23.912215, -10.926826], [23.456791, -10.867863], [22.837345, -11.017622], [22.402798, -10.993075], [22.155268, -11.084801], [22.208753, -9.894796], [21.875182, -9.523708], [21.801801, -8.908707], [21.949131, -8.305901], [21.746456, -7.920085], [21.728111, -7.290872], [20.514748, -7.299606], [20.601823, -6.939318], [20.091622, -6.94309], [20.037723, -7.116361], [19.417502, -7.155429], [19.166613, -7.738184], [19.016752, -7.988246], [18.464176, -7.847014], [18.134222, -7.987678], [17.47297, -8.068551], [17.089996, -7.545689], [16.860191, -7.222298], [16.57318, -6.622645], [16.326528, -5.87747], [13.375597, -5.864241], [13.024869, -5.984389], [12.735171, -5.965682], [12.322432, -6.100092], [12.182337, -5.789931], [12.436688, -5.684304], [12.468004, -5.248362], [12.631612, -4.991271], [12.995517, -4.781103], [13.25824, -4.882957], [13.600235, -4.500138], [14.144956, -4.510009], [14.209035, -4.793092], [14.582604, -4.970239], [15.170992, -4.343507], [15.75354, -3.855165], [16.00629, -3.535133], [15.972803, -2.712392], [16.407092, -1.740927], [16.865307, -1.225816], [17.523716, -0.74383], [17.638645, -0.424832], [17.663553, -0.058084], [17.82654, 0.288923], [17.774192, 0.855659], [17.898835, 1.741832], [18.094276, 2.365722], [18.393792, 2.900443], [18.453065, 3.504386], [18.542982, 4.201785], [18.932312, 4.709506], [19.467784, 5.031528], [20.290679, 4.691678], [20.927591, 4.322786], [21.659123, 4.224342], [22.405124, 4.02916], [22.704124, 4.633051], [22.84148, 4.710126], [23.297214, 4.609693], [24.410531, 5.108784], [24.805029, 4.897247], [25.128833, 4.927245], [25.278798, 5.170408], [25.650455, 5.256088], [26.402761, 5.150875], [27.044065, 5.127853], [27.374226, 5.233944], [27.979977, 4.408413], [28.428994, 4.287155], [28.696678, 4.455077], [29.159078, 4.389267], [29.715995, 4.600805], [29.9535, 4.173699], [30.833852, 3.509172], [30.83386, 3.509166], [30.773347, 2.339883], [31.174149, 2.204465], [30.85267, 1.849396], [30.468508, 1.583805], [30.086154, 1.062313], [29.875779, 0.59738], [29.819503, -0.20531], [29.587838, -0.587406], [29.579466, -1.341313], [29.291887, -1.620056], [29.254835, -2.21511], [29.117479, -2.292211], [29.024926, -2.839258], [29.276384, -3.293907], [29.339998, -4.499983]]], "type": "Polygon"}, "properties": {"ABBREV": "D.R.C.", "ABBREV_LEN": 6, "ADM0_A3": "COD", "ADM0_A3_AR": "COD", "ADM0_A3_BD": "COD", "ADM0_A3_BR": "COD", "ADM0_A3_CN": "COD", "ADM0_A3_DE": "COD", "ADM0_A3_EG": "COD", "ADM0_A3_ES": "COD", "ADM0_A3_FR": "COD", "ADM0_A3_GB": "COD", "ADM0_A3_GR": "COD", "ADM0_A3_ID": "COD", "ADM0_A3_IL": "COD", "ADM0_A3_IN": "COD", "ADM0_A3_IT": "COD", "ADM0_A3_JP": "COD", "ADM0_A3_KO": "COD", "ADM0_A3_MA": "COD", "ADM0_A3_NL": "COD", "ADM0_A3_NP": "COD", "ADM0_A3_PK": "COD", "ADM0_A3_PL": "COD", "ADM0_A3_PS": "COD", "ADM0_A3_PT": "COD", "ADM0_A3_RU": "COD", "ADM0_A3_SA": "COD", "ADM0_A3_SE": "COD", "ADM0_A3_TR": "COD", "ADM0_A3_TW": "COD", "ADM0_A3_UA": "COD", "ADM0_A3_UN": -99, "ADM0_A3_US": "COD", "ADM0_A3_VN": "COD", "ADM0_A3_WB": -99, "ADM0_DIF": 0, "ADM0_DIFF": null, "ADM0_ISO": "COD", "ADM0_TLC": "COD", "ADMIN": "Democratic Republic of the Congo", "BRK_A3": "COD", "BRK_DIFF": 0, "BRK_GROUP": null, "BRK_NAME": "Democratic Republic of the Congo", "CONTINENT": "Africa", "ECONOMY": "7. Least developed region", "FCLASS_AR": null, "FCLASS_BD": null, "FCLASS_BR": null, "FCLASS_CN": null, "FCLASS_DE": null, "FCLASS_EG": null, "FCLASS_ES": null, "FCLASS_FR": null, "FCLASS_GB": null, "FCLASS_GR": null, "FCLASS_ID": null, "FCLASS_IL": null, "FCLASS_IN": null, "FCLASS_ISO": "Admin-0 country", "FCLASS_IT": null, "FCLASS_JP": null, "FCLASS_KO": null, "FCLASS_MA": null, "FCLASS_NL": null, "FCLASS_NP": null, "FCLASS_PK": null, "FCLASS_PL": null, "FCLASS_PS": null, "FCLASS_PT": null, "FCLASS_RU": null, "FCLASS_SA": null, "FCLASS_SE": null, "FCLASS_TLC": "Admin-0 country", "FCLASS_TR": null, "FCLASS_TW": null, "FCLASS_UA": null, "FCLASS_US": null, "FCLASS_VN": null, "FIPS_10": "CG", "FORMAL_EN": "Democratic Republic of the Congo", "FORMAL_FR": null, "GDP_MD": 50400, "GDP_YEAR": 2019, "GEOUNIT": "Democratic Republic of the Congo", "GEOU_DIF": 0, "GU_A3": "COD", "HOMEPART": 1, "INCOME_GRP": "5. Low income", "ISO_A2": "CD", "ISO_A2_EH": "CD", "ISO_A3": "COD", "ISO_A3_EH": "COD", "ISO_N3": "180", "ISO_N3_EH": "180", "LABELRANK": 2, "LABEL_X": 23.458829, "LABEL_Y": -1.858167, "LEVEL": 2, "LONG_LEN": 32, "MAPCOLOR13": 7, "MAPCOLOR7": 4, "MAPCOLOR8": 4, "MAPCOLOR9": 4, "MAX_LABEL": 7, "MIN_LABEL": 2, "MIN_ZOOM": 0, "NAME": "Dem. Rep. Congo", "NAME_ALT": null, "NAME_AR": "\u062c\u0645\u0647\u0648\u0631\u064a\u0629 \u0627\u0644\u0643\u0648\u0646\u063a\u0648 \u0627\u0644\u062f\u064a\u0645\u0642\u0631\u0627\u0637\u064a\u0629", "NAME_BN": "\u0997\u09a3\u09a4\u09be\u09a8\u09cd\u09a4\u09cd\u09b0\u09bf\u0995 \u0995\u0999\u09cd\u0997\u09cb \u09aa\u09cd\u09b0\u099c\u09be\u09a4\u09a8\u09cd\u09a4\u09cd\u09b0", "NAME_CIAWF": "Congo, Democratic Republic of the", "NAME_DE": "Demokratische Republik Kongo", "NAME_EL": "\u039b\u03b1\u03ca\u03ba\u03ae \u0394\u03b7\u03bc\u03bf\u03ba\u03c1\u03b1\u03c4\u03af\u03b1 \u03c4\u03bf\u03c5 \u039a\u03bf\u03bd\u03b3\u03ba\u03cc", "NAME_EN": "Democratic Republic of the Congo", "NAME_ES": "Rep\u00fablica Democr\u00e1tica del Congo", "NAME_FA": "\u062c\u0645\u0647\u0648\u0631\u06cc \u062f\u0645\u0648\u06a9\u0631\u0627\u062a\u06cc\u06a9 \u06a9\u0646\u06af\u0648", "NAME_FR": "R\u00e9publique d\u00e9mocratique du Congo", "NAME_HE": "\u05d4\u05e8\u05e4\u05d5\u05d1\u05dc\u05d9\u05e7\u05d4 \u05d4\u05d3\u05de\u05d5\u05e7\u05e8\u05d8\u05d9\u05ea \u05e9\u05dc \u05e7\u05d5\u05e0\u05d2\u05d5", "NAME_HI": "\u0915\u093e\u0902\u0917\u094b \u0932\u094b\u0915\u0924\u093e\u0928\u094d\u0924\u094d\u0930\u093f\u0915 \u0917\u0923\u0930\u093e\u091c\u094d\u092f", "NAME_HU": "Kong\u00f3i Demokratikus K\u00f6zt\u00e1rsas\u00e1g", "NAME_ID": "Republik Demokratik Kongo", "NAME_IT": "Repubblica Democratica del Congo", "NAME_JA": "\u30b3\u30f3\u30b4\u6c11\u4e3b\u5171\u548c\u56fd", "NAME_KO": "\ucf69\uace0 \ubbfc\uc8fc \uacf5\ud654\uad6d", "NAME_LEN": 15, "NAME_LONG": "Democratic Republic of the Congo", "NAME_NL": "Congo-Kinshasa", "NAME_PL": "Demokratyczna Republika Konga", "NAME_PT": "Rep\u00fablica Democr\u00e1tica do Congo", "NAME_RU": "\u0414\u0435\u043c\u043e\u043a\u0440\u0430\u0442\u0438\u0447\u0435\u0441\u043a\u0430\u044f \u0420\u0435\u0441\u043f\u0443\u0431\u043b\u0438\u043a\u0430 \u041a\u043e\u043d\u0433\u043e", "NAME_SORT": "Congo, Dem. Rep.", "NAME_SV": "Kongo-Kinshasa", "NAME_TR": "Demokratik Kongo Cumhuriyeti", "NAME_UK": "\u0414\u0435\u043c\u043e\u043a\u0440\u0430\u0442\u0438\u0447\u043d\u0430 \u0420\u0435\u0441\u043f\u0443\u0431\u043b\u0456\u043a\u0430 \u041a\u043e\u043d\u0433\u043e", "NAME_UR": "\u062c\u0645\u06c1\u0648\u0631\u06cc \u062c\u0645\u06c1\u0648\u0631\u06cc\u06c1 \u06a9\u0627\u0646\u06af\u0648", "NAME_VI": "C\u1ed9ng h\u00f2a D\u00e2n ch\u1ee7 Congo", "NAME_ZH": "\u521a\u679c\u6c11\u4e3b\u5171\u548c\u56fd", "NAME_ZHT": "\u525b\u679c\u6c11\u4e3b\u5171\u548c\u570b", "NE_ID": 1159320513, "NOTE_ADM0": null, "NOTE_BRK": null, "POP_EST": 86790567, "POP_RANK": 16, "POP_YEAR": 2019, "POSTAL": "DRC", "REGION_UN": "Africa", "REGION_WB": "Sub-Saharan Africa", "SOVEREIGNT": "Democratic Republic of the Congo", "SOV_A3": "COD", "SUBREGION": "Middle Africa", "SUBUNIT": "Democratic Republic of the Congo", "SU_A3": "COD", "SU_DIF": 0, "TINY": -99, "TLC": "1", "TLC_DIFF": null, "TYPE": "Sovereign country", "UN_A3": "180", "WB_A2": "ZR", "WB_A3": "ZAR", "WIKIDATAID": "Q974", "WOE_ID": 23424780, "WOE_ID_EH": 23424780, "WOE_NOTE": "Exact WOE match as country", "featurecla": "Admin-0 country", "scalerank": 1}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_cdc7b97bf2fc71503af24f607a5134c6.bindTooltip(
+                `<div>
+                     Dem. Rep. Congo
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        var popup_f1adb95cb890a9ee8ac882be734b8e66 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_805068b52aaa15ba068cf89df51dd285 = $(`<div id="html_805068b52aaa15ba068cf89df51dd285" style="width: 100.0%; height: 100.0%;">             <div style="width: 220px; font-family: Arial, sans-serif;">                 <h4 style="margin: 0 0 8px 0;">Dem. Rep. Congo</h4>                 <p style="margin: 4px 0;"><b>Mission:</b><br>Missies in Afrika</p>                 <a href="https://www.mil.be/nl/onze-missies/missies-in-afrika/" target="_blank">More info</a>             </div>             </div>`)[0];
+                popup_f1adb95cb890a9ee8ac882be734b8e66.setContent(html_805068b52aaa15ba068cf89df51dd285);
+            
+        
+
+        geo_json_cdc7b97bf2fc71503af24f607a5134c6.bindPopup(popup_f1adb95cb890a9ee8ac882be734b8e66)
+        ;
+
+        
+    
+    
+            geo_json_cdc7b97bf2fc71503af24f607a5134c6.addTo(map_54eed05130a338c371a5546625698ebd);
+        
+    
+        function geo_json_e69de514e3ed072ad71db4e67f370174_styler(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"color": "#333333", "fillColor": "#00cc66", "fillOpacity": 0.6, "weight": 1.5};
+            }
+        }
+        function geo_json_e69de514e3ed072ad71db4e67f370174_highlighter(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"fillOpacity": 0.8, "weight": 3};
+            }
+        }
+
+        function geo_json_e69de514e3ed072ad71db4e67f370174_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_e69de514e3ed072ad71db4e67f370174.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_e69de514e3ed072ad71db4e67f370174_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_e69de514e3ed072ad71db4e67f370174 = L.geoJson(null, {
+                onEachFeature: geo_json_e69de514e3ed072ad71db4e67f370174_onEachFeature,
+            
+                style: geo_json_e69de514e3ed072ad71db4e67f370174_styler,
+            ...{
+}
+        });
+
+        function geo_json_e69de514e3ed072ad71db4e67f370174_add (data) {
+            geo_json_e69de514e3ed072ad71db4e67f370174
+                .addData(data);
+        }
+            geo_json_e69de514e3ed072ad71db4e67f370174_add({"features": [{"bbox": [-12.17075, 10.096361, 4.27021, 24.974574], "geometry": {"coordinates": [[[-11.513943, 12.442988], [-11.467899, 12.754519], [-11.553398, 13.141214], [-11.927716, 13.422075], [-12.124887, 13.994727], [-12.17075, 14.616834], [-11.834208, 14.799097], [-11.666078, 15.388208], [-11.349095, 15.411256], [-10.650791, 15.132746], [-10.086846, 15.330486], [-9.700255, 15.264107], [-9.550238, 15.486497], [-5.537744, 15.50169], [-5.315277, 16.201854], [-5.488523, 16.325102], [-5.971129, 20.640833], [-6.453787, 24.956591], [-4.923337, 24.974574], [-1.550055, 22.792666], [1.823228, 20.610809], [2.060991, 20.142233], [2.683588, 19.85623], [3.146661, 19.693579], [3.158133, 19.057364], [4.267419, 19.155265], [4.27021, 16.852227], [3.723422, 16.184284], [3.638259, 15.56812], [2.749993, 15.409525], [1.385528, 15.323561], [1.015783, 14.968182], [0.374892, 14.928908], [-0.266257, 14.924309], [-0.515854, 15.116158], [-1.066363, 14.973815], [-2.001035, 14.559008], [-2.191825, 14.246418], [-2.967694, 13.79815], [-3.103707, 13.541267], [-3.522803, 13.337662], [-4.006391, 13.472485], [-4.280405, 13.228444], [-4.427166, 12.542646], [-5.220942, 11.713859], [-5.197843, 11.375146], [-5.470565, 10.95127], [-5.404342, 10.370737], [-5.816926, 10.222555], [-6.050452, 10.096361], [-6.205223, 10.524061], [-6.493965, 10.411303], [-6.666461, 10.430811], [-6.850507, 10.138994], [-7.622759, 10.147236], [-7.89959, 10.297382], [-8.029944, 10.206535], [-8.335377, 10.494812], [-8.282357, 10.792597], [-8.407311, 10.909257], [-8.620321, 10.810891], [-8.581305, 11.136246], [-8.376305, 11.393646], [-8.786099, 11.812561], [-8.905265, 12.088358], [-9.127474, 12.30806], [-9.327616, 12.334286], [-9.567912, 12.194243], [-9.890993, 12.060479], [-10.165214, 11.844084], [-10.593224, 11.923975], [-10.87083, 12.177887], [-11.036556, 12.211245], [-11.297574, 12.077971], [-11.456169, 12.076834], [-11.513943, 12.442988]]], "type": "Polygon"}, "properties": {"ABBREV": "Mali", "ABBREV_LEN": 4, "ADM0_A3": "MLI", "ADM0_A3_AR": "MLI", "ADM0_A3_BD": "MLI", "ADM0_A3_BR": "MLI", "ADM0_A3_CN": "MLI", "ADM0_A3_DE": "MLI", "ADM0_A3_EG": "MLI", "ADM0_A3_ES": "MLI", "ADM0_A3_FR": "MLI", "ADM0_A3_GB": "MLI", "ADM0_A3_GR": "MLI", "ADM0_A3_ID": "MLI", "ADM0_A3_IL": "MLI", "ADM0_A3_IN": "MLI", "ADM0_A3_IT": "MLI", "ADM0_A3_JP": "MLI", "ADM0_A3_KO": "MLI", "ADM0_A3_MA": "MLI", "ADM0_A3_NL": "MLI", "ADM0_A3_NP": "MLI", "ADM0_A3_PK": "MLI", "ADM0_A3_PL": "MLI", "ADM0_A3_PS": "MLI", "ADM0_A3_PT": "MLI", "ADM0_A3_RU": "MLI", "ADM0_A3_SA": "MLI", "ADM0_A3_SE": "MLI", "ADM0_A3_TR": "MLI", "ADM0_A3_TW": "MLI", "ADM0_A3_UA": "MLI", "ADM0_A3_UN": -99, "ADM0_A3_US": "MLI", "ADM0_A3_VN": "MLI", "ADM0_A3_WB": -99, "ADM0_DIF": 0, "ADM0_DIFF": null, "ADM0_ISO": "MLI", "ADM0_TLC": "MLI", "ADMIN": "Mali", "BRK_A3": "MLI", "BRK_DIFF": 0, "BRK_GROUP": null, "BRK_NAME": "Mali", "CONTINENT": "Africa", "ECONOMY": "7. Least developed region", "FCLASS_AR": null, "FCLASS_BD": null, "FCLASS_BR": null, "FCLASS_CN": null, "FCLASS_DE": null, "FCLASS_EG": null, "FCLASS_ES": null, "FCLASS_FR": null, "FCLASS_GB": null, "FCLASS_GR": null, "FCLASS_ID": null, "FCLASS_IL": null, "FCLASS_IN": null, "FCLASS_ISO": "Admin-0 country", "FCLASS_IT": null, "FCLASS_JP": null, "FCLASS_KO": null, "FCLASS_MA": null, "FCLASS_NL": null, "FCLASS_NP": null, "FCLASS_PK": null, "FCLASS_PL": null, "FCLASS_PS": null, "FCLASS_PT": null, "FCLASS_RU": null, "FCLASS_SA": null, "FCLASS_SE": null, "FCLASS_TLC": "Admin-0 country", "FCLASS_TR": null, "FCLASS_TW": null, "FCLASS_UA": null, "FCLASS_US": null, "FCLASS_VN": null, "FIPS_10": "ML", "FORMAL_EN": "Republic of Mali", "FORMAL_FR": null, "GDP_MD": 17279, "GDP_YEAR": 2019, "GEOUNIT": "Mali", "GEOU_DIF": 0, "GU_A3": "MLI", "HOMEPART": 1, "INCOME_GRP": "5. Low income", "ISO_A2": "ML", "ISO_A2_EH": "ML", "ISO_A3": "MLI", "ISO_A3_EH": "MLI", "ISO_N3": "466", "ISO_N3_EH": "466", "LABELRANK": 3, "LABEL_X": -2.038455, "LABEL_Y": 18.692713, "LEVEL": 2, "LONG_LEN": 4, "MAPCOLOR13": 7, "MAPCOLOR7": 1, "MAPCOLOR8": 4, "MAPCOLOR9": 1, "MAX_LABEL": 7, "MIN_LABEL": 3, "MIN_ZOOM": 0, "NAME": "Mali", "NAME_ALT": null, "NAME_AR": "\u0645\u0627\u0644\u064a", "NAME_BN": "\u09ae\u09be\u09b2\u09bf", "NAME_CIAWF": "Mali", "NAME_DE": "Mali", "NAME_EL": "\u039c\u03ac\u03bb\u03b9", "NAME_EN": "Mali", "NAME_ES": "Mal\u00ed", "NAME_FA": "\u0645\u0627\u0644\u06cc", "NAME_FR": "Mali", "NAME_HE": "\u05de\u05d0\u05dc\u05d9", "NAME_HI": "\u092e\u093e\u0932\u0940", "NAME_HU": "Mali", "NAME_ID": "Mali", "NAME_IT": "Mali", "NAME_JA": "\u30de\u30ea\u5171\u548c\u56fd", "NAME_KO": "\ub9d0\ub9ac", "NAME_LEN": 4, "NAME_LONG": "Mali", "NAME_NL": "Mali", "NAME_PL": "Mali", "NAME_PT": "Mali", "NAME_RU": "\u041c\u0430\u043b\u0438", "NAME_SORT": "Mali", "NAME_SV": "Mali", "NAME_TR": "Mali", "NAME_UK": "\u041c\u0430\u043b\u0456", "NAME_UR": "\u0645\u0627\u0644\u06cc", "NAME_VI": "Mali", "NAME_ZH": "\u9a6c\u91cc", "NAME_ZHT": "\u99ac\u5229\u5171\u548c\u570b", "NE_ID": 1159321063, "NOTE_ADM0": null, "NOTE_BRK": null, "POP_EST": 19658031, "POP_RANK": 14, "POP_YEAR": 2019, "POSTAL": "ML", "REGION_UN": "Africa", "REGION_WB": "Sub-Saharan Africa", "SOVEREIGNT": "Mali", "SOV_A3": "MLI", "SUBREGION": "Western Africa", "SUBUNIT": "Mali", "SU_A3": "MLI", "SU_DIF": 0, "TINY": -99, "TLC": "1", "TLC_DIFF": null, "TYPE": "Sovereign country", "UN_A3": "466", "WB_A2": "ML", "WB_A3": "MLI", "WIKIDATAID": "Q912", "WOE_ID": 23424891, "WOE_ID_EH": 23424891, "WOE_NOTE": "Exact WOE match as country", "featurecla": "Admin-0 country", "scalerank": 1}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_e69de514e3ed072ad71db4e67f370174.bindTooltip(
+                `<div>
+                     Mali
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        var popup_feef79ada42aae43df74002cc9d9fd90 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_2c0c30df78842a3ccefa720c39b57482 = $(`<div id="html_2c0c30df78842a3ccefa720c39b57482" style="width: 100.0%; height: 100.0%;">             <div style="width: 220px; font-family: Arial, sans-serif;">                 <h4 style="margin: 0 0 8px 0;">Mali</h4>                 <p style="margin: 4px 0;"><b>Mission:</b><br>Missies in Afrika</p>                 <a href="https://www.mil.be/nl/onze-missies/missies-in-afrika/" target="_blank">More info</a>             </div>             </div>`)[0];
+                popup_feef79ada42aae43df74002cc9d9fd90.setContent(html_2c0c30df78842a3ccefa720c39b57482);
+            
+        
+
+        geo_json_e69de514e3ed072ad71db4e67f370174.bindPopup(popup_feef79ada42aae43df74002cc9d9fd90)
+        ;
+
+        
+    
+    
+            geo_json_e69de514e3ed072ad71db4e67f370174.addTo(map_54eed05130a338c371a5546625698ebd);
+        
+    
+        function geo_json_0c948e7869d9ddb4e3332b5a670c9ef4_styler(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"color": "#333333", "fillColor": "#00cc66", "fillOpacity": 0.6, "weight": 1.5};
+            }
+        }
+        function geo_json_0c948e7869d9ddb4e3332b5a670c9ef4_highlighter(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"fillOpacity": 0.8, "weight": 3};
+            }
+        }
+
+        function geo_json_0c948e7869d9ddb4e3332b5a670c9ef4_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_0c948e7869d9ddb4e3332b5a670c9ef4.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_0c948e7869d9ddb4e3332b5a670c9ef4_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_0c948e7869d9ddb4e3332b5a670c9ef4 = L.geoJson(null, {
+                onEachFeature: geo_json_0c948e7869d9ddb4e3332b5a670c9ef4_onEachFeature,
+            
+                style: geo_json_0c948e7869d9ddb4e3332b5a670c9ef4_styler,
+            ...{
+}
+        });
+
+        function geo_json_0c948e7869d9ddb4e3332b5a670c9ef4_add (data) {
+            geo_json_0c948e7869d9ddb4e3332b5a670c9ef4
+                .addData(data);
+        }
+            geo_json_0c948e7869d9ddb4e3332b5a670c9ef4_add({"features": [{"bbox": [0.772336, 6.142158, 3.797112, 12.235636], "geometry": {"coordinates": [[[2.691702, 6.258817], [1.865241, 6.142158], [1.618951, 6.832038], [1.664478, 9.12859], [1.463043, 9.334624], [1.425061, 9.825395], [1.077795, 10.175607], [0.772336, 10.470808], [0.899563, 10.997339], [1.24347, 11.110511], [1.447178, 11.547719], [1.935986, 11.64115], [2.154474, 11.94015], [2.490164, 12.233052], [2.848643, 12.235636], [3.61118, 11.660167], [3.572216, 11.327939], [3.797112, 10.734746], [3.60007, 10.332186], [3.705438, 10.06321], [3.220352, 9.444153], [2.912308, 9.137608], [2.723793, 8.506845], [2.749063, 7.870734], [2.691702, 6.258817]]], "type": "Polygon"}, "properties": {"ABBREV": "Benin", "ABBREV_LEN": 5, "ADM0_A3": "BEN", "ADM0_A3_AR": "BEN", "ADM0_A3_BD": "BEN", "ADM0_A3_BR": "BEN", "ADM0_A3_CN": "BEN", "ADM0_A3_DE": "BEN", "ADM0_A3_EG": "BEN", "ADM0_A3_ES": "BEN", "ADM0_A3_FR": "BEN", "ADM0_A3_GB": "BEN", "ADM0_A3_GR": "BEN", "ADM0_A3_ID": "BEN", "ADM0_A3_IL": "BEN", "ADM0_A3_IN": "BEN", "ADM0_A3_IT": "BEN", "ADM0_A3_JP": "BEN", "ADM0_A3_KO": "BEN", "ADM0_A3_MA": "BEN", "ADM0_A3_NL": "BEN", "ADM0_A3_NP": "BEN", "ADM0_A3_PK": "BEN", "ADM0_A3_PL": "BEN", "ADM0_A3_PS": "BEN", "ADM0_A3_PT": "BEN", "ADM0_A3_RU": "BEN", "ADM0_A3_SA": "BEN", "ADM0_A3_SE": "BEN", "ADM0_A3_TR": "BEN", "ADM0_A3_TW": "BEN", "ADM0_A3_UA": "BEN", "ADM0_A3_UN": -99, "ADM0_A3_US": "BEN", "ADM0_A3_VN": "BEN", "ADM0_A3_WB": -99, "ADM0_DIF": 0, "ADM0_DIFF": null, "ADM0_ISO": "BEN", "ADM0_TLC": "BEN", "ADMIN": "Benin", "BRK_A3": "BEN", "BRK_DIFF": 0, "BRK_GROUP": null, "BRK_NAME": "Benin", "CONTINENT": "Africa", "ECONOMY": "7. Least developed region", "FCLASS_AR": null, "FCLASS_BD": null, "FCLASS_BR": null, "FCLASS_CN": null, "FCLASS_DE": null, "FCLASS_EG": null, "FCLASS_ES": null, "FCLASS_FR": null, "FCLASS_GB": null, "FCLASS_GR": null, "FCLASS_ID": null, "FCLASS_IL": null, "FCLASS_IN": null, "FCLASS_ISO": "Admin-0 country", "FCLASS_IT": null, "FCLASS_JP": null, "FCLASS_KO": null, "FCLASS_MA": null, "FCLASS_NL": null, "FCLASS_NP": null, "FCLASS_PK": null, "FCLASS_PL": null, "FCLASS_PS": null, "FCLASS_PT": null, "FCLASS_RU": null, "FCLASS_SA": null, "FCLASS_SE": null, "FCLASS_TLC": "Admin-0 country", "FCLASS_TR": null, "FCLASS_TW": null, "FCLASS_UA": null, "FCLASS_US": null, "FCLASS_VN": null, "FIPS_10": "BN", "FORMAL_EN": "Republic of Benin", "FORMAL_FR": null, "GDP_MD": 14390, "GDP_YEAR": 2019, "GEOUNIT": "Benin", "GEOU_DIF": 0, "GU_A3": "BEN", "HOMEPART": 1, "INCOME_GRP": "5. Low income", "ISO_A2": "BJ", "ISO_A2_EH": "BJ", "ISO_A3": "BEN", "ISO_A3_EH": "BEN", "ISO_N3": "204", "ISO_N3_EH": "204", "LABELRANK": 5, "LABEL_X": 2.352018, "LABEL_Y": 10.324775, "LEVEL": 2, "LONG_LEN": 5, "MAPCOLOR13": 12, "MAPCOLOR7": 1, "MAPCOLOR8": 2, "MAPCOLOR9": 2, "MAX_LABEL": 9, "MIN_LABEL": 4, "MIN_ZOOM": 0, "NAME": "Benin", "NAME_ALT": null, "NAME_AR": "\u0628\u0646\u064a\u0646", "NAME_BN": "\u09ac\u09c7\u09a8\u09bf\u09a8", "NAME_CIAWF": "Benin", "NAME_DE": "Benin", "NAME_EL": "\u039c\u03c0\u03b5\u03bd\u03af\u03bd", "NAME_EN": "Benin", "NAME_ES": "Ben\u00edn", "NAME_FA": "\u0628\u0646\u06cc\u0646", "NAME_FR": "B\u00e9nin", "NAME_HE": "\u05d1\u05e0\u05d9\u05df", "NAME_HI": "\u092c\u0947\u0928\u093f\u0928", "NAME_HU": "Benin", "NAME_ID": "Benin", "NAME_IT": "Benin", "NAME_JA": "\u30d9\u30ca\u30f3", "NAME_KO": "\ubca0\ub0c9", "NAME_LEN": 5, "NAME_LONG": "Benin", "NAME_NL": "Benin", "NAME_PL": "Benin", "NAME_PT": "Benim", "NAME_RU": "\u0411\u0435\u043d\u0438\u043d", "NAME_SORT": "Benin", "NAME_SV": "Benin", "NAME_TR": "Benin", "NAME_UK": "\u0411\u0435\u043d\u0456\u043d", "NAME_UR": "\u0628\u06cc\u0646\u0646", "NAME_VI": "B\u00e9nin", "NAME_ZH": "\u8d1d\u5b81", "NAME_ZHT": "\u8c9d\u5357", "NE_ID": 1159320399, "NOTE_ADM0": null, "NOTE_BRK": null, "POP_EST": 11801151, "POP_RANK": 14, "POP_YEAR": 2019, "POSTAL": "BJ", "REGION_UN": "Africa", "REGION_WB": "Sub-Saharan Africa", "SOVEREIGNT": "Benin", "SOV_A3": "BEN", "SUBREGION": "Western Africa", "SUBUNIT": "Benin", "SU_A3": "BEN", "SU_DIF": 0, "TINY": -99, "TLC": "1", "TLC_DIFF": null, "TYPE": "Sovereign country", "UN_A3": "204", "WB_A2": "BJ", "WB_A3": "BEN", "WIKIDATAID": "Q962", "WOE_ID": 23424764, "WOE_ID_EH": 23424764, "WOE_NOTE": "Exact WOE match as country", "featurecla": "Admin-0 country", "scalerank": 1}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_0c948e7869d9ddb4e3332b5a670c9ef4.bindTooltip(
+                `<div>
+                     Benin
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        var popup_be63b97ccbb12b95e12e59bb22b8786b = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_f3447dc6b5c26ee6b7b3876295df55a1 = $(`<div id="html_f3447dc6b5c26ee6b7b3876295df55a1" style="width: 100.0%; height: 100.0%;">             <div style="width: 220px; font-family: Arial, sans-serif;">                 <h4 style="margin: 0 0 8px 0;">Benin</h4>                 <p style="margin: 4px 0;"><b>Mission:</b><br>Missies in Afrika</p>                 <a href="https://www.mil.be/nl/onze-missies/missies-in-afrika/" target="_blank">More info</a>             </div>             </div>`)[0];
+                popup_be63b97ccbb12b95e12e59bb22b8786b.setContent(html_f3447dc6b5c26ee6b7b3876295df55a1);
+            
+        
+
+        geo_json_0c948e7869d9ddb4e3332b5a670c9ef4.bindPopup(popup_be63b97ccbb12b95e12e59bb22b8786b)
+        ;
+
+        
+    
+    
+            geo_json_0c948e7869d9ddb4e3332b5a670c9ef4.addTo(map_54eed05130a338c371a5546625698ebd);
+        
+    
+        function geo_json_ee27bcd910f25ab76bedd037a2b3afbd_styler(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"color": "#333333", "fillColor": "#00cc66", "fillOpacity": 0.6, "weight": 1.5};
+            }
+        }
+        function geo_json_ee27bcd910f25ab76bedd037a2b3afbd_highlighter(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"fillOpacity": 0.8, "weight": 3};
+            }
+        }
+
+        function geo_json_ee27bcd910f25ab76bedd037a2b3afbd_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_ee27bcd910f25ab76bedd037a2b3afbd.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_ee27bcd910f25ab76bedd037a2b3afbd_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_ee27bcd910f25ab76bedd037a2b3afbd = L.geoJson(null, {
+                onEachFeature: geo_json_ee27bcd910f25ab76bedd037a2b3afbd_onEachFeature,
+            
+                style: geo_json_ee27bcd910f25ab76bedd037a2b3afbd_styler,
+            ...{
+}
+        });
+
+        function geo_json_ee27bcd910f25ab76bedd037a2b3afbd_add (data) {
+            geo_json_ee27bcd910f25ab76bedd037a2b3afbd
+                .addData(data);
+        }
+            geo_json_ee27bcd910f25ab76bedd037a2b3afbd_add({"features": [{"bbox": [0.295646, 11.660167, 15.903247, 23.471668], "geometry": {"coordinates": [[[14.8513, 22.86295], [15.096888, 21.308519], [15.47106, 21.04845], [15.487148, 20.730415], [15.903247, 20.387619], [15.685741, 19.95718], [15.300441, 17.92795], [15.247731, 16.627306], [13.97217, 15.68437], [13.540394, 14.367134], [13.956699, 13.996691], [13.954477, 13.353449], [14.595781, 13.330427], [14.495787, 12.859396], [14.213531, 12.802035], [14.181336, 12.483657], [13.995353, 12.461565], [13.318702, 13.556356], [13.083987, 13.596147], [12.302071, 13.037189], [11.527803, 13.32898], [10.989593, 13.387323], [10.701032, 13.246918], [10.114814, 13.277252], [9.524928, 12.851102], [9.014933, 12.826659], [7.804671, 13.343527], [7.330747, 13.098038], [6.820442, 13.115091], [6.445426, 13.492768], [5.443058, 13.865924], [4.368344, 13.747482], [4.107946, 13.531216], [3.967283, 12.956109], [3.680634, 12.552903], [3.61118, 11.660167], [2.848643, 12.235636], [2.490164, 12.233052], [2.154474, 11.94015], [2.177108, 12.625018], [1.024103, 12.851826], [0.993046, 13.33575], [0.429928, 13.988733], [0.295646, 14.444235], [0.374892, 14.928908], [1.015783, 14.968182], [1.385528, 15.323561], [2.749993, 15.409525], [3.638259, 15.56812], [3.723422, 16.184284], [4.27021, 16.852227], [4.267419, 19.155265], [5.677566, 19.601207], [8.572893, 21.565661], [11.999506, 23.471668], [13.581425, 23.040506], [14.143871, 22.491289], [14.8513, 22.86295]]], "type": "Polygon"}, "properties": {"ABBREV": "Niger", "ABBREV_LEN": 5, "ADM0_A3": "NER", "ADM0_A3_AR": "NER", "ADM0_A3_BD": "NER", "ADM0_A3_BR": "NER", "ADM0_A3_CN": "NER", "ADM0_A3_DE": "NER", "ADM0_A3_EG": "NER", "ADM0_A3_ES": "NER", "ADM0_A3_FR": "NER", "ADM0_A3_GB": "NER", "ADM0_A3_GR": "NER", "ADM0_A3_ID": "NER", "ADM0_A3_IL": "NER", "ADM0_A3_IN": "NER", "ADM0_A3_IT": "NER", "ADM0_A3_JP": "NER", "ADM0_A3_KO": "NER", "ADM0_A3_MA": "NER", "ADM0_A3_NL": "NER", "ADM0_A3_NP": "NER", "ADM0_A3_PK": "NER", "ADM0_A3_PL": "NER", "ADM0_A3_PS": "NER", "ADM0_A3_PT": "NER", "ADM0_A3_RU": "NER", "ADM0_A3_SA": "NER", "ADM0_A3_SE": "NER", "ADM0_A3_TR": "NER", "ADM0_A3_TW": "NER", "ADM0_A3_UA": "NER", "ADM0_A3_UN": -99, "ADM0_A3_US": "NER", "ADM0_A3_VN": "NER", "ADM0_A3_WB": -99, "ADM0_DIF": 0, "ADM0_DIFF": null, "ADM0_ISO": "NER", "ADM0_TLC": "NER", "ADMIN": "Niger", "BRK_A3": "NER", "BRK_DIFF": 0, "BRK_GROUP": null, "BRK_NAME": "Niger", "CONTINENT": "Africa", "ECONOMY": "7. Least developed region", "FCLASS_AR": null, "FCLASS_BD": null, "FCLASS_BR": null, "FCLASS_CN": null, "FCLASS_DE": null, "FCLASS_EG": null, "FCLASS_ES": null, "FCLASS_FR": null, "FCLASS_GB": null, "FCLASS_GR": null, "FCLASS_ID": null, "FCLASS_IL": null, "FCLASS_IN": null, "FCLASS_ISO": "Admin-0 country", "FCLASS_IT": null, "FCLASS_JP": null, "FCLASS_KO": null, "FCLASS_MA": null, "FCLASS_NL": null, "FCLASS_NP": null, "FCLASS_PK": null, "FCLASS_PL": null, "FCLASS_PS": null, "FCLASS_PT": null, "FCLASS_RU": null, "FCLASS_SA": null, "FCLASS_SE": null, "FCLASS_TLC": "Admin-0 country", "FCLASS_TR": null, "FCLASS_TW": null, "FCLASS_UA": null, "FCLASS_US": null, "FCLASS_VN": null, "FIPS_10": "NG", "FORMAL_EN": "Republic of Niger", "FORMAL_FR": null, "GDP_MD": 12911, "GDP_YEAR": 2019, "GEOUNIT": "Niger", "GEOU_DIF": 0, "GU_A3": "NER", "HOMEPART": 1, "INCOME_GRP": "5. Low income", "ISO_A2": "NE", "ISO_A2_EH": "NE", "ISO_A3": "NER", "ISO_A3_EH": "NER", "ISO_N3": "562", "ISO_N3_EH": "562", "LABELRANK": 3, "LABEL_X": 9.504356, "LABEL_Y": 17.446195, "LEVEL": 2, "LONG_LEN": 5, "MAPCOLOR13": 13, "MAPCOLOR7": 4, "MAPCOLOR8": 5, "MAPCOLOR9": 3, "MAX_LABEL": 8, "MIN_LABEL": 3, "MIN_ZOOM": 0, "NAME": "Niger", "NAME_ALT": null, "NAME_AR": "\u0627\u0644\u0646\u064a\u062c\u0631", "NAME_BN": "\u09a8\u09be\u0987\u099c\u09be\u09b0", "NAME_CIAWF": "Niger", "NAME_DE": "Niger", "NAME_EL": "\u039d\u03af\u03b3\u03b7\u03c1\u03b1\u03c2", "NAME_EN": "Niger", "NAME_ES": "N\u00edger", "NAME_FA": "\u0646\u06cc\u062c\u0631", "NAME_FR": "Niger", "NAME_HE": "\u05e0\u05d9\u05d6\u0027\u05e8", "NAME_HI": "\u0928\u093e\u0907\u091c\u0930", "NAME_HU": "Niger", "NAME_ID": "Niger", "NAME_IT": "Niger", "NAME_JA": "\u30cb\u30b8\u30a7\u30fc\u30eb", "NAME_KO": "\ub2c8\uc81c\ub974", "NAME_LEN": 5, "NAME_LONG": "Niger", "NAME_NL": "Niger", "NAME_PL": "Niger", "NAME_PT": "N\u00edger", "NAME_RU": "\u041d\u0438\u0433\u0435\u0440", "NAME_SORT": "Niger", "NAME_SV": "Niger", "NAME_TR": "Nijer", "NAME_UK": "\u041d\u0456\u0433\u0435\u0440", "NAME_UR": "\u0646\u0627\u0626\u062c\u0631", "NAME_VI": "Niger", "NAME_ZH": "\u5c3c\u65e5\u5c14", "NAME_ZHT": "\u5c3c\u65e5", "NE_ID": 1159321087, "NOTE_ADM0": null, "NOTE_BRK": null, "POP_EST": 23310715, "POP_RANK": 15, "POP_YEAR": 2019, "POSTAL": "NE", "REGION_UN": "Africa", "REGION_WB": "Sub-Saharan Africa", "SOVEREIGNT": "Niger", "SOV_A3": "NER", "SUBREGION": "Western Africa", "SUBUNIT": "Niger", "SU_A3": "NER", "SU_DIF": 0, "TINY": -99, "TLC": "1", "TLC_DIFF": null, "TYPE": "Sovereign country", "UN_A3": "562", "WB_A2": "NE", "WB_A3": "NER", "WIKIDATAID": "Q1032", "WOE_ID": 23424906, "WOE_ID_EH": 23424906, "WOE_NOTE": "Exact WOE match as country", "featurecla": "Admin-0 country", "scalerank": 1}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_ee27bcd910f25ab76bedd037a2b3afbd.bindTooltip(
+                `<div>
+                     Niger
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        var popup_52c305db69fe4fd357dbee3c92ae77a5 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_7a06e5cd6044c994365428256d463ae1 = $(`<div id="html_7a06e5cd6044c994365428256d463ae1" style="width: 100.0%; height: 100.0%;">             <div style="width: 220px; font-family: Arial, sans-serif;">                 <h4 style="margin: 0 0 8px 0;">Niger</h4>                 <p style="margin: 4px 0;"><b>Mission:</b><br>Missies in Afrika</p>                 <a href="https://www.mil.be/nl/onze-missies/missies-in-afrika/" target="_blank">More info</a>             </div>             </div>`)[0];
+                popup_52c305db69fe4fd357dbee3c92ae77a5.setContent(html_7a06e5cd6044c994365428256d463ae1);
+            
+        
+
+        geo_json_ee27bcd910f25ab76bedd037a2b3afbd.bindPopup(popup_52c305db69fe4fd357dbee3c92ae77a5)
+        ;
+
+        
+    
+    
+            geo_json_ee27bcd910f25ab76bedd037a2b3afbd.addTo(map_54eed05130a338c371a5546625698ebd);
+        
+    
+        function geo_json_4796f53fb2715e7ab2d8b0664e494086_styler(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"color": "#333333", "fillColor": "#00cc66", "fillOpacity": 0.6, "weight": 1.5};
+            }
+        }
+        function geo_json_4796f53fb2715e7ab2d8b0664e494086_highlighter(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"fillOpacity": 0.8, "weight": 3};
+            }
+        }
+
+        function geo_json_4796f53fb2715e7ab2d8b0664e494086_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_4796f53fb2715e7ab2d8b0664e494086.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_4796f53fb2715e7ab2d8b0664e494086_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_4796f53fb2715e7ab2d8b0664e494086 = L.geoJson(null, {
+                onEachFeature: geo_json_4796f53fb2715e7ab2d8b0664e494086_onEachFeature,
+            
+                style: geo_json_4796f53fb2715e7ab2d8b0664e494086_styler,
+            ...{
+}
+        });
+
+        function geo_json_4796f53fb2715e7ab2d8b0664e494086_add (data) {
+            geo_json_4796f53fb2715e7ab2d8b0664e494086
+                .addData(data);
+        }
+            geo_json_4796f53fb2715e7ab2d8b0664e494086_add({"features": [{"bbox": [-5.470565, 9.610835, 2.177108, 15.116158], "geometry": {"coordinates": [[[-5.404342, 10.370737], [-5.470565, 10.95127], [-5.197843, 11.375146], [-5.220942, 11.713859], [-4.427166, 12.542646], [-4.280405, 13.228444], [-4.006391, 13.472485], [-3.522803, 13.337662], [-3.103707, 13.541267], [-2.967694, 13.79815], [-2.191825, 14.246418], [-2.001035, 14.559008], [-1.066363, 14.973815], [-0.515854, 15.116158], [-0.266257, 14.924309], [0.374892, 14.928908], [0.295646, 14.444235], [0.429928, 13.988733], [0.993046, 13.33575], [1.024103, 12.851826], [2.177108, 12.625018], [2.154474, 11.94015], [1.935986, 11.64115], [1.447178, 11.547719], [1.24347, 11.110511], [0.899563, 10.997339], [0.023803, 11.018682], [-0.438702, 11.098341], [-0.761576, 10.93693], [-1.203358, 11.009819], [-2.940409, 10.96269], [-2.963896, 10.395335], [-2.827496, 9.642461], [-3.511899, 9.900326], [-3.980449, 9.862344], [-4.330247, 9.610835], [-4.779884, 9.821985], [-4.954653, 10.152714], [-5.404342, 10.370737]]], "type": "Polygon"}, "properties": {"ABBREV": "B.F.", "ABBREV_LEN": 4, "ADM0_A3": "BFA", "ADM0_A3_AR": "BFA", "ADM0_A3_BD": "BFA", "ADM0_A3_BR": "BFA", "ADM0_A3_CN": "BFA", "ADM0_A3_DE": "BFA", "ADM0_A3_EG": "BFA", "ADM0_A3_ES": "BFA", "ADM0_A3_FR": "BFA", "ADM0_A3_GB": "BFA", "ADM0_A3_GR": "BFA", "ADM0_A3_ID": "BFA", "ADM0_A3_IL": "BFA", "ADM0_A3_IN": "BFA", "ADM0_A3_IT": "BFA", "ADM0_A3_JP": "BFA", "ADM0_A3_KO": "BFA", "ADM0_A3_MA": "BFA", "ADM0_A3_NL": "BFA", "ADM0_A3_NP": "BFA", "ADM0_A3_PK": "BFA", "ADM0_A3_PL": "BFA", "ADM0_A3_PS": "BFA", "ADM0_A3_PT": "BFA", "ADM0_A3_RU": "BFA", "ADM0_A3_SA": "BFA", "ADM0_A3_SE": "BFA", "ADM0_A3_TR": "BFA", "ADM0_A3_TW": "BFA", "ADM0_A3_UA": "BFA", "ADM0_A3_UN": -99, "ADM0_A3_US": "BFA", "ADM0_A3_VN": "BFA", "ADM0_A3_WB": -99, "ADM0_DIF": 0, "ADM0_DIFF": null, "ADM0_ISO": "BFA", "ADM0_TLC": "BFA", "ADMIN": "Burkina Faso", "BRK_A3": "BFA", "BRK_DIFF": 0, "BRK_GROUP": null, "BRK_NAME": "Burkina Faso", "CONTINENT": "Africa", "ECONOMY": "7. Least developed region", "FCLASS_AR": null, "FCLASS_BD": null, "FCLASS_BR": null, "FCLASS_CN": null, "FCLASS_DE": null, "FCLASS_EG": null, "FCLASS_ES": null, "FCLASS_FR": null, "FCLASS_GB": null, "FCLASS_GR": null, "FCLASS_ID": null, "FCLASS_IL": null, "FCLASS_IN": null, "FCLASS_ISO": "Admin-0 country", "FCLASS_IT": null, "FCLASS_JP": null, "FCLASS_KO": null, "FCLASS_MA": null, "FCLASS_NL": null, "FCLASS_NP": null, "FCLASS_PK": null, "FCLASS_PL": null, "FCLASS_PS": null, "FCLASS_PT": null, "FCLASS_RU": null, "FCLASS_SA": null, "FCLASS_SE": null, "FCLASS_TLC": "Admin-0 country", "FCLASS_TR": null, "FCLASS_TW": null, "FCLASS_UA": null, "FCLASS_US": null, "FCLASS_VN": null, "FIPS_10": "UV", "FORMAL_EN": "Burkina Faso", "FORMAL_FR": null, "GDP_MD": 15990, "GDP_YEAR": 2019, "GEOUNIT": "Burkina Faso", "GEOU_DIF": 0, "GU_A3": "BFA", "HOMEPART": 1, "INCOME_GRP": "5. Low income", "ISO_A2": "BF", "ISO_A2_EH": "BF", "ISO_A3": "BFA", "ISO_A3_EH": "BFA", "ISO_N3": "854", "ISO_N3_EH": "854", "LABELRANK": 3, "LABEL_X": -1.36388, "LABEL_Y": 12.673048, "LEVEL": 2, "LONG_LEN": 12, "MAPCOLOR13": 11, "MAPCOLOR7": 2, "MAPCOLOR8": 1, "MAPCOLOR9": 5, "MAX_LABEL": 8, "MIN_LABEL": 3, "MIN_ZOOM": 0, "NAME": "Burkina Faso", "NAME_ALT": null, "NAME_AR": "\u0628\u0648\u0631\u0643\u064a\u0646\u0627 \u0641\u0627\u0633\u0648", "NAME_BN": "\u09ac\u09c1\u09b0\u09cd\u0995\u09bf\u09a8\u09be \u09ab\u09be\u09b8\u09cb", "NAME_CIAWF": "Burkina Faso", "NAME_DE": "Burkina Faso", "NAME_EL": "\u039c\u03c0\u03bf\u03c5\u03c1\u03ba\u03af\u03bd\u03b1 \u03a6\u03ac\u03c3\u03bf", "NAME_EN": "Burkina Faso", "NAME_ES": "Burkina Faso", "NAME_FA": "\u0628\u0648\u0631\u06a9\u06cc\u0646\u0627\u0641\u0627\u0633\u0648", "NAME_FR": "Burkina Faso", "NAME_HE": "\u05d1\u05d5\u05e8\u05e7\u05d9\u05e0\u05d4 \u05e4\u05d0\u05e1\u05d5", "NAME_HI": "\u092c\u0941\u0930\u094d\u0915\u093f\u0928\u093e \u092b\u093e\u0938\u094b", "NAME_HU": "Burkina Faso", "NAME_ID": "Burkina Faso", "NAME_IT": "Burkina Faso", "NAME_JA": "\u30d6\u30eb\u30ad\u30ca\u30d5\u30a1\u30bd", "NAME_KO": "\ubd80\ub974\ud0a4\ub098\ud30c\uc18c", "NAME_LEN": 12, "NAME_LONG": "Burkina Faso", "NAME_NL": "Burkina Faso", "NAME_PL": "Burkina Faso", "NAME_PT": "Burkina Faso", "NAME_RU": "\u0411\u0443\u0440\u043a\u0438\u043d\u0430-\u0424\u0430\u0441\u043e", "NAME_SORT": "Burkina Faso", "NAME_SV": "Burkina Faso", "NAME_TR": "Burkina Faso", "NAME_UK": "\u0411\u0443\u0440\u043a\u0456\u043d\u0430-\u0424\u0430\u0441\u043e", "NAME_UR": "\u0628\u0631\u06a9\u06cc\u0646\u0627 \u0641\u0627\u0633\u0648", "NAME_VI": "Burkina Faso", "NAME_ZH": "\u5e03\u57fa\u7eb3\u6cd5\u7d22", "NAME_ZHT": "\u5e03\u57fa\u7d0d\u6cd5\u7d22", "NE_ID": 1159320405, "NOTE_ADM0": null, "NOTE_BRK": null, "POP_EST": 20321378, "POP_RANK": 15, "POP_YEAR": 2019, "POSTAL": "BF", "REGION_UN": "Africa", "REGION_WB": "Sub-Saharan Africa", "SOVEREIGNT": "Burkina Faso", "SOV_A3": "BFA", "SUBREGION": "Western Africa", "SUBUNIT": "Burkina Faso", "SU_A3": "BFA", "SU_DIF": 0, "TINY": -99, "TLC": "1", "TLC_DIFF": null, "TYPE": "Sovereign country", "UN_A3": "854", "WB_A2": "BF", "WB_A3": "BFA", "WIKIDATAID": "Q965", "WOE_ID": 23424978, "WOE_ID_EH": 23424978, "WOE_NOTE": "Exact WOE match as country", "featurecla": "Admin-0 country", "scalerank": 1}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_4796f53fb2715e7ab2d8b0664e494086.bindTooltip(
+                `<div>
+                     Burkina Faso
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        var popup_22e40d7d322e59e33b8d75b4181156fe = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_1e458353bc63210f03c4e9b430b797e8 = $(`<div id="html_1e458353bc63210f03c4e9b430b797e8" style="width: 100.0%; height: 100.0%;">             <div style="width: 220px; font-family: Arial, sans-serif;">                 <h4 style="margin: 0 0 8px 0;">Burkina Faso</h4>                 <p style="margin: 4px 0;"><b>Mission:</b><br>Missies in Afrika</p>                 <a href="https://www.mil.be/nl/onze-missies/missies-in-afrika/" target="_blank">More info</a>             </div>             </div>`)[0];
+                popup_22e40d7d322e59e33b8d75b4181156fe.setContent(html_1e458353bc63210f03c4e9b430b797e8);
+            
+        
+
+        geo_json_4796f53fb2715e7ab2d8b0664e494086.bindPopup(popup_22e40d7d322e59e33b8d75b4181156fe)
+        ;
+
+        
+    
+    
+            geo_json_4796f53fb2715e7ab2d8b0664e494086.addTo(map_54eed05130a338c371a5546625698ebd);
+        
+    
+        function geo_json_62e4beeb602bcae2391db8bc3f9aea8b_styler(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"color": "#333333", "fillColor": "#ff4444", "fillOpacity": 0.6, "weight": 1.5};
+            }
+        }
+        function geo_json_62e4beeb602bcae2391db8bc3f9aea8b_highlighter(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"fillOpacity": 0.8, "weight": 3};
+            }
+        }
+
+        function geo_json_62e4beeb602bcae2391db8bc3f9aea8b_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_62e4beeb602bcae2391db8bc3f9aea8b.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_62e4beeb602bcae2391db8bc3f9aea8b_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_62e4beeb602bcae2391db8bc3f9aea8b = L.geoJson(null, {
+                onEachFeature: geo_json_62e4beeb602bcae2391db8bc3f9aea8b_onEachFeature,
+            
+                style: geo_json_62e4beeb602bcae2391db8bc3f9aea8b_styler,
+            ...{
+}
+        });
+
+        function geo_json_62e4beeb602bcae2391db8bc3f9aea8b_add (data) {
+            geo_json_62e4beeb602bcae2391db8bc3f9aea8b
+                .addData(data);
+        }
+            geo_json_62e4beeb602bcae2391db8bc3f9aea8b_add({"features": [{"bbox": [46.568713, 28.526063, 48.416094, 30.05907], "geometry": {"coordinates": [[[47.974519, 29.975819], [48.183189, 29.534477], [48.093943, 29.306299], [48.416094, 28.552004], [47.708851, 28.526063], [47.459822, 29.002519], [46.568713, 29.099025], [47.302622, 30.05907], [47.974519, 29.975819]]], "type": "Polygon"}, "properties": {"ABBREV": "Kwt.", "ABBREV_LEN": 4, "ADM0_A3": "KWT", "ADM0_A3_AR": "KWT", "ADM0_A3_BD": "KWT", "ADM0_A3_BR": "KWT", "ADM0_A3_CN": "KWT", "ADM0_A3_DE": "KWT", "ADM0_A3_EG": "KWT", "ADM0_A3_ES": "KWT", "ADM0_A3_FR": "KWT", "ADM0_A3_GB": "KWT", "ADM0_A3_GR": "KWT", "ADM0_A3_ID": "KWT", "ADM0_A3_IL": "KWT", "ADM0_A3_IN": "KWT", "ADM0_A3_IT": "KWT", "ADM0_A3_JP": "KWT", "ADM0_A3_KO": "KWT", "ADM0_A3_MA": "KWT", "ADM0_A3_NL": "KWT", "ADM0_A3_NP": "KWT", "ADM0_A3_PK": "KWT", "ADM0_A3_PL": "KWT", "ADM0_A3_PS": "KWT", "ADM0_A3_PT": "KWT", "ADM0_A3_RU": "KWT", "ADM0_A3_SA": "KWT", "ADM0_A3_SE": "KWT", "ADM0_A3_TR": "KWT", "ADM0_A3_TW": "KWT", "ADM0_A3_UA": "KWT", "ADM0_A3_UN": -99, "ADM0_A3_US": "KWT", "ADM0_A3_VN": "KWT", "ADM0_A3_WB": -99, "ADM0_DIF": 0, "ADM0_DIFF": null, "ADM0_ISO": "KWT", "ADM0_TLC": "KWT", "ADMIN": "Kuwait", "BRK_A3": "KWT", "BRK_DIFF": 0, "BRK_GROUP": null, "BRK_NAME": "Kuwait", "CONTINENT": "Asia", "ECONOMY": "6. Developing region", "FCLASS_AR": null, "FCLASS_BD": null, "FCLASS_BR": null, "FCLASS_CN": null, "FCLASS_DE": null, "FCLASS_EG": null, "FCLASS_ES": null, "FCLASS_FR": null, "FCLASS_GB": null, "FCLASS_GR": null, "FCLASS_ID": null, "FCLASS_IL": null, "FCLASS_IN": null, "FCLASS_ISO": "Admin-0 country", "FCLASS_IT": null, "FCLASS_JP": null, "FCLASS_KO": null, "FCLASS_MA": null, "FCLASS_NL": null, "FCLASS_NP": null, "FCLASS_PK": null, "FCLASS_PL": null, "FCLASS_PS": null, "FCLASS_PT": null, "FCLASS_RU": null, "FCLASS_SA": null, "FCLASS_SE": null, "FCLASS_TLC": "Admin-0 country", "FCLASS_TR": null, "FCLASS_TW": null, "FCLASS_UA": null, "FCLASS_US": null, "FCLASS_VN": null, "FIPS_10": "KU", "FORMAL_EN": "State of Kuwait", "FORMAL_FR": null, "GDP_MD": 134628, "GDP_YEAR": 2019, "GEOUNIT": "Kuwait", "GEOU_DIF": 0, "GU_A3": "KWT", "HOMEPART": 1, "INCOME_GRP": "2. High income: nonOECD", "ISO_A2": "KW", "ISO_A2_EH": "KW", "ISO_A3": "KWT", "ISO_A3_EH": "KWT", "ISO_N3": "414", "ISO_N3_EH": "414", "LABELRANK": 6, "LABEL_X": 47.313999, "LABEL_Y": 29.413628, "LEVEL": 2, "LONG_LEN": 6, "MAPCOLOR13": 2, "MAPCOLOR7": 2, "MAPCOLOR8": 2, "MAPCOLOR9": 2, "MAX_LABEL": 10, "MIN_LABEL": 5, "MIN_ZOOM": 0, "NAME": "Kuwait", "NAME_ALT": null, "NAME_AR": "\u0627\u0644\u0643\u0648\u064a\u062a", "NAME_BN": "\u0995\u09c1\u09af\u09bc\u09c7\u09a4", "NAME_CIAWF": "Kuwait", "NAME_DE": "Kuwait", "NAME_EL": "\u039a\u03bf\u03c5\u03b2\u03ad\u03b9\u03c4", "NAME_EN": "Kuwait", "NAME_ES": "Kuwait", "NAME_FA": "\u06a9\u0648\u06cc\u062a", "NAME_FR": "Kowe\u00eft", "NAME_HE": "\u05db\u05d5\u05d5\u05d9\u05ea", "NAME_HI": "\u0915\u0941\u0935\u0948\u0924", "NAME_HU": "Kuvait", "NAME_ID": "Kuwait", "NAME_IT": "Kuwait", "NAME_JA": "\u30af\u30a6\u30a7\u30fc\u30c8", "NAME_KO": "\ucfe0\uc6e8\uc774\ud2b8", "NAME_LEN": 6, "NAME_LONG": "Kuwait", "NAME_NL": "Koeweit", "NAME_PL": "Kuwejt", "NAME_PT": "Kuwait", "NAME_RU": "\u041a\u0443\u0432\u0435\u0439\u0442", "NAME_SORT": "Kuwait", "NAME_SV": "Kuwait", "NAME_TR": "Kuveyt", "NAME_UK": "\u041a\u0443\u0432\u0435\u0439\u0442", "NAME_UR": "\u06a9\u0648\u06cc\u062a", "NAME_VI": "Kuwait", "NAME_ZH": "\u79d1\u5a01\u7279", "NAME_ZHT": "\u79d1\u5a01\u7279", "NE_ID": 1159321009, "NOTE_ADM0": null, "NOTE_BRK": null, "POP_EST": 4207083, "POP_RANK": 12, "POP_YEAR": 2019, "POSTAL": "KW", "REGION_UN": "Asia", "REGION_WB": "Middle East \u0026 North Africa", "SOVEREIGNT": "Kuwait", "SOV_A3": "KWT", "SUBREGION": "Western Asia", "SUBUNIT": "Kuwait", "SU_A3": "KWT", "SU_DIF": 0, "TINY": -99, "TLC": "1", "TLC_DIFF": null, "TYPE": "Sovereign country", "UN_A3": "414", "WB_A2": "KW", "WB_A3": "KWT", "WIKIDATAID": "Q817", "WOE_ID": 23424870, "WOE_ID_EH": 23424870, "WOE_NOTE": "Exact WOE match as country", "featurecla": "Admin-0 country", "scalerank": 1}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_62e4beeb602bcae2391db8bc3f9aea8b.bindTooltip(
+                `<div>
+                     Kuwait
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        var popup_201827607f3a03a1821350c35cf2ca95 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_d3aa7107dcfb5e187583dc0c4ad6d706 = $(`<div id="html_d3aa7107dcfb5e187583dc0c4ad6d706" style="width: 100.0%; height: 100.0%;">             <div style="width: 220px; font-family: Arial, sans-serif;">                 <h4 style="margin: 0 0 8px 0;">Kuwait</h4>                 <p style="margin: 4px 0;"><b>Mission:</b><br>Missie Inherent Resolve</p>                 <a href="https://www.mil.be/nl/onze-missies/missie-inherent-resolve/" target="_blank">More info</a>             </div>             </div>`)[0];
+                popup_201827607f3a03a1821350c35cf2ca95.setContent(html_d3aa7107dcfb5e187583dc0c4ad6d706);
+            
+        
+
+        geo_json_62e4beeb602bcae2391db8bc3f9aea8b.bindPopup(popup_201827607f3a03a1821350c35cf2ca95)
+        ;
+
+        
+    
+    
+            geo_json_62e4beeb602bcae2391db8bc3f9aea8b.addTo(map_54eed05130a338c371a5546625698ebd);
+        
+    
+        function geo_json_dd514c9c5507eeeb1f3b7a6fa5aa4fa5_styler(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"color": "#333333", "fillColor": "#3388ff", "fillOpacity": 0.6, "weight": 1.5};
+            }
+        }
+        function geo_json_dd514c9c5507eeeb1f3b7a6fa5aa4fa5_highlighter(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"fillOpacity": 0.8, "weight": 3};
+            }
+        }
+
+        function geo_json_dd514c9c5507eeeb1f3b7a6fa5aa4fa5_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_dd514c9c5507eeeb1f3b7a6fa5aa4fa5.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_dd514c9c5507eeeb1f3b7a6fa5aa4fa5_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_dd514c9c5507eeeb1f3b7a6fa5aa4fa5 = L.geoJson(null, {
+                onEachFeature: geo_json_dd514c9c5507eeeb1f3b7a6fa5aa4fa5_onEachFeature,
+            
+                style: geo_json_dd514c9c5507eeeb1f3b7a6fa5aa4fa5_styler,
+            ...{
+}
+        });
+
+        function geo_json_dd514c9c5507eeeb1f3b7a6fa5aa4fa5_add (data) {
+            geo_json_dd514c9c5507eeeb1f3b7a6fa5aa4fa5
+                .addData(data);
+        }
+            geo_json_dd514c9c5507eeeb1f3b7a6fa5aa4fa5_add({"features": [{"bbox": [20.220192, 43.688445, 29.626543, 48.220881], "geometry": {"coordinates": [[[28.233554, 45.488283], [28.679779, 45.304031], [29.149725, 45.464925], [29.603289, 45.293308], [29.626543, 45.035391], [29.141612, 44.82021], [28.837858, 44.913874], [28.558081, 43.707462], [27.970107, 43.812468], [27.2424, 44.175986], [26.065159, 43.943494], [25.569272, 43.688445], [24.100679, 43.741051], [23.332302, 43.897011], [22.944832, 43.823785], [22.65715, 44.234923], [22.474008, 44.409228], [22.705726, 44.578003], [22.459022, 44.702517], [22.145088, 44.478422], [21.562023, 44.768947], [21.483526, 45.18117], [20.874313, 45.416375], [20.762175, 45.734573], [20.220192, 46.127469], [21.021952, 46.316088], [21.626515, 46.994238], [22.099768, 47.672439], [22.710531, 47.882194], [23.142236, 48.096341], [23.760958, 47.985598], [24.402056, 47.981878], [24.866317, 47.737526], [25.207743, 47.891056], [25.945941, 47.987149], [26.19745, 48.220881], [26.619337, 48.220726], [26.924176, 48.123264], [27.233873, 47.826771], [27.551166, 47.405117], [28.12803, 46.810476], [28.160018, 46.371563], [28.054443, 45.944586], [28.233554, 45.488283]]], "type": "Polygon"}, "properties": {"ABBREV": "Rom.", "ABBREV_LEN": 4, "ADM0_A3": "ROU", "ADM0_A3_AR": "ROU", "ADM0_A3_BD": "ROU", "ADM0_A3_BR": "ROU", "ADM0_A3_CN": "ROU", "ADM0_A3_DE": "ROU", "ADM0_A3_EG": "ROU", "ADM0_A3_ES": "ROU", "ADM0_A3_FR": "ROU", "ADM0_A3_GB": "ROU", "ADM0_A3_GR": "ROU", "ADM0_A3_ID": "ROU", "ADM0_A3_IL": "ROU", "ADM0_A3_IN": "ROU", "ADM0_A3_IT": "ROU", "ADM0_A3_JP": "ROU", "ADM0_A3_KO": "ROU", "ADM0_A3_MA": "ROU", "ADM0_A3_NL": "ROU", "ADM0_A3_NP": "ROU", "ADM0_A3_PK": "ROU", "ADM0_A3_PL": "ROU", "ADM0_A3_PS": "ROU", "ADM0_A3_PT": "ROU", "ADM0_A3_RU": "ROU", "ADM0_A3_SA": "ROU", "ADM0_A3_SE": "ROU", "ADM0_A3_TR": "ROU", "ADM0_A3_TW": "ROU", "ADM0_A3_UA": "ROU", "ADM0_A3_UN": -99, "ADM0_A3_US": "ROU", "ADM0_A3_VN": "ROU", "ADM0_A3_WB": -99, "ADM0_DIF": 0, "ADM0_DIFF": null, "ADM0_ISO": "ROU", "ADM0_TLC": "ROU", "ADMIN": "Romania", "BRK_A3": "ROU", "BRK_DIFF": 0, "BRK_GROUP": null, "BRK_NAME": "Romania", "CONTINENT": "Europe", "ECONOMY": "2. Developed region: nonG7", "FCLASS_AR": null, "FCLASS_BD": null, "FCLASS_BR": null, "FCLASS_CN": null, "FCLASS_DE": null, "FCLASS_EG": null, "FCLASS_ES": null, "FCLASS_FR": null, "FCLASS_GB": null, "FCLASS_GR": null, "FCLASS_ID": null, "FCLASS_IL": null, "FCLASS_IN": null, "FCLASS_ISO": "Admin-0 country", "FCLASS_IT": null, "FCLASS_JP": null, "FCLASS_KO": null, "FCLASS_MA": null, "FCLASS_NL": null, "FCLASS_NP": null, "FCLASS_PK": null, "FCLASS_PL": null, "FCLASS_PS": null, "FCLASS_PT": null, "FCLASS_RU": null, "FCLASS_SA": null, "FCLASS_SE": null, "FCLASS_TLC": "Admin-0 country", "FCLASS_TR": null, "FCLASS_TW": null, "FCLASS_UA": null, "FCLASS_US": null, "FCLASS_VN": null, "FIPS_10": "RO", "FORMAL_EN": "Romania", "FORMAL_FR": null, "GDP_MD": 250077, "GDP_YEAR": 2019, "GEOUNIT": "Romania", "GEOU_DIF": 0, "GU_A3": "ROU", "HOMEPART": 1, "INCOME_GRP": "3. Upper middle income", "ISO_A2": "RO", "ISO_A2_EH": "RO", "ISO_A3": "ROU", "ISO_A3_EH": "ROU", "ISO_N3": "642", "ISO_N3_EH": "642", "LABELRANK": 3, "LABEL_X": 24.972624, "LABEL_Y": 45.733237, "LEVEL": 2, "LONG_LEN": 7, "MAPCOLOR13": 13, "MAPCOLOR7": 1, "MAPCOLOR8": 4, "MAPCOLOR9": 3, "MAX_LABEL": 8, "MIN_LABEL": 3, "MIN_ZOOM": 0, "NAME": "Romania", "NAME_ALT": null, "NAME_AR": "\u0631\u0648\u0645\u0627\u0646\u064a\u0627", "NAME_BN": "\u09b0\u09cb\u09ae\u09be\u09a8\u09bf\u09af\u09bc\u09be", "NAME_CIAWF": "Romania", "NAME_DE": "Rum\u00e4nien", "NAME_EL": "\u03a1\u03bf\u03c5\u03bc\u03b1\u03bd\u03af\u03b1", "NAME_EN": "Romania", "NAME_ES": "Rumania", "NAME_FA": "\u0631\u0648\u0645\u0627\u0646\u06cc", "NAME_FR": "Roumanie", "NAME_HE": "\u05e8\u05d5\u05de\u05e0\u05d9\u05d4", "NAME_HI": "\u0930\u094b\u092e\u093e\u0928\u093f\u092f\u093e", "NAME_HU": "Rom\u00e1nia", "NAME_ID": "Rumania", "NAME_IT": "Romania", "NAME_JA": "\u30eb\u30fc\u30de\u30cb\u30a2", "NAME_KO": "\ub8e8\ub9c8\ub2c8\uc544", "NAME_LEN": 7, "NAME_LONG": "Romania", "NAME_NL": "Roemeni\u00eb", "NAME_PL": "Rumunia", "NAME_PT": "Rom\u00e9nia", "NAME_RU": "\u0420\u0443\u043c\u044b\u043d\u0438\u044f", "NAME_SORT": "Romania", "NAME_SV": "Rum\u00e4nien", "NAME_TR": "Romanya", "NAME_UK": "\u0420\u0443\u043c\u0443\u043d\u0456\u044f", "NAME_UR": "\u0631\u0648\u0645\u0627\u0646\u06cc\u06c1", "NAME_VI": "Romania", "NAME_ZH": "\u7f57\u9a6c\u5c3c\u4e9a", "NAME_ZHT": "\u7f85\u99ac\u5c3c\u4e9e", "NE_ID": 1159321199, "NOTE_ADM0": null, "NOTE_BRK": null, "POP_EST": 19356544, "POP_RANK": 14, "POP_YEAR": 2019, "POSTAL": "RO", "REGION_UN": "Europe", "REGION_WB": "Europe \u0026 Central Asia", "SOVEREIGNT": "Romania", "SOV_A3": "ROU", "SUBREGION": "Eastern Europe", "SUBUNIT": "Romania", "SU_A3": "ROU", "SU_DIF": 0, "TINY": -99, "TLC": "1", "TLC_DIFF": null, "TYPE": "Sovereign country", "UN_A3": "642", "WB_A2": "RO", "WB_A3": "ROM", "WIKIDATAID": "Q218", "WOE_ID": 23424933, "WOE_ID_EH": 23424933, "WOE_NOTE": "Exact WOE match as country", "featurecla": "Admin-0 country", "scalerank": 1}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_dd514c9c5507eeeb1f3b7a6fa5aa4fa5.bindTooltip(
+                `<div>
+                     Romania
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        var popup_c060f6afad068f9cf002caec4349bae4 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_2723fc80a5cfdf8bbc037eb2090e0f20 = $(`<div id="html_2723fc80a5cfdf8bbc037eb2090e0f20" style="width: 100.0%; height: 100.0%;">             <div style="width: 220px; font-family: Arial, sans-serif;">                 <h4 style="margin: 0 0 8px 0;">Romania</h4>                 <p style="margin: 4px 0;"><b>Mission:</b><br>Missies op de oostflank van Europa</p>                 <a href="https://www.mil.be/nl/onze-missies/missies-op-de-oostflank-van-europa/" target="_blank">More info</a>             </div>             </div>`)[0];
+                popup_c060f6afad068f9cf002caec4349bae4.setContent(html_2723fc80a5cfdf8bbc037eb2090e0f20);
+            
+        
+
+        geo_json_dd514c9c5507eeeb1f3b7a6fa5aa4fa5.bindPopup(popup_c060f6afad068f9cf002caec4349bae4)
+        ;
+
+        
+    
+    
+            geo_json_dd514c9c5507eeeb1f3b7a6fa5aa4fa5.addTo(map_54eed05130a338c371a5546625698ebd);
+        
+    
+        function geo_json_7589140532b3ed70ff853be6eeddd0a7_styler(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"color": "#333333", "fillColor": "#3388ff", "fillOpacity": 0.6, "weight": 1.5};
+            }
+        }
+        function geo_json_7589140532b3ed70ff853be6eeddd0a7_highlighter(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"fillOpacity": 0.8, "weight": 3};
+            }
+        }
+
+        function geo_json_7589140532b3ed70ff853be6eeddd0a7_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_7589140532b3ed70ff853be6eeddd0a7.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_7589140532b3ed70ff853be6eeddd0a7_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_7589140532b3ed70ff853be6eeddd0a7 = L.geoJson(null, {
+                onEachFeature: geo_json_7589140532b3ed70ff853be6eeddd0a7_onEachFeature,
+            
+                style: geo_json_7589140532b3ed70ff853be6eeddd0a7_styler,
+            ...{
+}
+        });
+
+        function geo_json_7589140532b3ed70ff853be6eeddd0a7_add (data) {
+            geo_json_7589140532b3ed70ff853be6eeddd0a7
+                .addData(data);
+        }
+            geo_json_7589140532b3ed70ff853be6eeddd0a7_add({"features": [{"bbox": [21.0558, 53.905702, 26.588279, 56.372528], "geometry": {"coordinates": [[[26.494331, 55.615107], [26.588279, 55.167176], [25.768433, 54.846963], [25.536354, 54.282423], [24.450684, 53.905702], [23.484128, 53.912498], [23.243987, 54.220567], [22.731099, 54.327537], [22.651052, 54.582741], [22.757764, 54.856574], [22.315724, 55.015299], [21.268449, 55.190482], [21.0558, 56.031076], [22.201157, 56.337802], [23.878264, 56.273671], [24.860684, 56.372528], [25.000934, 56.164531], [25.533047, 56.100297], [26.494331, 55.615107]]], "type": "Polygon"}, "properties": {"ABBREV": "Lith.", "ABBREV_LEN": 5, "ADM0_A3": "LTU", "ADM0_A3_AR": "LTU", "ADM0_A3_BD": "LTU", "ADM0_A3_BR": "LTU", "ADM0_A3_CN": "LTU", "ADM0_A3_DE": "LTU", "ADM0_A3_EG": "LTU", "ADM0_A3_ES": "LTU", "ADM0_A3_FR": "LTU", "ADM0_A3_GB": "LTU", "ADM0_A3_GR": "LTU", "ADM0_A3_ID": "LTU", "ADM0_A3_IL": "LTU", "ADM0_A3_IN": "LTU", "ADM0_A3_IT": "LTU", "ADM0_A3_JP": "LTU", "ADM0_A3_KO": "LTU", "ADM0_A3_MA": "LTU", "ADM0_A3_NL": "LTU", "ADM0_A3_NP": "LTU", "ADM0_A3_PK": "LTU", "ADM0_A3_PL": "LTU", "ADM0_A3_PS": "LTU", "ADM0_A3_PT": "LTU", "ADM0_A3_RU": "LTU", "ADM0_A3_SA": "LTU", "ADM0_A3_SE": "LTU", "ADM0_A3_TR": "LTU", "ADM0_A3_TW": "LTU", "ADM0_A3_UA": "LTU", "ADM0_A3_UN": -99, "ADM0_A3_US": "LTU", "ADM0_A3_VN": "LTU", "ADM0_A3_WB": -99, "ADM0_DIF": 0, "ADM0_DIFF": null, "ADM0_ISO": "LTU", "ADM0_TLC": "LTU", "ADMIN": "Lithuania", "BRK_A3": "LTU", "BRK_DIFF": 0, "BRK_GROUP": null, "BRK_NAME": "Lithuania", "CONTINENT": "Europe", "ECONOMY": "2. Developed region: nonG7", "FCLASS_AR": null, "FCLASS_BD": null, "FCLASS_BR": null, "FCLASS_CN": null, "FCLASS_DE": null, "FCLASS_EG": null, "FCLASS_ES": null, "FCLASS_FR": null, "FCLASS_GB": null, "FCLASS_GR": null, "FCLASS_ID": null, "FCLASS_IL": null, "FCLASS_IN": null, "FCLASS_ISO": "Admin-0 country", "FCLASS_IT": null, "FCLASS_JP": null, "FCLASS_KO": null, "FCLASS_MA": null, "FCLASS_NL": null, "FCLASS_NP": null, "FCLASS_PK": null, "FCLASS_PL": null, "FCLASS_PS": null, "FCLASS_PT": null, "FCLASS_RU": null, "FCLASS_SA": null, "FCLASS_SE": null, "FCLASS_TLC": "Admin-0 country", "FCLASS_TR": null, "FCLASS_TW": null, "FCLASS_UA": null, "FCLASS_US": null, "FCLASS_VN": null, "FIPS_10": "LH", "FORMAL_EN": "Republic of Lithuania", "FORMAL_FR": null, "GDP_MD": 54627, "GDP_YEAR": 2019, "GEOUNIT": "Lithuania", "GEOU_DIF": 0, "GU_A3": "LTU", "HOMEPART": 1, "INCOME_GRP": "3. Upper middle income", "ISO_A2": "LT", "ISO_A2_EH": "LT", "ISO_A3": "LTU", "ISO_A3_EH": "LTU", "ISO_N3": "440", "ISO_N3_EH": "440", "LABELRANK": 5, "LABEL_X": 24.089932, "LABEL_Y": 55.103703, "LEVEL": 2, "LONG_LEN": 9, "MAPCOLOR13": 9, "MAPCOLOR7": 6, "MAPCOLOR8": 3, "MAPCOLOR9": 3, "MAX_LABEL": 9, "MIN_LABEL": 4, "MIN_ZOOM": 0, "NAME": "Lithuania", "NAME_ALT": null, "NAME_AR": "\u0644\u064a\u062a\u0648\u0627\u0646\u064a\u0627", "NAME_BN": "\u09b2\u09bf\u09a5\u09c1\u09af\u09bc\u09be\u09a8\u09bf\u09af\u09bc\u09be", "NAME_CIAWF": "Lithuania", "NAME_DE": "Litauen", "NAME_EL": "\u039b\u03b9\u03b8\u03bf\u03c5\u03b1\u03bd\u03af\u03b1", "NAME_EN": "Lithuania", "NAME_ES": "Lituania", "NAME_FA": "\u0644\u06cc\u062a\u0648\u0627\u0646\u06cc", "NAME_FR": "Lituanie", "NAME_HE": "\u05dc\u05d9\u05d8\u05d0", "NAME_HI": "\u0932\u093f\u0925\u0941\u0906\u0928\u093f\u092f\u093e", "NAME_HU": "Litv\u00e1nia", "NAME_ID": "Lituania", "NAME_IT": "Lituania", "NAME_JA": "\u30ea\u30c8\u30a2\u30cb\u30a2", "NAME_KO": "\ub9ac\ud22c\uc544\ub2c8\uc544", "NAME_LEN": 9, "NAME_LONG": "Lithuania", "NAME_NL": "Litouwen", "NAME_PL": "Litwa", "NAME_PT": "Litu\u00e2nia", "NAME_RU": "\u041b\u0438\u0442\u0432\u0430", "NAME_SORT": "Lithuania", "NAME_SV": "Litauen", "NAME_TR": "Litvanya", "NAME_UK": "\u041b\u0438\u0442\u0432\u0430", "NAME_UR": "\u0644\u062a\u06be\u0648\u0648\u06cc\u0646\u06cc\u0627", "NAME_VI": "Litva", "NAME_ZH": "\u7acb\u9676\u5b9b", "NAME_ZHT": "\u7acb\u9676\u5b9b", "NE_ID": 1159321029, "NOTE_ADM0": null, "NOTE_BRK": null, "POP_EST": 2786844, "POP_RANK": 12, "POP_YEAR": 2019, "POSTAL": "LT", "REGION_UN": "Europe", "REGION_WB": "Europe \u0026 Central Asia", "SOVEREIGNT": "Lithuania", "SOV_A3": "LTU", "SUBREGION": "Northern Europe", "SUBUNIT": "Lithuania", "SU_A3": "LTU", "SU_DIF": 0, "TINY": -99, "TLC": "1", "TLC_DIFF": null, "TYPE": "Sovereign country", "UN_A3": "440", "WB_A2": "LT", "WB_A3": "LTU", "WIKIDATAID": "Q37", "WOE_ID": 23424875, "WOE_ID_EH": 23424875, "WOE_NOTE": "Exact WOE match as country", "featurecla": "Admin-0 country", "scalerank": 1}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_7589140532b3ed70ff853be6eeddd0a7.bindTooltip(
+                `<div>
+                     Lithuania
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        var popup_8c548108a17b164e4b0ad40b0b76ff98 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_7dd09fcbd6a71e83a7503cac1f72b29c = $(`<div id="html_7dd09fcbd6a71e83a7503cac1f72b29c" style="width: 100.0%; height: 100.0%;">             <div style="width: 220px; font-family: Arial, sans-serif;">                 <h4 style="margin: 0 0 8px 0;">Lithuania</h4>                 <p style="margin: 4px 0;"><b>Mission:</b><br>Missies op de oostflank van Europa</p>                 <a href="https://www.mil.be/nl/onze-missies/missies-op-de-oostflank-van-europa/" target="_blank">More info</a>             </div>             </div>`)[0];
+                popup_8c548108a17b164e4b0ad40b0b76ff98.setContent(html_7dd09fcbd6a71e83a7503cac1f72b29c);
+            
+        
+
+        geo_json_7589140532b3ed70ff853be6eeddd0a7.bindPopup(popup_8c548108a17b164e4b0ad40b0b76ff98)
+        ;
+
+        
+    
+    
+            geo_json_7589140532b3ed70ff853be6eeddd0a7.addTo(map_54eed05130a338c371a5546625698ebd);
+        
+    
+        function geo_json_af3f8446f8a57e0b8b72e27ec29f34e7_styler(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"color": "#333333", "fillColor": "#3388ff", "fillOpacity": 0.6, "weight": 1.5};
+            }
+        }
+        function geo_json_af3f8446f8a57e0b8b72e27ec29f34e7_highlighter(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"fillOpacity": 0.8, "weight": 3};
+            }
+        }
+
+        function geo_json_af3f8446f8a57e0b8b72e27ec29f34e7_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_af3f8446f8a57e0b8b72e27ec29f34e7.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_af3f8446f8a57e0b8b72e27ec29f34e7_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_af3f8446f8a57e0b8b72e27ec29f34e7 = L.geoJson(null, {
+                onEachFeature: geo_json_af3f8446f8a57e0b8b72e27ec29f34e7_onEachFeature,
+            
+                style: geo_json_af3f8446f8a57e0b8b72e27ec29f34e7_styler,
+            ...{
+}
+        });
+
+        function geo_json_af3f8446f8a57e0b8b72e27ec29f34e7_add (data) {
+            geo_json_af3f8446f8a57e0b8b72e27ec29f34e7
+                .addData(data);
+        }
+            geo_json_af3f8446f8a57e0b8b72e27ec29f34e7_add({"features": [{"bbox": [21.0558, 55.615107, 28.176709, 57.970157], "geometry": {"coordinates": [[[27.288185, 57.474528], [27.770016, 57.244258], [27.855282, 56.759326], [28.176709, 56.16913], [27.10246, 55.783314], [26.494331, 55.615107], [25.533047, 56.100297], [25.000934, 56.164531], [24.860684, 56.372528], [23.878264, 56.273671], [22.201157, 56.337802], [21.0558, 56.031076], [21.090424, 56.783873], [21.581866, 57.411871], [22.524341, 57.753374], [23.318453, 57.006236], [24.12073, 57.025693], [24.312863, 57.793424], [25.164594, 57.970157], [25.60281, 57.847529], [26.463532, 57.476389], [27.288185, 57.474528]]], "type": "Polygon"}, "properties": {"ABBREV": "Lat.", "ABBREV_LEN": 4, "ADM0_A3": "LVA", "ADM0_A3_AR": "LVA", "ADM0_A3_BD": "LVA", "ADM0_A3_BR": "LVA", "ADM0_A3_CN": "LVA", "ADM0_A3_DE": "LVA", "ADM0_A3_EG": "LVA", "ADM0_A3_ES": "LVA", "ADM0_A3_FR": "LVA", "ADM0_A3_GB": "LVA", "ADM0_A3_GR": "LVA", "ADM0_A3_ID": "LVA", "ADM0_A3_IL": "LVA", "ADM0_A3_IN": "LVA", "ADM0_A3_IT": "LVA", "ADM0_A3_JP": "LVA", "ADM0_A3_KO": "LVA", "ADM0_A3_MA": "LVA", "ADM0_A3_NL": "LVA", "ADM0_A3_NP": "LVA", "ADM0_A3_PK": "LVA", "ADM0_A3_PL": "LVA", "ADM0_A3_PS": "LVA", "ADM0_A3_PT": "LVA", "ADM0_A3_RU": "LVA", "ADM0_A3_SA": "LVA", "ADM0_A3_SE": "LVA", "ADM0_A3_TR": "LVA", "ADM0_A3_TW": "LVA", "ADM0_A3_UA": "LVA", "ADM0_A3_UN": -99, "ADM0_A3_US": "LVA", "ADM0_A3_VN": "LVA", "ADM0_A3_WB": -99, "ADM0_DIF": 0, "ADM0_DIFF": null, "ADM0_ISO": "LVA", "ADM0_TLC": "LVA", "ADMIN": "Latvia", "BRK_A3": "LVA", "BRK_DIFF": 0, "BRK_GROUP": null, "BRK_NAME": "Latvia", "CONTINENT": "Europe", "ECONOMY": "2. Developed region: nonG7", "FCLASS_AR": null, "FCLASS_BD": null, "FCLASS_BR": null, "FCLASS_CN": null, "FCLASS_DE": null, "FCLASS_EG": null, "FCLASS_ES": null, "FCLASS_FR": null, "FCLASS_GB": null, "FCLASS_GR": null, "FCLASS_ID": null, "FCLASS_IL": null, "FCLASS_IN": null, "FCLASS_ISO": "Admin-0 country", "FCLASS_IT": null, "FCLASS_JP": null, "FCLASS_KO": null, "FCLASS_MA": null, "FCLASS_NL": null, "FCLASS_NP": null, "FCLASS_PK": null, "FCLASS_PL": null, "FCLASS_PS": null, "FCLASS_PT": null, "FCLASS_RU": null, "FCLASS_SA": null, "FCLASS_SE": null, "FCLASS_TLC": "Admin-0 country", "FCLASS_TR": null, "FCLASS_TW": null, "FCLASS_UA": null, "FCLASS_US": null, "FCLASS_VN": null, "FIPS_10": "LG", "FORMAL_EN": "Republic of Latvia", "FORMAL_FR": null, "GDP_MD": 34102, "GDP_YEAR": 2019, "GEOUNIT": "Latvia", "GEOU_DIF": 0, "GU_A3": "LVA", "HOMEPART": 1, "INCOME_GRP": "3. Upper middle income", "ISO_A2": "LV", "ISO_A2_EH": "LV", "ISO_A3": "LVA", "ISO_A3_EH": "LVA", "ISO_N3": "428", "ISO_N3_EH": "428", "LABELRANK": 5, "LABEL_X": 25.458723, "LABEL_Y": 57.066872, "LEVEL": 2, "LONG_LEN": 6, "MAPCOLOR13": 13, "MAPCOLOR7": 4, "MAPCOLOR8": 7, "MAPCOLOR9": 6, "MAX_LABEL": 9, "MIN_LABEL": 4, "MIN_ZOOM": 0, "NAME": "Latvia", "NAME_ALT": null, "NAME_AR": "\u0644\u0627\u062a\u0641\u064a\u0627", "NAME_BN": "\u09b2\u09be\u09a4\u09ad\u09bf\u09af\u09bc\u09be", "NAME_CIAWF": "Latvia", "NAME_DE": "Lettland", "NAME_EL": "\u039b\u03b5\u03c4\u03bf\u03bd\u03af\u03b1", "NAME_EN": "Latvia", "NAME_ES": "Letonia", "NAME_FA": "\u0644\u062a\u0648\u0646\u06cc", "NAME_FR": "Lettonie", "NAME_HE": "\u05dc\u05d8\u05d1\u05d9\u05d4", "NAME_HI": "\u0932\u093e\u0924\u0935\u093f\u092f\u093e", "NAME_HU": "Lettorsz\u00e1g", "NAME_ID": "Latvia", "NAME_IT": "Lettonia", "NAME_JA": "\u30e9\u30c8\u30d3\u30a2", "NAME_KO": "\ub77c\ud2b8\ube44\uc544", "NAME_LEN": 6, "NAME_LONG": "Latvia", "NAME_NL": "Letland", "NAME_PL": "\u0141otwa", "NAME_PT": "Let\u00f3nia", "NAME_RU": "\u041b\u0430\u0442\u0432\u0438\u044f", "NAME_SORT": "Latvia", "NAME_SV": "Lettland", "NAME_TR": "Letonya", "NAME_UK": "\u041b\u0430\u0442\u0432\u0456\u044f", "NAME_UR": "\u0644\u0679\u0648\u06cc\u0627", "NAME_VI": "Latvia", "NAME_ZH": "\u62c9\u8131\u7ef4\u4e9a", "NAME_ZHT": "\u62c9\u812b\u7dad\u4e9e", "NE_ID": 1159321033, "NOTE_ADM0": null, "NOTE_BRK": null, "POP_EST": 1912789, "POP_RANK": 12, "POP_YEAR": 2019, "POSTAL": "LV", "REGION_UN": "Europe", "REGION_WB": "Europe \u0026 Central Asia", "SOVEREIGNT": "Latvia", "SOV_A3": "LVA", "SUBREGION": "Northern Europe", "SUBUNIT": "Latvia", "SU_A3": "LVA", "SU_DIF": 0, "TINY": -99, "TLC": "1", "TLC_DIFF": null, "TYPE": "Sovereign country", "UN_A3": "428", "WB_A2": "LV", "WB_A3": "LVA", "WIKIDATAID": "Q211", "WOE_ID": 23424874, "WOE_ID_EH": 23424874, "WOE_NOTE": "Exact WOE match as country", "featurecla": "Admin-0 country", "scalerank": 1}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_af3f8446f8a57e0b8b72e27ec29f34e7.bindTooltip(
+                `<div>
+                     Latvia
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        var popup_cdd24d1353f322ecc87fff6cee33ca8c = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_6880455e352c70bb5e147bfba3950fb6 = $(`<div id="html_6880455e352c70bb5e147bfba3950fb6" style="width: 100.0%; height: 100.0%;">             <div style="width: 220px; font-family: Arial, sans-serif;">                 <h4 style="margin: 0 0 8px 0;">Latvia</h4>                 <p style="margin: 4px 0;"><b>Mission:</b><br>Missies op de oostflank van Europa</p>                 <a href="https://www.mil.be/nl/onze-missies/missies-op-de-oostflank-van-europa/" target="_blank">More info</a>             </div>             </div>`)[0];
+                popup_cdd24d1353f322ecc87fff6cee33ca8c.setContent(html_6880455e352c70bb5e147bfba3950fb6);
+            
+        
+
+        geo_json_af3f8446f8a57e0b8b72e27ec29f34e7.bindPopup(popup_cdd24d1353f322ecc87fff6cee33ca8c)
+        ;
+
+        
+    
+    
+            geo_json_af3f8446f8a57e0b8b72e27ec29f34e7.addTo(map_54eed05130a338c371a5546625698ebd);
+        
+    
+        function geo_json_043f8e86a8c817aab1295acf56181fe8_styler(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"color": "#333333", "fillColor": "#3388ff", "fillOpacity": 0.6, "weight": 1.5};
+            }
+        }
+        function geo_json_043f8e86a8c817aab1295acf56181fe8_highlighter(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"fillOpacity": 0.8, "weight": 3};
+            }
+        }
+
+        function geo_json_043f8e86a8c817aab1295acf56181fe8_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_043f8e86a8c817aab1295acf56181fe8.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_043f8e86a8c817aab1295acf56181fe8_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_043f8e86a8c817aab1295acf56181fe8 = L.geoJson(null, {
+                onEachFeature: geo_json_043f8e86a8c817aab1295acf56181fe8_onEachFeature,
+            
+                style: geo_json_043f8e86a8c817aab1295acf56181fe8_styler,
+            ...{
+}
+        });
+
+        function geo_json_043f8e86a8c817aab1295acf56181fe8_add (data) {
+            geo_json_043f8e86a8c817aab1295acf56181fe8
+                .addData(data);
+        }
+            geo_json_043f8e86a8c817aab1295acf56181fe8_add({"features": [{"bbox": [23.339795, 57.474528, 28.131699, 59.61109], "geometry": {"coordinates": [[[27.981127, 59.475373], [27.98112, 59.47537], [28.131699, 59.300825], [27.42015, 58.72457], [27.716686, 57.791899], [27.288185, 57.474528], [26.463532, 57.476389], [25.60281, 57.847529], [25.164594, 57.970157], [24.312863, 57.793424], [24.428928, 58.383413], [24.061198, 58.257375], [23.42656, 58.612753], [23.339795, 59.18724], [24.604214, 59.465854], [25.864189, 59.61109], [26.949136, 59.445803], [27.981114, 59.475388], [27.981127, 59.475373]]], "type": "Polygon"}, "properties": {"ABBREV": "Est.", "ABBREV_LEN": 4, "ADM0_A3": "EST", "ADM0_A3_AR": "EST", "ADM0_A3_BD": "EST", "ADM0_A3_BR": "EST", "ADM0_A3_CN": "EST", "ADM0_A3_DE": "EST", "ADM0_A3_EG": "EST", "ADM0_A3_ES": "EST", "ADM0_A3_FR": "EST", "ADM0_A3_GB": "EST", "ADM0_A3_GR": "EST", "ADM0_A3_ID": "EST", "ADM0_A3_IL": "EST", "ADM0_A3_IN": "EST", "ADM0_A3_IT": "EST", "ADM0_A3_JP": "EST", "ADM0_A3_KO": "EST", "ADM0_A3_MA": "EST", "ADM0_A3_NL": "EST", "ADM0_A3_NP": "EST", "ADM0_A3_PK": "EST", "ADM0_A3_PL": "EST", "ADM0_A3_PS": "EST", "ADM0_A3_PT": "EST", "ADM0_A3_RU": "EST", "ADM0_A3_SA": "EST", "ADM0_A3_SE": "EST", "ADM0_A3_TR": "EST", "ADM0_A3_TW": "EST", "ADM0_A3_UA": "EST", "ADM0_A3_UN": -99, "ADM0_A3_US": "EST", "ADM0_A3_VN": "EST", "ADM0_A3_WB": -99, "ADM0_DIF": 0, "ADM0_DIFF": null, "ADM0_ISO": "EST", "ADM0_TLC": "EST", "ADMIN": "Estonia", "BRK_A3": "EST", "BRK_DIFF": 0, "BRK_GROUP": null, "BRK_NAME": "Estonia", "CONTINENT": "Europe", "ECONOMY": "2. Developed region: nonG7", "FCLASS_AR": null, "FCLASS_BD": null, "FCLASS_BR": null, "FCLASS_CN": null, "FCLASS_DE": null, "FCLASS_EG": null, "FCLASS_ES": null, "FCLASS_FR": null, "FCLASS_GB": null, "FCLASS_GR": null, "FCLASS_ID": null, "FCLASS_IL": null, "FCLASS_IN": null, "FCLASS_ISO": "Admin-0 country", "FCLASS_IT": null, "FCLASS_JP": null, "FCLASS_KO": null, "FCLASS_MA": null, "FCLASS_NL": null, "FCLASS_NP": null, "FCLASS_PK": null, "FCLASS_PL": null, "FCLASS_PS": null, "FCLASS_PT": null, "FCLASS_RU": null, "FCLASS_SA": null, "FCLASS_SE": null, "FCLASS_TLC": "Admin-0 country", "FCLASS_TR": null, "FCLASS_TW": null, "FCLASS_UA": null, "FCLASS_US": null, "FCLASS_VN": null, "FIPS_10": "EN", "FORMAL_EN": "Republic of Estonia", "FORMAL_FR": null, "GDP_MD": 31471, "GDP_YEAR": 2019, "GEOUNIT": "Estonia", "GEOU_DIF": 0, "GU_A3": "EST", "HOMEPART": 1, "INCOME_GRP": "1. High income: OECD", "ISO_A2": "EE", "ISO_A2_EH": "EE", "ISO_A3": "EST", "ISO_A3_EH": "EST", "ISO_N3": "233", "ISO_N3_EH": "233", "LABELRANK": 6, "LABEL_X": 25.867126, "LABEL_Y": 58.724865, "LEVEL": 2, "LONG_LEN": 7, "MAPCOLOR13": 10, "MAPCOLOR7": 3, "MAPCOLOR8": 2, "MAPCOLOR9": 1, "MAX_LABEL": 8, "MIN_LABEL": 3, "MIN_ZOOM": 0, "NAME": "Estonia", "NAME_ALT": null, "NAME_AR": "\u0625\u0633\u062a\u0648\u0646\u064a\u0627", "NAME_BN": "\u098f\u09b8\u09cd\u09a4\u09cb\u09a8\u09bf\u09af\u09bc\u09be", "NAME_CIAWF": "Estonia", "NAME_DE": "Estland", "NAME_EL": "\u0395\u03c3\u03b8\u03bf\u03bd\u03af\u03b1", "NAME_EN": "Estonia", "NAME_ES": "Estonia", "NAME_FA": "\u0627\u0633\u062a\u0648\u0646\u06cc", "NAME_FR": "Estonie", "NAME_HE": "\u05d0\u05e1\u05d8\u05d5\u05e0\u05d9\u05d4", "NAME_HI": "\u090f\u0938\u094d\u091f\u094b\u0928\u093f\u092f\u093e", "NAME_HU": "\u00c9sztorsz\u00e1g", "NAME_ID": "Estonia", "NAME_IT": "Estonia", "NAME_JA": "\u30a8\u30b9\u30c8\u30cb\u30a2", "NAME_KO": "\uc5d0\uc2a4\ud1a0\ub2c8\uc544", "NAME_LEN": 7, "NAME_LONG": "Estonia", "NAME_NL": "Estland", "NAME_PL": "Estonia", "NAME_PT": "Est\u00f3nia", "NAME_RU": "\u042d\u0441\u0442\u043e\u043d\u0438\u044f", "NAME_SORT": "Estonia", "NAME_SV": "Estland", "NAME_TR": "Estonya", "NAME_UK": "\u0415\u0441\u0442\u043e\u043d\u0456\u044f", "NAME_UR": "\u0627\u0633\u062a\u0648\u0646\u06cc\u0627", "NAME_VI": "Estonia", "NAME_ZH": "\u7231\u6c99\u5c3c\u4e9a", "NAME_ZHT": "\u611b\u6c99\u5c3c\u4e9e", "NE_ID": 1159320615, "NOTE_ADM0": null, "NOTE_BRK": null, "POP_EST": 1326590, "POP_RANK": 12, "POP_YEAR": 2019, "POSTAL": "EST", "REGION_UN": "Europe", "REGION_WB": "Europe \u0026 Central Asia", "SOVEREIGNT": "Estonia", "SOV_A3": "EST", "SUBREGION": "Northern Europe", "SUBUNIT": "Estonia", "SU_A3": "EST", "SU_DIF": 0, "TINY": -99, "TLC": "1", "TLC_DIFF": null, "TYPE": "Sovereign country", "UN_A3": "233", "WB_A2": "EE", "WB_A3": "EST", "WIKIDATAID": "Q191", "WOE_ID": 23424805, "WOE_ID_EH": 23424805, "WOE_NOTE": "Exact WOE match as country", "featurecla": "Admin-0 country", "scalerank": 1}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_043f8e86a8c817aab1295acf56181fe8.bindTooltip(
+                `<div>
+                     Estonia
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        var popup_b21b9c86bd408c4e72fe0475d665c8bf = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_39fe5a0b7a684be4a7a7eda5ec71ecbd = $(`<div id="html_39fe5a0b7a684be4a7a7eda5ec71ecbd" style="width: 100.0%; height: 100.0%;">             <div style="width: 220px; font-family: Arial, sans-serif;">                 <h4 style="margin: 0 0 8px 0;">Estonia</h4>                 <p style="margin: 4px 0;"><b>Mission:</b><br>Missies op de oostflank van Europa</p>                 <a href="https://www.mil.be/nl/onze-missies/missies-op-de-oostflank-van-europa/" target="_blank">More info</a>             </div>             </div>`)[0];
+                popup_b21b9c86bd408c4e72fe0475d665c8bf.setContent(html_39fe5a0b7a684be4a7a7eda5ec71ecbd);
+            
+        
+
+        geo_json_043f8e86a8c817aab1295acf56181fe8.bindPopup(popup_b21b9c86bd408c4e72fe0475d665c8bf)
+        ;
+
+        
+    
+    
+            geo_json_043f8e86a8c817aab1295acf56181fe8.addTo(map_54eed05130a338c371a5546625698ebd);
+        
+    
+        function geo_json_77e0560314b9f6dc574b4e93efde594a_styler(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"color": "#1e7e34", "fillColor": "#28a745", "fillOpacity": 0.7, "weight": 2};
+            }
+        }
+        function geo_json_77e0560314b9f6dc574b4e93efde594a_highlighter(feature) {
+            switch(feature.properties.featurecla) {
+                default:
+                    return {"fillOpacity": 0.9, "weight": 3};
+            }
+        }
+
+        function geo_json_77e0560314b9f6dc574b4e93efde594a_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_77e0560314b9f6dc574b4e93efde594a.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_77e0560314b9f6dc574b4e93efde594a_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_77e0560314b9f6dc574b4e93efde594a = L.geoJson(null, {
+                onEachFeature: geo_json_77e0560314b9f6dc574b4e93efde594a_onEachFeature,
+            
+                style: geo_json_77e0560314b9f6dc574b4e93efde594a_styler,
+            ...{
+}
+        });
+
+        function geo_json_77e0560314b9f6dc574b4e93efde594a_add (data) {
+            geo_json_77e0560314b9f6dc574b4e93efde594a
+                .addData(data);
+        }
+            geo_json_77e0560314b9f6dc574b4e93efde594a_add({"features": [{"bbox": [2.513573, 49.529484, 6.156658, 51.475024], "geometry": {"coordinates": [[[6.156658, 50.803721], [6.043073, 50.128052], [5.782417, 50.090328], [5.674052, 49.529484], [4.799222, 49.985373], [4.286023, 49.907497], [3.588184, 50.378992], [3.123252, 50.780363], [2.658422, 50.796848], [2.513573, 51.148506], [3.314971, 51.345781], [3.315011, 51.345777], [3.314971, 51.345755], [4.047071, 51.267259], [4.973991, 51.475024], [5.606976, 51.037298], [6.156658, 50.803721]]], "type": "Polygon"}, "properties": {"ABBREV": "Belg.", "ABBREV_LEN": 5, "ADM0_A3": "BEL", "ADM0_A3_AR": "BEL", "ADM0_A3_BD": "BEL", "ADM0_A3_BR": "BEL", "ADM0_A3_CN": "BEL", "ADM0_A3_DE": "BEL", "ADM0_A3_EG": "BEL", "ADM0_A3_ES": "BEL", "ADM0_A3_FR": "BEL", "ADM0_A3_GB": "BEL", "ADM0_A3_GR": "BEL", "ADM0_A3_ID": "BEL", "ADM0_A3_IL": "BEL", "ADM0_A3_IN": "BEL", "ADM0_A3_IT": "BEL", "ADM0_A3_JP": "BEL", "ADM0_A3_KO": "BEL", "ADM0_A3_MA": "BEL", "ADM0_A3_NL": "BEL", "ADM0_A3_NP": "BEL", "ADM0_A3_PK": "BEL", "ADM0_A3_PL": "BEL", "ADM0_A3_PS": "BEL", "ADM0_A3_PT": "BEL", "ADM0_A3_RU": "BEL", "ADM0_A3_SA": "BEL", "ADM0_A3_SE": "BEL", "ADM0_A3_TR": "BEL", "ADM0_A3_TW": "BEL", "ADM0_A3_UA": "BEL", "ADM0_A3_UN": -99, "ADM0_A3_US": "BEL", "ADM0_A3_VN": "BEL", "ADM0_A3_WB": -99, "ADM0_DIF": 0, "ADM0_DIFF": null, "ADM0_ISO": "BEL", "ADM0_TLC": "BEL", "ADMIN": "Belgium", "BRK_A3": "BEL", "BRK_DIFF": 0, "BRK_GROUP": null, "BRK_NAME": "Belgium", "CONTINENT": "Europe", "ECONOMY": "2. Developed region: nonG7", "FCLASS_AR": null, "FCLASS_BD": null, "FCLASS_BR": null, "FCLASS_CN": null, "FCLASS_DE": null, "FCLASS_EG": null, "FCLASS_ES": null, "FCLASS_FR": null, "FCLASS_GB": null, "FCLASS_GR": null, "FCLASS_ID": null, "FCLASS_IL": null, "FCLASS_IN": null, "FCLASS_ISO": "Admin-0 country", "FCLASS_IT": null, "FCLASS_JP": null, "FCLASS_KO": null, "FCLASS_MA": null, "FCLASS_NL": null, "FCLASS_NP": null, "FCLASS_PK": null, "FCLASS_PL": null, "FCLASS_PS": null, "FCLASS_PT": null, "FCLASS_RU": null, "FCLASS_SA": null, "FCLASS_SE": null, "FCLASS_TLC": "Admin-0 country", "FCLASS_TR": null, "FCLASS_TW": null, "FCLASS_UA": null, "FCLASS_US": null, "FCLASS_VN": null, "FIPS_10": "BE", "FORMAL_EN": "Kingdom of Belgium", "FORMAL_FR": null, "GDP_MD": 533097, "GDP_YEAR": 2019, "GEOUNIT": "Belgium", "GEOU_DIF": 0, "GU_A3": "BEL", "HOMEPART": 1, "INCOME_GRP": "1. High income: OECD", "ISO_A2": "BE", "ISO_A2_EH": "BE", "ISO_A3": "BEL", "ISO_A3_EH": "BEL", "ISO_N3": "056", "ISO_N3_EH": "056", "LABELRANK": 2, "LABEL_X": 4.800448, "LABEL_Y": 50.785392, "LEVEL": 2, "LONG_LEN": 7, "MAPCOLOR13": 8, "MAPCOLOR7": 3, "MAPCOLOR8": 2, "MAPCOLOR9": 1, "MAX_LABEL": 9, "MIN_LABEL": 4, "MIN_ZOOM": 0, "NAME": "Belgium", "NAME_ALT": null, "NAME_AR": "\u0628\u0644\u062c\u064a\u0643\u0627", "NAME_BN": "\u09ac\u09c7\u09b2\u099c\u09bf\u09af\u09bc\u09be\u09ae", "NAME_CIAWF": "Belgium", "NAME_DE": "Belgien", "NAME_EL": "\u0392\u03ad\u03bb\u03b3\u03b9\u03bf", "NAME_EN": "Belgium", "NAME_ES": "B\u00e9lgica", "NAME_FA": "\u0628\u0644\u0698\u06cc\u06a9", "NAME_FR": "Belgique", "NAME_HE": "\u05d1\u05dc\u05d2\u05d9\u05d4", "NAME_HI": "\u092c\u0947\u0932\u094d\u091c\u093f\u092f\u092e", "NAME_HU": "Belgium", "NAME_ID": "Belgia", "NAME_IT": "Belgio", "NAME_JA": "\u30d9\u30eb\u30ae\u30fc", "NAME_KO": "\ubca8\uae30\uc5d0", "NAME_LEN": 7, "NAME_LONG": "Belgium", "NAME_NL": "Belgi\u00eb", "NAME_PL": "Belgia", "NAME_PT": "B\u00e9lgica", "NAME_RU": "\u0411\u0435\u043b\u044c\u0433\u0438\u044f", "NAME_SORT": "Belgium", "NAME_SV": "Belgien", "NAME_TR": "Bel\u00e7ika", "NAME_UK": "\u0411\u0435\u043b\u044c\u0433\u0456\u044f", "NAME_UR": "\u0628\u0644\u062c\u0626\u06cc\u0645", "NAME_VI": "B\u1ec9", "NAME_ZH": "\u6bd4\u5229\u65f6", "NAME_ZHT": "\u6bd4\u5229\u6642", "NE_ID": 1159320389, "NOTE_ADM0": null, "NOTE_BRK": null, "POP_EST": 11484055, "POP_RANK": 14, "POP_YEAR": 2019, "POSTAL": "B", "REGION_UN": "Europe", "REGION_WB": "Europe \u0026 Central Asia", "SOVEREIGNT": "Belgium", "SOV_A3": "BEL", "SUBREGION": "Western Europe", "SUBUNIT": "Belgium", "SU_A3": "BEL", "SU_DIF": 0, "TINY": -99, "TLC": "1", "TLC_DIFF": null, "TYPE": "Sovereign country", "UN_A3": "056", "WB_A2": "BE", "WB_A3": "BEL", "WIKIDATAID": "Q31", "WOE_ID": 23424757, "WOE_ID_EH": 23424757, "WOE_NOTE": "Exact WOE match as country", "featurecla": "Admin-0 country", "scalerank": 1}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_77e0560314b9f6dc574b4e93efde594a.bindTooltip(
+                `<div>
+                     Belgium (Home)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        var popup_a3e66e845ce110d9814a23781c1aa61e = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_7d2cdfcedd3269a578e85a43f8f01ff1 = $(`<div id="html_7d2cdfcedd3269a578e85a43f8f01ff1" style="width: 100.0%; height: 100.0%;">             <div style="width: 200px; font-family: Arial, sans-serif;">                 <h4 style="margin: 0 0 8px 0;">Belgium</h4>                 <p style="margin: 4px 0;">Home country</p>             </div>             </div>`)[0];
+                popup_a3e66e845ce110d9814a23781c1aa61e.setContent(html_7d2cdfcedd3269a578e85a43f8f01ff1);
+            
+        
+
+        geo_json_77e0560314b9f6dc574b4e93efde594a.bindPopup(popup_a3e66e845ce110d9814a23781c1aa61e)
+        ;
+
+        
+    
+    
+            geo_json_77e0560314b9f6dc574b4e93efde594a.addTo(map_54eed05130a338c371a5546625698ebd);
+        
+    
+        function geo_json_a96057145cbbe1db898a607a38ca5a12_styler(feature) {
+            switch(feature.properties.name) {
+                default:
+                    return {"color": "#1a66cc", "fillColor": "#3388ff", "fillOpacity": 0.6, "weight": 2};
+            }
+        }
+        function geo_json_a96057145cbbe1db898a607a38ca5a12_highlighter(feature) {
+            switch(feature.properties.name) {
+                default:
+                    return {"fillOpacity": 0.8, "weight": 3};
+            }
+        }
+
+        function geo_json_a96057145cbbe1db898a607a38ca5a12_onEachFeature(feature, layer) {
+
+            layer.on({
+                mouseout: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                            geo_json_a96057145cbbe1db898a607a38ca5a12.resetStyle(e.target);
+                    }
+                },
+                mouseover: function(e) {
+                    if(typeof e.target.setStyle === "function"){
+                        const highlightStyle = geo_json_a96057145cbbe1db898a607a38ca5a12_highlighter(e.target.feature)
+                        e.target.setStyle(highlightStyle);
+                    }
+                },
+            });
+        };
+        var geo_json_a96057145cbbe1db898a607a38ca5a12 = L.geoJson(null, {
+                onEachFeature: geo_json_a96057145cbbe1db898a607a38ca5a12_onEachFeature,
+            
+                style: geo_json_a96057145cbbe1db898a607a38ca5a12_styler,
+            ...{
+}
+        });
+
+        function geo_json_a96057145cbbe1db898a607a38ca5a12_add (data) {
+            geo_json_a96057145cbbe1db898a607a38ca5a12
+                .addData(data);
+        }
+            geo_json_a96057145cbbe1db898a607a38ca5a12_add({"features": [{"geometry": {"coordinates": [[[10.580006, 57.730017], [10.546106, 57.215733], [10.25, 56.890016], [10.369993, 56.609982], [10.912182, 56.458621], [10.667804, 56.081383], [10.369993, 56.190007], [9.649985, 55.469999], [9.921906, 54.983104], [9.93958, 54.596642], [10.950112, 54.363607], [10.939467, 54.008693], [11.956252, 54.196486], [12.51844, 54.470371], [13.647467, 54.075511], [14.119686, 53.757029], [14.8029, 54.050706], [16.363477, 54.513159], [17.622832, 54.851536], [18.620859, 54.682606], [18.696255, 54.438719], [19.66064, 54.426084], [19.888481, 54.86616], [21.268449, 55.190482], [21.0558, 56.031076], [21.090424, 56.783873], [21.581866, 57.411871], [22.524341, 57.753374], [23.318453, 57.006236], [24.12073, 57.025693], [24.312863, 57.793424], [24.428928, 58.383413], [24.061198, 58.257375], [23.42656, 58.612753], [23.339795, 59.18724], [24.604214, 59.465854], [25.864189, 59.61109], [26.949136, 59.445803], [27.981114, 59.475388], [27.981127, 59.475373], [29.1177, 60.02805], [28.070002, 60.503519], [28.069998, 60.503517], [26.255173, 60.423961], [24.496624, 60.057316], [22.869695, 59.846373], [22.290764, 60.391921], [21.322244, 60.72017], [21.544866, 61.705329], [21.059211, 62.607393], [21.536029, 63.189735], [22.442744, 63.81781], [24.730512, 64.902344], [25.398068, 65.111427], [25.294043, 65.534346], [23.903379, 66.006927], [22.183173, 65.723741], [21.213517, 65.026005], [21.369631, 64.413588], [19.778876, 63.609554], [17.847779, 62.7494], [17.119555, 61.341166], [17.831346, 60.636583], [18.787722, 60.081914], [17.869225, 58.953766], [16.829185, 58.719827], [16.44771, 57.041118], [15.879786, 56.104302], [14.666681, 56.200885], [14.100721, 55.407781], [12.942911, 55.361737], [12.625101, 56.30708], [11.787942, 57.441817], [10.580006, 57.730017]]], "type": "Polygon"}, "properties": {"method": "Closing between Skagen and G\u00f6teborg", "name": "Baltic Sea (Polygon Closing Method)", "vertices": 74}, "type": "Feature"}], "type": "FeatureCollection"});
+
+        
+    
+            geo_json_a96057145cbbe1db898a607a38ca5a12.bindTooltip(
+                `<div>
+                     Baltic Sea (Eastern Flank)
+                 </div>`,
+                {
+  "sticky": true,
+}
+            );
+        
+    
+        var popup_45eb5522d1acb068e5c34d8991345bb5 = L.popup({
+  "maxWidth": 250,
+});
+
+        
+            
+                var html_fcf0f44398114c2f5cf7f86494edaae0 = $(`<div id="html_fcf0f44398114c2f5cf7f86494edaae0" style="width: 100.0%; height: 100.0%;">             <div style="width: 220px; font-family: Arial, sans-serif;">                 <h4 style="margin: 0 0 8px 0;">Baltic Sea</h4>                 <p style="margin: 4px 0;"><b>Mission:</b><br>Missies op de oostflank van Europa</p>                 <a href="https://www.mil.be/nl/onze-missies/missies-op-de-oostflank-van-europa/" target="_blank">More info</a>             </div>             </div>`)[0];
+                popup_45eb5522d1acb068e5c34d8991345bb5.setContent(html_fcf0f44398114c2f5cf7f86494edaae0);
+            
+        
+
+        geo_json_a96057145cbbe1db898a607a38ca5a12.bindPopup(popup_45eb5522d1acb068e5c34d8991345bb5)
+        ;
+
+        
+    
+    
+            geo_json_a96057145cbbe1db898a607a38ca5a12.addTo(map_54eed05130a338c371a5546625698ebd);
+        
+</script>
+</html>
