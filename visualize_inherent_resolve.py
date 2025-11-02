@@ -13,7 +13,7 @@ Mission Context (2024-2025):
 - ~2,000 coalition troops (down to ~1,000 in Syria by 2025)
 - ~3,000 ISIS fighters remain across Iraq and Syria (scattered, no continuous territory)
 
-INPUT: data/ne_110m_admin_0_countries.geojson, data/globe_locations.json
+INPUT: data/geojson/ne_110m_admin_0_countries.geojson, data/globe_locations.json
 OUTPUT: maps/inherent_resolve_map.html
 """
 import json
@@ -27,7 +27,7 @@ def load_globe_data(filepath='data/globe_locations.json'):
         return json.load(f)
 
 
-def get_country_geojson(cache_file='data/ne_110m_admin_0_countries.geojson'):
+def get_country_geojson(cache_file='data/geojson/ne_110m_admin_0_countries.geojson'):
     """Load Natural Earth countries GeoJSON from cache."""
     with open(cache_file, 'r', encoding='utf-8') as f:
         return json.load(f)

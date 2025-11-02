@@ -15,7 +15,7 @@ Mission Context (2024-2025):
 - Diplomatic protection detachments (DAS) in Sahel countries
 - 3D approach: Diplomacy, Development, Defense
 
-INPUT: data/ne_110m_admin_0_countries.geojson
+INPUT: data/geojson/ne_110m_admin_0_countries.geojson
 OUTPUT: maps/african_missions_map.html
 """
 import json
@@ -23,7 +23,7 @@ import folium
 import os
 
 
-def get_country_geojson(cache_file='data/ne_110m_admin_0_countries.geojson'):
+def get_country_geojson(cache_file='data/geojson/ne_110m_admin_0_countries.geojson'):
     """Load Natural Earth countries GeoJSON from cache."""
     with open(cache_file, 'r', encoding='utf-8') as f:
         return json.load(f)

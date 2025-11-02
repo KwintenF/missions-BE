@@ -122,7 +122,7 @@ python3 visualize_african_missions.py
 **Requirements:**
 - Python 3.x
 - folium library (`pip install folium`)
-- Natural Earth GeoJSON data in `data/` directory
+- Natural Earth GeoJSON data in `data/geojson/` directory
 
 ## Data Sources
 
@@ -138,7 +138,10 @@ python3 visualize_african_missions.py
 missions-BE/
 ├── README.md
 ├── data/
-│   ├── ne_110m_admin_0_countries.geojson
+│   ├── geojson/
+│   │   ├── ne_110m_admin_0_countries.geojson
+│   │   ├── baltic_sea_extracted.geojson
+│   │   └── baltic_border_union.geojson
 │   └── globe_locations.json
 ├── maps/
 │   ├── nato_alliance_map.html
@@ -146,6 +149,13 @@ missions-BE/
 │   ├── african_missions_map.html
 │   ├── inherent_resolve_map.html
 │   └── missions_map.html
+├── utils/
+│   └── map_making/
+│       ├── extract_baltic.py
+│       ├── geometry.py
+│       ├── polygon_closing.py
+│       ├── polygon_union.py
+│       └── triangulate.py
 ├── visualize_nato_alliance.py
 ├── visualize_nato_eu_membership.py
 ├── visualize_african_missions.py

@@ -15,14 +15,14 @@ Current status:
 - EU: 27 member states
 - Both: 23 member states
 
-INPUT: data/ne_110m_admin_0_countries.geojson
+INPUT: data/geojson/ne_110m_admin_0_countries.geojson
 OUTPUT: maps/nato_eu_membership_map.html
 """
 import json
 import folium
 
 
-def get_country_geojson(cache_file='data/ne_110m_admin_0_countries.geojson'):
+def get_country_geojson(cache_file='data/geojson/ne_110m_admin_0_countries.geojson'):
     """Load Natural Earth countries GeoJSON from cache."""
     with open(cache_file, 'r', encoding='utf-8') as f:
         return json.load(f)

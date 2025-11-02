@@ -2,7 +2,7 @@
 """
 Create simple map visualizations of Belgian military mission locations.
 
-INPUT: data/globe_locations.json, data/ne_110m_admin_0_countries.geojson, data/baltic_sea_extracted.geojson
+INPUT: data/globe_locations.json, data/geojson/ne_110m_admin_0_countries.geojson, data/geojson/baltic_sea_extracted.geojson
 """
 import json
 import folium
@@ -32,7 +32,7 @@ def load_globe_data(filepath='data/globe_locations.json'):
         return json.load(f)
 
 
-def get_country_geojson(cache_file='data/ne_110m_admin_0_countries.geojson'):
+def get_country_geojson(cache_file='data/geojson/ne_110m_admin_0_countries.geojson'):
     """
     Fetch Natural Earth world countries GeoJSON data.
     Downloads once and caches locally to avoid repeated network requests.
@@ -95,7 +95,7 @@ def create_interactive_map(locations, output_file='maps/missions_map.html'):
     geojson_data = get_country_geojson()
 
     # Load extracted Baltic Sea polygon
-    baltic_sea_path = 'data/baltic_sea_extracted.geojson'
+    baltic_sea_path = 'data/geojson/baltic_sea_extracted.geojson'
     if os.path.exists(baltic_sea_path):
         with open(baltic_sea_path, 'r', encoding='utf-8') as f:
             baltic_sea_data = json.load(f)
